@@ -13,19 +13,28 @@ add_library(glad_c STATIC lib/glad/src/glad.c)
 target_include_directories(glad_c PUBLIC lib/glad/include)
 
 add_subdirectory(lib/glfw)
+add_subdirectory(lib/glm)
+
 find_package(OpenGL REQUIRED)
 
 add_executable(solarsim 
-    src/main.cpp
+	src/main.cpp
+	src/graphics/shader.cpp
+	src/graphics/texture.cpp
 )
 
 target_link_libraries(solarsim
-    glfw
-    glad_c
-    OpenGL::GL
+	glfw
+	glm
+	glad_c
+	OpenGL::GL
 )
 
-target_include_directories(solarsim PRIVATE 
-    include
-    lib/glfw/include
+target_include_directories(solarsim PRIVATE
+	src
+	src/renderer
+	src/graphics
+	lib/stb
 )
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
