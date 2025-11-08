@@ -21,9 +21,11 @@ add_executable(solarsim
 	src/main.cpp
 	src/graphics/shader.cpp
 	src/graphics/texture.cpp
-	src/rendering/renderer.cpp
-	src/simulation/celestial_body.cpp
+	src/core/renderer.cpp
+	src/core/window.cpp
 	src/core/camera.cpp
+	src/core/input_manager.cpp
+	src/simulation/celestial_body.cpp
 )
 
 target_link_libraries(solarsim
