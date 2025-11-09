@@ -9,7 +9,7 @@ void InputManager::init(Window* window, Camera* camera) {
 
 	glfwSetCursorPosCallback(w, mouseCallback);
 	glfwSetScrollCallback(w, scrollCallback);
-	glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
+	glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void InputManager::processInput(float deltaTime) {
@@ -30,6 +30,18 @@ void InputManager::processInput(float deltaTime) {
 
 	if (glfwGetKey(w, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, true);
+	if (glfwGetKey(w, GLFW_KEY_TAB) == GLFW_PRESS) {
+		if (shouldCaptureMouse) {
+			glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			shouldCaptureMouse = false;
+		}
+	} else {
+		if (!shouldCaptureMouse) {
+			glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			firstMouse = true;
+			shouldCaptureMouse = true;
+		}
+	}
 }
 
 void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -40,6 +52,7 @@ void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 }
 
 void InputManager::handleMouseMovement(float xpos, float ypos) {
+	if (!shouldCaptureMouse) return;
 	if (firstMouse)
 	{
 		lastX = xpos;
