@@ -21,7 +21,7 @@ class Simulation {
 		void clearAllEntities();
 
 		size_t getEntityCount() const { return entities.size(); };
-		const Camera* getCamera() const { return &camera; }
+		Camera* getCamera() { return &camera; }
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
 
