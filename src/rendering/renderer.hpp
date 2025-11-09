@@ -9,8 +9,8 @@ class Renderer {
 		std::unordered_map<Shader*, std::vector<std::unique_ptr<Entity>>> renderGroups;
 
 	public:
-		Renderer();
-		~Renderer();
+		Renderer() = default;
+		~Renderer() = default;
 		void init();
 		void render(const Camera& camera);
 		void registerEntity(std::unique_ptr<Entity> obj);
