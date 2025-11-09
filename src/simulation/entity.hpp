@@ -32,7 +32,7 @@ class Entity {
 
 		virtual void render(Shader& shader) = 0;
 
-		virtual void update(float deltaTime) {}
+		virtual void update(float deltaTime) = 0;
 
 		Transform& getTransform() { return transform; }
 		const Transform& getTransform() const { return transform; }
