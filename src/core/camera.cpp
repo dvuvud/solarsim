@@ -2,19 +2,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(glm::vec3 position, const CameraConfig& config)
-      : Position(position),
-	WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-	Yaw(config.Yaw),
-	Pitch(config.Pitch), 
-	Fov(config.Fov),
-	RenderDistance(config.RenderDistance),
-	MovementSpeed(config.Speed),
-	MouseSensitivity(config.Sensitivity)
-{
-	updateCameraVectors();
-}
-
 glm::mat4 Camera::GetViewMatrix()
 {
 	return glm::lookAt(Position, Position + Front, Up);

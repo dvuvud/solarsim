@@ -22,6 +22,24 @@ struct CameraConfig {
 
 class Camera {
 	public:
+		Camera(glm::vec3 position, const CameraConfig& config = {})
+			: Position(position),
+			WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+			Yaw(config.Yaw),
+			Pitch(config.Pitch), 
+			Fov(config.Fov),
+			RenderDistance(config.RenderDistance),
+			MovementSpeed(config.Speed),
+			MouseSensitivity(config.Sensitivity)
+			{
+				updateCameraVectors();
+			}
+
+		glm::mat4 GetViewMatrix();
+		void ProcessKeyboard(Camera_Movement direction, float deltaTime);
+		void ProcessMouseMovement(float xoffset, float yoffset);
+		void ProcessMouseScroll(float yoffset);
+
 		glm::vec3 Position;
 		glm::vec3 Front, Up, Right, WorldUp;
 
@@ -33,11 +51,6 @@ class Camera {
 		float MovementSpeed;
 		float MouseSensitivity;
 
-		Camera(glm::vec3 position = glm::vec3(0.0f), const CameraConfig& config = {});
-		glm::mat4 GetViewMatrix();
-		void ProcessKeyboard(Camera_Movement direction, float deltaTime);
-		void ProcessMouseMovement(float xoffset, float yoffset);
-		void ProcessMouseScroll(float yoffset);
 	private:
 		void updateCameraVectors();
 };
