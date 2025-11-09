@@ -6,13 +6,13 @@
 
 class Renderer {
 	private:
-		std::unordered_map<Shader*, std::vector<std::unique_ptr<Entity>>> renderGroups;
+		std::unordered_map<Shader*, std::vector<std::vector<Entity*>>> renderGroups;
 
 	public:
 		Renderer() = default;
 		~Renderer() = default;
 		void init();
 		void render(const Camera& camera);
-		void registerEntity(std::unique_ptr<Entity> obj);
+		void registerEntity(std::vector<Entity*> obj);
 };
 
