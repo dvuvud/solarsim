@@ -8,7 +8,9 @@
 
 class Simulation {
 	public:
-		Simulation() : camera(glm::vec3(0.f, 0.f, 50.f)) {};
+		Simulation()
+			: camera(glm::vec3(0.f, 0.f, 5.f)),
+			renderer(entities) {};
 		~Simulation() = default;
 
 		void spawnEntity(std::unique_ptr<Entity> entity);

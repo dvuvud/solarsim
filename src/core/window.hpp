@@ -5,12 +5,12 @@
 class Window {
 	public:
 		bool init(const unsigned int width, const unsigned int height, const char* title);
+		~Window() { if (window) glfwDestroyWindow(window);}
 		bool shouldClose();
 		void swapBuffers();
 		void pollEvents();
 		void cleanup();
 		GLFWwindow* getNativeWindow();
-		~Window() { if (window) glfwDestroyWindow(window);}
 	private:
 		GLFWwindow* window = nullptr;
 
