@@ -1,5 +1,5 @@
 #include "glad/glad.h"
-#include "renderer.hpp"
+#include <graphics/renderer.hpp>
 
 Renderer::Renderer(std::vector<std::unique_ptr<Entity>>& entities) : entities(entities) {
 	glEnable(GL_DEPTH_TEST);

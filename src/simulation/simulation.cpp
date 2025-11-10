@@ -1,4 +1,4 @@
-#include "simulation.hpp"
+#include <simulation/simulation.hpp>
 
 void Simulation::spawnEntity(std::unique_ptr<Entity> entity) {
 	if (!entity) return;

@@ -1,4 +1,4 @@
-#include <core/input_manager.hpp>
+#include "input_manager.hpp"
 
 InputManager::InputManager(Window* window, Camera* camera) {
 	this->window = window;

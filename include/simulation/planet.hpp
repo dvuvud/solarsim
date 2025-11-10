@@ -1,6 +1,6 @@
 #pragma once
 
-#include "entity.hpp"
+#include <simulation/entity.hpp>
 
 class Planet : public Entity {
 	public:

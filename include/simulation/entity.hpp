@@ -3,10 +3,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../graphics/shader.hpp"
+#include <graphics/shader.hpp>
 
-#include "material.hpp"
-#include "mesh.hpp"
+#include <graphics/material.hpp>
+#include <graphics/mesh.hpp>
 
 struct Transform {
 	glm::vec3 position = glm::vec3(0.f,0.f,0.f);

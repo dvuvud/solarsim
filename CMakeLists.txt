@@ -19,13 +19,13 @@ find_package(OpenGL REQUIRED)
 
 add_executable(solarsim 
 	src/main.cpp
+	src/core/window.cpp
+	src/core/input_manager.cpp
+	src/graphics/mesh.cpp
 	src/graphics/shader.cpp
 	src/graphics/texture.cpp
-	src/rendering/renderer.cpp
-	src/core/window.cpp
-	src/core/camera.cpp
-	src/core/input_manager.cpp
-	src/simulation/mesh.cpp
+	src/graphics/camera.cpp
+	src/graphics/renderer.cpp
 	src/simulation/simulation.cpp
 	src/simulation/planet.cpp
 )
@@ -38,10 +38,6 @@ target_link_libraries(solarsim
 )
 
 target_include_directories(solarsim PRIVATE
-	src
-	src/rendering
-	src/simulation
-	src/core
-	src/graphics
+	include
 	lib/stb
 )

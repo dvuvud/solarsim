@@ -1,4 +1,4 @@
-#include "planet.hpp"
+#include <simulation/planet.hpp>
 #include <iostream>
 
 Planet::Planet(Mesh* mesh, Material* material, const glm::vec3& position)
