@@ -41,15 +41,12 @@ const std::vector<unsigned int> indices = {
 	6, 7, 3,   // second triangle
 };
 
-void Engine::init(unsigned int width, unsigned int height, const std::string& title)
+Engine::Engine(unsigned int width, unsigned int height, const std::string& title)
 {
 	if (!glfwInit()) {
 		throw std::runtime_error("Failed to initialize glfw");
 	}
-	window = std::make_unique<Window>();
-	if (!window->init(width, height, title.c_str())) {
-		throw std::runtime_error("Failed to initialize window");
-	}
+	window = std::make_unique<Window>(width, height, title.c_str());
 	simulation = std::make_unique<Simulation>();
 	renderer = std::make_unique<Renderer>(simulation->getEntities(), simulation->getCamera());
 	inputManager = std::make_unique<InputManager>(window.get(), simulation->getCamera());
