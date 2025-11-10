@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "mesh.hpp"
+#include <graphics/mesh.hpp>
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 	: vertices(vertices), indices(indices)

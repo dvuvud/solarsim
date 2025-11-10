@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../core/camera.hpp"
-#include "../graphics/shader.hpp"
-#include "../simulation/entity.hpp"
+#include <graphics/camera.hpp>
+#include <graphics/shader.hpp>
+#include <simulation/entity.hpp>
 
 class Renderer {
 	private:

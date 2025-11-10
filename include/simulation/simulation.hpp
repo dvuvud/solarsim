@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../rendering/renderer.hpp"
-#include "../core/camera.hpp"
-#include "../core/input_manager.hpp"
-#include "../core/window.hpp"
-#include "entity.hpp"
+#include <graphics/renderer.hpp>
+#include <graphics/camera.hpp>
+#include <core/input_manager.hpp>
+#include <core/window.hpp>
+#include <simulation/entity.hpp>
 
 class Simulation {
 	public:

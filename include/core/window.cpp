@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include <core/window.hpp>
+#include "window.hpp"
 
 #include <iostream>
 
