@@ -19,6 +19,7 @@ find_package(OpenGL REQUIRED)
 
 add_executable(solarsim 
 	src/main.cpp
+	src/engine/engine.cpp
 	src/core/window.cpp
 	src/core/input_manager.cpp
 	src/graphics/mesh.cpp

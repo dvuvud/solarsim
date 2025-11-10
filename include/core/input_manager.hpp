@@ -8,8 +8,8 @@ class InputManager {
 		InputManager(Window* window, Camera* camera);
 		void processInput(float deltaTime);
 	private:
-		Window* window = nullptr;
-		Camera* camera = nullptr;
+		Window* window;
+		Camera* camera;
 
 		bool shouldCaptureMouse = true;
 		bool firstMouse = true;

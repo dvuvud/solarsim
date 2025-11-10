@@ -8,24 +8,20 @@
 
 class Simulation {
 	public:
-		Simulation() : camera(glm::vec3(0.f, 0.f, 5.f)), renderer(entities, &camera) {};
+		Simulation() : camera(glm::vec3(0.f, 0.f, 5.f)) {};
 		~Simulation() = default;
 
 		void spawnEntity(std::unique_ptr<Entity> entity);
 
 		void update(float deltaTime);        
 
-
-		void render();
-
 		void clearAllEntities();
 
 		size_t getEntityCount() const { return entities.size(); };
 		Camera* getCamera() { return &camera; }
+		const std::vector<std::unique_ptr<Entity>>& getEntities() const { return entities; }
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
-
-		Renderer renderer;
 		Camera camera;
 
 		// TODO: Implement physics system
