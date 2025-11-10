@@ -7,9 +7,8 @@
 
 class Engine {
 	public:
-		Engine() = default;
+		Engine(unsigned int width = 800, unsigned int height = 600, const std::string& title = "solarsim");
 		~Engine() { if (glfwInit()) glfwTerminate(); }
-		void init(unsigned int width = 800, unsigned int height = 600, const std::string& = "solarsim");
 		void run();
 	private:
 		std::unique_ptr<Window> window;
