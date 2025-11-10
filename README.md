@@ -5,9 +5,9 @@ A solar system simulator that models celestial mechanics with real-time physics.
 ## Build & Run
 
 ### Required System Libraries
-- **OpenGL** (3.3+) - Graphics API/Specification
-- **CMake** (3.10+) - Build system
-- **C++17 compiler** - GCC, Clang, or MSVC
+- **OpenGL** (3.3+)
+- **CMake** (3.10+)
+- **C++17 compiler**
 
 ### Included Dependencies (No installation needed)
 The following are included as submodules or source code:
