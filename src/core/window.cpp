@@ -10,7 +10,7 @@ bool Window::init(const unsigned int width, const unsigned int height, const cha
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-	window = glfwCreateWindow(width, height, "solarsim", NULL, NULL);
+	window = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -24,7 +24,7 @@ bool Window::init(const unsigned int width, const unsigned int height, const cha
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
-	return window;
+	return window != NULL;
 }
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height)

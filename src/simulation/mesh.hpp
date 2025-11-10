@@ -2,7 +2,6 @@
 
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
-#include <string>
 
 struct Vertex {
     glm::vec3 position;
@@ -12,7 +11,7 @@ struct Vertex {
 
 class Mesh {
 	public:
-		Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices = {}, const std::string& name = "Mesh");
+		Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices = {});
 		~Mesh();
 		void render() const;
 	private:
@@ -20,8 +19,6 @@ class Mesh {
 		std::vector<unsigned int> indices;
 
 		GLuint VAO, VBO, EBO;
-
-		std::string name;
 
 		void setupMesh();
 };

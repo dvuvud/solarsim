@@ -1,6 +1,6 @@
 #include "input_manager.hpp"
 
-void InputManager::init(Window* window, Camera* camera) {
+InputManager::InputManager(Window* window, Camera* camera) {
 	this->window = window;
 	this->camera = camera;
 

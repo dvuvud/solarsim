@@ -1,8 +1,8 @@
 #include <glad/glad.h>
 #include "mesh.hpp"
 
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::string& name)
-	: vertices(vertices), indices(indices), name(name)
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+	: vertices(vertices), indices(indices)
 {
 	setupMesh();
 }
@@ -20,6 +20,7 @@ void Mesh::render() const {
 	if (indices.empty()) {
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	} else {
+
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	}
 	glBindVertexArray(0);
@@ -51,6 +52,4 @@ void Mesh::setupMesh() {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
 				indices.data(), GL_STATIC_DRAW);
 	}
-
-	glBindVertexArray(0);
 }

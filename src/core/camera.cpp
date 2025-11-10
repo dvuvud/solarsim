@@ -2,9 +2,14 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::GetViewMatrix() const
 {
 	return glm::lookAt(Position, Position + Front, Up);
+}
+
+glm::mat4 Camera::GetProjectionMatrix() const
+{
+	return glm::perspective(glm::radians(Fov), 800.f / 600.f, 0.1f, RenderDistance);
 }
 
 void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
