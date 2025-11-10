@@ -23,25 +23,3 @@ Window::Window(const unsigned int width, const unsigned int height, const char* 
 		throw std::runtime_error("Failed to initialize GLAD");
 	}
 }
-
-void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
-
-bool Window::shouldClose() {
-	return glfwWindowShouldClose(window);
-}
-
-void Window::swapBuffers() {
-	glfwSwapBuffers(window);
-}
-
-GLFWwindow* Window::getNativeWindow() {
-	return window;
-}
-
-void Window::pollEvents() {
-	glfwPollEvents();
-}
-

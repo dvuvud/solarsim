@@ -31,6 +31,10 @@ add_executable(solarsim
 	src/simulation/planet.cpp
 )
 
+if(APPLE)
+    target_compile_options(solarsim PRIVATE -Wno-deprecated-declarations)
+endif()
+
 target_link_libraries(solarsim
 	glfw
 	glm
