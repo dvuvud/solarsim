@@ -31,15 +31,15 @@ class Camera {
 			RenderDistance(config.RenderDistance),
 			MovementSpeed(config.Speed),
 			MouseSensitivity(config.Sensitivity)
-			{
-				updateCameraVectors();
-			}
+			{ updateCameraVectors(); }
 
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjectionMatrix() const;
 		void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 		void ProcessMouseMovement(float xoffset, float yoffset);
 		void ProcessMouseScroll(float yoffset);
+	private:
+		void updateCameraVectors();
 
 		glm::vec3 Position;
 		glm::vec3 Front, Up, Right, WorldUp;
@@ -51,7 +51,4 @@ class Camera {
 
 		float MovementSpeed;
 		float MouseSensitivity;
-
-	private:
-		void updateCameraVectors();
 };

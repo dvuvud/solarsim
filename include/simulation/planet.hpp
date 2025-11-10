@@ -8,4 +8,8 @@ class Planet : public Entity {
 		virtual ~Planet() = default;
 		void update(float deltaTime) override;
 		virtual void render(Shader& shader) override;
+	private:
+		// TODO: Implement the following in planet construction
+		float mass;
+		float radius;
 };
