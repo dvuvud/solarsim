@@ -56,12 +56,16 @@ void Engine::init(unsigned int width, unsigned int height, const std::string& ti
 
 	// TODO: Put this logic into the material class and create a mesh/model factory for common shapes
 	tmpShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/shader.fs");
+	tmpLightShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
 	tmpMat = std::make_unique<Material>();
 	tmpMat->shader = tmpShader.get();
+	tmpLightMat = std::make_unique<Material>();
+	tmpLightMat->shader = tmpLightShader.get();
 
 	tmpMesh = std::make_unique<Mesh>(vertices, indices);
 
 	simulation->spawnEntity(std::make_unique<Planet>(tmpMesh.get(), tmpMat.get(), glm::vec3(0.f,0.f,0.f)));
+	simulation->spawnEntity(std::make_unique<Planet>(tmpMesh.get(), tmpLightMat.get(), glm::vec3(3.f,3.f,-5.f)));
 }
 
 void Engine::run()

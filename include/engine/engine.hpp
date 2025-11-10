@@ -21,4 +21,7 @@ class Engine {
 		std::unique_ptr<Mesh> tmpMesh;
 		std::unique_ptr<Material> tmpMat;
 		std::unique_ptr<Shader> tmpShader;
+
+		std::unique_ptr<Material> tmpLightMat;
+		std::unique_ptr<Shader> tmpLightShader;
 };
