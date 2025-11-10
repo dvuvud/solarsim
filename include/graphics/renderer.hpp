@@ -6,11 +6,11 @@
 
 class Renderer {
 	public:
-		Renderer(std::vector<std::unique_ptr<Entity>>& entities, const Camera* camera = nullptr);
+		Renderer(const std::vector<std::unique_ptr<Entity>>& entities, Camera* camera = nullptr);
 		~Renderer() = default;
 		void render();
-		void setActiveCamera(const Camera* camera) { activeCamera = camera; }
+		void setActiveCamera(Camera* camera) { activeCamera = camera; }
 	private:
-		std::vector<std::unique_ptr<Entity>>& entities;
-		const Camera* activeCamera;
+		const std::vector<std::unique_ptr<Entity>>& entities;
+		Camera* activeCamera;
 };
