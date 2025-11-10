@@ -4,6 +4,9 @@
 #include "window.hpp"
 
 class InputManager {
+	public:
+		InputManager(Window* window, Camera* camera);
+		void processInput(float deltaTime);
 	private:
 		Window* window = nullptr;
 		Camera* camera = nullptr;
@@ -13,11 +16,6 @@ class InputManager {
 		float lastX = 0.0f;
 		float lastY = 0.0f;
 
-	public:
-		void init(Window* window, Camera* camera);
-		void processInput(float deltaTime);
-
-	private:
 		void handleMouseMovement(float xpos, float ypos);
 		void handleMouseScroll(double xoffset, double yoffset);
 

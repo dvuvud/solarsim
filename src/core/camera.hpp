@@ -35,7 +35,8 @@ class Camera {
 				updateCameraVectors();
 			}
 
-		glm::mat4 GetViewMatrix();
+		glm::mat4 GetViewMatrix() const;
+		glm::mat4 GetProjectionMatrix() const;
 		void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 		void ProcessMouseMovement(float xoffset, float yoffset);
 		void ProcessMouseScroll(float yoffset);

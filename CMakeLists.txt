@@ -26,6 +26,8 @@ add_executable(solarsim
 	src/core/camera.cpp
 	src/core/input_manager.cpp
 	src/simulation/mesh.cpp
+	src/simulation/simulation.cpp
+	src/simulation/planet.cpp
 )
 
 target_link_libraries(solarsim
