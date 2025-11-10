@@ -15,7 +15,7 @@ void Simulation::update(float deltaTime) {
 }
 
 void Simulation::render() {
-	renderer.render(camera);
+	renderer.render();
 }
 
 void Simulation::clearAllEntities() {
