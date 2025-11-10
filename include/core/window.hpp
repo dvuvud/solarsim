@@ -9,7 +9,6 @@ class Window {
 		bool shouldClose();
 		void swapBuffers();
 		void pollEvents();
-		void cleanup();
 		GLFWwindow* getNativeWindow();
 	private:
 		GLFWwindow* window = nullptr;
