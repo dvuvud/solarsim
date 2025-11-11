@@ -9,21 +9,22 @@ namespace solarsim {
 
 	class InputManager {
 		public:
-			InputManager(Window* window, Camera* camera);
+			InputManager(Window* p_window, Camera* p_camera);
 			void processInput(float deltaTime);
+			void setCamera(Camera* p_camera) { m_camera = p_camera; }
 		private:
-			Window* window;
-			Camera* camera;
+			Window* m_window;
+			Camera* m_camera;
 
-			bool shouldCaptureMouse = true;
-			bool firstMouse = true;
-			float lastX = 0.0f;
-			float lastY = 0.0f;
+			bool m_shouldCaptureMouse = true;
+			bool m_firstMouse = true;
+			float m_lastX = 0.0f;
+			float m_lastY = 0.0f;
 
-			void handleMouseMovement(float xpos, float ypos);
-			void handleMouseScroll(double xoffset, double yoffset);
+			void handleMouseMovement(float p_xpos, float p_ypos);
+			void handleMouseScroll(double p_xoffset, double p_yoffset);
 
-			static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
-			static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+			static void mouseCallback(GLFWwindow* p_window, double p_xpos, double p_ypos);
+			static void scrollCallback(GLFWwindow* p_window, double p_xoffset, double p_yoffset);
 	};
 }

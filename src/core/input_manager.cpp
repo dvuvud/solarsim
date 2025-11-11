@@ -3,11 +3,11 @@
 #include <core/input_manager.hpp>
 
 namespace solarsim {
-	InputManager::InputManager(Window* window, Camera* camera) {
-		this->window = window;
-		this->camera = camera;
+	InputManager::InputManager(Window* p_window, Camera* p_camera) {
+		m_window = p_window;
+		m_camera = p_camera;
 
-		GLFWwindow* w = window->getNativeWindow();
+		GLFWwindow* w = p_window->getNativeWindow();
 		glfwSetWindowUserPointer(w, this);
 
 		glfwSetCursorPosCallback(w, mouseCallback);
@@ -16,74 +16,74 @@ namespace solarsim {
 	}
 
 	void InputManager::processInput(float deltaTime) {
-		if (!window || !window->getNativeWindow()) return;
-		GLFWwindow* w = window->getNativeWindow();
+		if (!m_window || !m_camera) return;
+		GLFWwindow* w = m_window->getNativeWindow();
 		if (glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS)
-			camera->ProcessKeyboard(FORWARD, deltaTime);
+			m_camera->ProcessKeyboard(FORWARD, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS)
-			camera->ProcessKeyboard(BACKWARD, deltaTime);
+			m_camera->ProcessKeyboard(BACKWARD, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS)
-			camera->ProcessKeyboard(LEFT, deltaTime);
+			m_camera->ProcessKeyboard(LEFT, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS)
-			camera->ProcessKeyboard(RIGHT, deltaTime);
+			m_camera->ProcessKeyboard(RIGHT, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_SPACE) == GLFW_PRESS)
-			camera->ProcessKeyboard(UP, deltaTime);
+			m_camera->ProcessKeyboard(UP, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			camera->ProcessKeyboard(DOWN, deltaTime);
+			m_camera->ProcessKeyboard(DOWN, deltaTime);
 
 		if (glfwGetKey(w, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(w, true);
 		if (glfwGetKey(w, GLFW_KEY_TAB) == GLFW_PRESS) {
-			if (shouldCaptureMouse) {
+			if (m_shouldCaptureMouse) {
 				glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-				shouldCaptureMouse = false;
+				m_shouldCaptureMouse = false;
 			}
 		} else {
-			if (!shouldCaptureMouse) {
+			if (!m_shouldCaptureMouse) {
 				glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-				firstMouse = true;
-				shouldCaptureMouse = true;
+				m_firstMouse = true;
+				m_shouldCaptureMouse = true;
 			}
 		}
 	}
 
-	void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
-		InputManager* manager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+	void InputManager::mouseCallback(GLFWwindow* p_window, double p_xpos, double p_ypos) {
+		InputManager* manager = static_cast<InputManager*>(glfwGetWindowUserPointer(p_window));
 		if (manager) {
-			manager->handleMouseMovement(static_cast<float>(xpos), static_cast<float>(ypos));
+			manager->handleMouseMovement(static_cast<float>(p_xpos), static_cast<float>(p_ypos));
 		}
 	}
 
-	void InputManager::handleMouseMovement(float xpos, float ypos) {
-		if (!shouldCaptureMouse) return;
-		if (firstMouse)
+	void InputManager::handleMouseMovement(float p_xpos, float p_ypos) {
+		if (!m_shouldCaptureMouse) return;
+		if (m_firstMouse)
 		{
-			lastX = xpos;
-			lastY = ypos;
-			firstMouse = false;
+			m_lastX = p_xpos;
+			m_lastY = p_ypos;
+			m_firstMouse = false;
 		}
 
-		float xoffset = xpos - lastX;
-		float yoffset = lastY - ypos;
+		float xoffset = p_xpos - m_lastX;
+		float yoffset = m_lastY - p_ypos;
 
-		lastX = xpos;
-		lastY = ypos;
+		m_lastX = p_xpos;
+		m_lastY = p_ypos;
 
-		if (camera) {
-			camera->ProcessMouseMovement(xoffset, yoffset);
+		if (m_camera) {
+			m_camera->ProcessMouseMovement(xoffset, yoffset);
 		}
 	}
 
-	void InputManager::scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	void InputManager::scrollCallback(GLFWwindow* window, double p_xoffset, double p_yoffset) {
 		InputManager* manager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 		if (manager) {
-			manager->handleMouseScroll(xoffset, yoffset);
+			manager->handleMouseScroll(p_xoffset, p_yoffset);
 		}
 	}
 
-	void InputManager::handleMouseScroll(double xoffset, double yoffset) {
-		if (camera) {
-			camera->ProcessMouseScroll(static_cast<float>(yoffset)); 
+	void InputManager::handleMouseScroll(double p_xoffset, double p_yoffset) {
+		if (m_camera) {
+			m_camera->ProcessMouseScroll(static_cast<float>(p_yoffset)); 
 		}
 	}
 }

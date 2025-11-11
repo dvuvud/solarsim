@@ -12,14 +12,14 @@ namespace solarsim {
 
 	class Mesh {
 		public:
-			Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices = {});
+			Mesh(const std::vector<Vertex>& p_vertices, const std::vector<unsigned int>& p_indices = {});
 			~Mesh();
 			void render() const;
 		private:
-			std::vector<Vertex> vertices;
-			std::vector<unsigned int> indices;
+			std::vector<Vertex> m_vertices;
+			std::vector<unsigned int> m_indices;
 
-			GLuint VAO, VBO, EBO;
+			GLuint m_VAO, m_VBO, m_EBO;
 
 			void setupMesh();
 	};

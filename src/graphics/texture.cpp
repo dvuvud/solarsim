@@ -6,9 +6,9 @@
 
 namespace solarsim {
 	Texture::Texture(const char* texturePath, unsigned int textureUnit, bool useMipmap) {
-		glGenTextures(1, &ID);
-		glBindTexture(GL_TEXTURE_2D, ID);
-		unit = textureUnit;
+		glGenTextures(1, &m_ID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
+		m_unit = textureUnit;
 
 		// Setting texture parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -23,20 +23,20 @@ namespace solarsim {
 
 		// Loading image
 		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
+		unsigned char* data = stbi_load(texturePath, &m_width, &m_height, &m_nrChannels, 0);
 		if (data) {
 			GLenum format;
-			if (nrChannels == 1) {
+			if (m_nrChannels == 1) {
 				format = GL_RED;
-			} else if (nrChannels == 3) {
+			} else if (m_nrChannels == 3) {
 				format = GL_RGB;
-			} else if (nrChannels == 4) {
+			} else if (m_nrChannels == 4) {
 				format = GL_RGBA;
 			} else {
 				format = GL_RGB;
 			}
 
-			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, data);
 
 			if (useMipmap) {
 				glGenerateMipmap(GL_TEXTURE_2D);
@@ -49,7 +49,7 @@ namespace solarsim {
 	}
 
 	void Texture::bind() {
-		glActiveTexture(GL_TEXTURE0+unit);
-		glBindTexture(GL_TEXTURE_2D, ID);
+		glActiveTexture(GL_TEXTURE0+m_unit);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 }

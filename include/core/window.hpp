@@ -5,15 +5,15 @@
 namespace solarsim {
 	class Window {
 		public:
-			Window(const unsigned int width, const unsigned int height, const char* title);
-			~Window() { if (window) glfwDestroyWindow(window);}
-			bool shouldClose() { return glfwWindowShouldClose(window); }
-			void swapBuffers() { glfwSwapBuffers(window); }
+			Window(const unsigned int p_width, const unsigned int p_height, const char* p_title);
+			~Window() { if (m_window) glfwDestroyWindow(m_window);}
+			bool shouldClose() { return glfwWindowShouldClose(m_window); }
+			void swapBuffers() { glfwSwapBuffers(m_window); }
 			void pollEvents() { glfwPollEvents(); }
-			GLFWwindow* getNativeWindow() { return window; }
+			GLFWwindow* getNativeWindow() { return m_window; }
 		private:
-			GLFWwindow* window;
+			GLFWwindow* m_window;
 
-			void static framebuffer_size_callback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }
+			void static framebuffer_size_callback(GLFWwindow* p_window, int p_width, int p_height) { glViewport(0, 0, p_width, p_height); }
 	};
 }
