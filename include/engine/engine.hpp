@@ -4,6 +4,7 @@
 #include <core/input_manager.hpp>
 #include <graphics/renderer.hpp>
 #include <simulation/simulation.hpp>
+#include <memory>
 
 class Engine {
 	public:
