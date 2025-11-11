@@ -12,10 +12,11 @@ namespace solarsim {
 
 	class Mesh {
 		public:
+			Mesh() = default;
 			Mesh(const std::vector<Vertex>& p_vertices, const std::vector<unsigned int>& p_indices = {});
 			~Mesh();
 			void render() const;
-		private:
+		protected:
 			std::vector<Vertex> m_vertices;
 			std::vector<unsigned int> m_indices;
 

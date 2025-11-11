@@ -7,9 +7,9 @@
 #include <simulation/planet.hpp>
 #include <simulation/simulation.hpp>
 #include <graphics/material.hpp>
-#include <graphics/mesh.hpp>
 #include <graphics/shader.hpp>
 #include <graphics/renderer.hpp>
+#include <mesh/mesh.hpp>
 #include <memory>
 
 namespace solarsim {

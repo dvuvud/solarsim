@@ -1,5 +1,5 @@
 #include <simulation/planet.hpp>
-#include <graphics/mesh.hpp>
+#include <mesh/mesh.hpp>
 #include <graphics/shader.hpp>
 #include <graphics/material.hpp>
 #include <graphics/camera.hpp>

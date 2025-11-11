@@ -25,13 +25,14 @@ add_executable(solarsim
 	src/engine/engine.cpp
 	src/core/window.cpp
 	src/core/input_manager.cpp
-	src/graphics/mesh.cpp
 	src/graphics/shader.cpp
 	src/graphics/texture.cpp
 	src/graphics/camera.cpp
 	src/graphics/renderer.cpp
 	src/simulation/simulation.cpp
 	src/simulation/planet.cpp
+	src/mesh/mesh.cpp
+	src/mesh/cube.cpp
 )
 
 if(APPLE)
