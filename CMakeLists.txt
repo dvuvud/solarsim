@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.10)
+
+if(UNIX)
+    cmake_policy(SET CMP0072 NEW)
+    set(OpenGL_GL_PREFERENCE GLVND)
+endif()
+
 project(SolarSim LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-
-enable_language(C)
-enable_language(CXX)
 
 add_library(glad_c STATIC lib/glad/src/glad.c)
 target_include_directories(glad_c PUBLIC lib/glad/include)

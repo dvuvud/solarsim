@@ -3,6 +3,7 @@
 #include <graphics/camera.hpp>
 #include <graphics/shader.hpp>
 #include <simulation/entity.hpp>
+#include <memory>
 
 class Renderer {
 	public:

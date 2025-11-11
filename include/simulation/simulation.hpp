@@ -5,6 +5,7 @@
 #include <core/input_manager.hpp>
 #include <core/window.hpp>
 #include <simulation/entity.hpp>
+#include <memory>
 
 class Simulation {
 	public:
