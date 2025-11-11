@@ -33,8 +33,5 @@ namespace solarsim {
 			std::unique_ptr<Material> m_tmpLightMat;
 
 			std::unique_ptr<Mesh> m_tmpMesh;
-
-			std::unique_ptr<Planet> m_tmpPlanet;
-			std::unique_ptr<Planet> m_tmpLightPlanet;
 	};
 }

@@ -12,11 +12,11 @@ namespace solarsim {
 		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
-	void Renderer::render(const std::vector<Entity*>& p_entities, const Camera* p_camera)
+	void Renderer::render(const std::vector<std::unique_ptr<Entity>>& p_entities, const Camera* p_camera)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (!p_camera) return;
-		for (Entity* entity : p_entities) {
+		for (auto& entity : p_entities) {
 			if (entity) entity->render(*p_camera);
 		}
 	}

@@ -57,11 +57,9 @@ namespace solarsim {
 		m_tmpLightShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
 		m_tmpLightMat = std::make_unique<Material>(m_tmpLightShader.get());
 		m_tmpMesh = std::make_unique<Mesh>(vertices, indices);
-		m_tmpPlanet = std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(0.f,0.f,0.f));
-		m_tmpLightPlanet = std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,3.f,-5.f));
 
-		m_simulation->spawnEntity(m_tmpPlanet.get());
-		m_simulation->spawnEntity(m_tmpLightPlanet.get());
+		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(0.f,0.f,0.f)));
+		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,3.f,-5.f)));
 	}
 
 	Engine::~Engine() { 
