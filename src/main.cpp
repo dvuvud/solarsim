@@ -5,7 +5,7 @@ int main()
 {
 	try 
 	{
-		Engine engine;
+		solarsim::Engine engine;
 		engine.run();
 	}
 	catch (const std::exception& e)

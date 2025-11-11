@@ -1,8 +1,9 @@
 #pragma once
 
-#include <graphics/shader.hpp>
-
-class Material {
-	public:
-		Shader* shader;
-};
+namespace solarsim {
+	class Shader;
+	class Material {
+		public:
+			Shader* shader;
+	};
+}
