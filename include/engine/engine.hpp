@@ -1,27 +1,36 @@
 #pragma once
 
-#include <core/window.hpp>
-#include <core/input_manager.hpp>
-#include <graphics/renderer.hpp>
-#include <simulation/simulation.hpp>
+#include <GLFW/glfw3.h>
+#include <string>
 #include <memory>
 
-class Engine {
-	public:
-		Engine(unsigned int width = 800, unsigned int height = 600, const std::string& title = "solarsim");
-		~Engine() { if (glfwInit()) glfwTerminate(); }
-		void run();
-	private:
-		std::unique_ptr<Window> window;
-		std::unique_ptr<Simulation> simulation;
-		std::unique_ptr<Renderer> renderer;
-		std::unique_ptr<InputManager> inputManager;
+namespace solarsim {
 
-		// Temporary for testing, move to respective factories or similar
-		std::unique_ptr<Mesh> tmpMesh;
-		std::unique_ptr<Material> tmpMat;
-		std::unique_ptr<Shader> tmpShader;
+	class Mesh;
+	class Material;
+	class Shader;
+	class Window;
+	class Renderer;
+	class InputManager;
+	class Simulation;
 
-		std::unique_ptr<Material> tmpLightMat;
-		std::unique_ptr<Shader> tmpLightShader;
-};
+	class Engine {
+		public:
+			Engine(unsigned int width = 800, unsigned int height = 600, const std::string& title = "solarsim");
+			~Engine();
+			void run();
+		private:
+			Window* window;
+			Simulation* simulation;
+			Renderer* renderer;
+			InputManager* inputManager;
+
+			// Temporary for testing, move to respective factories or similar
+			Mesh* tmpMesh;
+			Material* tmpMat;
+			Shader* tmpShader;
+
+			Material* tmpLightMat;
+			Shader* tmpLightShader;
+	};
+}

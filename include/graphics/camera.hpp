@@ -2,53 +2,56 @@
 
 #include <glm/glm.hpp>
 
-enum Camera_Movement {
-	FORWARD,
-	BACKWARD,
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-};
+namespace solarsim {
 
-struct CameraConfig {
-	float Yaw = -90.0f;
-	float Pitch = 0.0f;
-	float Speed = 2.5f;
-	float Sensitivity = 0.1f;
-	float Fov = 45.0f;
-	float RenderDistance = 100.f;
-};
+	enum Camera_Movement {
+		FORWARD,
+		BACKWARD,
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
+	};
 
-class Camera {
-	public:
-		Camera(glm::vec3 position, const CameraConfig& config = {})
-			: Position(position),
-			WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-			Yaw(config.Yaw),
-			Pitch(config.Pitch), 
-			Fov(config.Fov),
-			RenderDistance(config.RenderDistance),
-			MovementSpeed(config.Speed),
-			MouseSensitivity(config.Sensitivity)
-			{ updateCameraVectors(); }
+	struct CameraConfig {
+		float Yaw = -90.0f;
+		float Pitch = 0.0f;
+		float Speed = 2.5f;
+		float Sensitivity = 0.1f;
+		float Fov = 45.0f;
+		float RenderDistance = 100.f;
+	};
 
-		glm::mat4 GetViewMatrix() const;
-		glm::mat4 GetProjectionMatrix() const;
-		void ProcessKeyboard(Camera_Movement direction, float deltaTime);
-		void ProcessMouseMovement(float xoffset, float yoffset);
-		void ProcessMouseScroll(float yoffset);
-	private:
-		void updateCameraVectors();
+	class Camera {
+		public:
+			Camera(glm::vec3 position, const CameraConfig& config = {})
+				: Position(position),
+				WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+				Yaw(config.Yaw),
+				Pitch(config.Pitch), 
+				Fov(config.Fov),
+				RenderDistance(config.RenderDistance),
+				MovementSpeed(config.Speed),
+				MouseSensitivity(config.Sensitivity)
+				{ updateCameraVectors(); }
 
-		glm::vec3 Position;
-		glm::vec3 Front, Up, Right, WorldUp;
+			glm::mat4 GetViewMatrix() const;
+			glm::mat4 GetProjectionMatrix() const;
+			void ProcessKeyboard(Camera_Movement direction, float deltaTime);
+			void ProcessMouseMovement(float xoffset, float yoffset);
+			void ProcessMouseScroll(float yoffset);
+		private:
+			void updateCameraVectors();
 
-		float Yaw;
-		float Pitch;
-		float Fov;
-		float RenderDistance;
+			glm::vec3 Position;
+			glm::vec3 Front, Up, Right, WorldUp;
 
-		float MovementSpeed;
-		float MouseSensitivity;
-};
+			float Yaw;
+			float Pitch;
+			float Fov;
+			float RenderDistance;
+
+			float MovementSpeed;
+			float MouseSensitivity;
+	};
+}
