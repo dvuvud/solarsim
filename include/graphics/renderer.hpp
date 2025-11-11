@@ -7,12 +7,8 @@ namespace solarsim {
 	class Entity;
 	class Renderer {
 		public:
-			Renderer(const std::vector<Entity*>& entities, Camera* camera = nullptr);
+			Renderer();
 			~Renderer() = default;
-			void render();
-			void setActiveCamera(Camera* camera) { activeCamera = camera; }
-		private:
-			const std::vector<Entity*>& entities;
-			Camera* activeCamera;
+			void render(const std::vector<Entity*>& p_entities, const Camera* p_camera);
 	};
 }

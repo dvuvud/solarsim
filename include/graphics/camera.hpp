@@ -24,19 +24,10 @@ namespace solarsim {
 
 	class Camera {
 		public:
-			Camera(glm::vec3 position, const CameraConfig& config = {})
-				: Position(position),
-				WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-				Yaw(config.Yaw),
-				Pitch(config.Pitch), 
-				Fov(config.Fov),
-				RenderDistance(config.RenderDistance),
-				MovementSpeed(config.Speed),
-				MouseSensitivity(config.Sensitivity)
-				{ updateCameraVectors(); }
+			Camera(glm::vec3 p_position, const CameraConfig& p_config = {});
 
-			glm::mat4 GetViewMatrix() const;
-			glm::mat4 GetProjectionMatrix() const;
+			glm::mat4 getViewMatrix() const;
+			glm::mat4 getProjectionMatrix() const;
 			void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 			void ProcessMouseMovement(float xoffset, float yoffset);
 			void ProcessMouseScroll(float yoffset);
@@ -46,12 +37,12 @@ namespace solarsim {
 			glm::vec3 Position;
 			glm::vec3 Front, Up, Right, WorldUp;
 
-			float Yaw;
-			float Pitch;
-			float Fov;
-			float RenderDistance;
+			float m_yaw;
+			float m_pitch;
+			float m_fov;
+			float m_renderDistance;
 
-			float MovementSpeed;
-			float MouseSensitivity;
+			float m_movementSpeed;
+			float m_mouseSensitivity;
 	};
 }

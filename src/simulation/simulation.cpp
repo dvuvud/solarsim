@@ -2,25 +2,31 @@
 #include <simulation/entity.hpp>
 
 namespace solarsim {
-	Simulation::~Simulation() {
-		for (Entity* entity: entities) {
-			delete entity;
-		}
+	Simulation::Simulation() : m_camera(glm::vec3(0.f,0.f,5.f))
+	{
+
+	}
+	Simulation::~Simulation() 
+	{
+
 	}
 
-	void Simulation::spawnEntity(Entity* entity) {
-		if (!entity) return;
-		entities.push_back(std::move(entity));
+	void Simulation::spawnEntity(Entity* p_entity) 
+	{
+		if (!p_entity) return;
+		m_entities.push_back(std::move(p_entity));
 	}
 
-	void Simulation::update(float deltaTime) {
+	void Simulation::update(float deltaTime) 
+	{
 		// Apply physics
-		for (auto& entity : entities) {
+		for (Entity* entity : m_entities) {
 			entity->update(deltaTime);
 		}
 	}
 
-	void Simulation::clearAllEntities() {
-		entities.clear();
+	void Simulation::clearAllEntities() 
+	{
+		m_entities.clear();
 	}
 }

@@ -7,6 +7,7 @@ namespace solarsim {
 	class Mesh;
 	class Material;
 	class Shader;
+	class Camera;
 	struct Transform {
 		glm::vec3 position = glm::vec3(0.f,0.f,0.f);
 		glm::vec3 rotation = glm::vec3(0.f,0.f,0.f);
@@ -25,35 +26,35 @@ namespace solarsim {
 
 	class Entity {
 		public:
-			Entity(const Transform& transform, Mesh* mesh, Material* material)
-				: transform(transform), mesh(mesh), material(material) {}
+			Entity(const Transform& p_transform, Mesh* p_mesh, Material* p_material)
+				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material) {}
 			virtual ~Entity() = default;
 
-			virtual void render(Shader& shader) = 0;
+			virtual void render(const Camera& p_camera) = 0;
 
 			virtual void update(float deltaTime) = 0;
 
-			void setTransform(const Transform& transform) { this->transform = transform; }
-			Transform& getTransform() { return transform; }
-			const Transform& getTransform() const { return transform; }
+			void setTransform(const Transform& p_transform) { m_transform = p_transform; }
+			Transform& getTransform() { return m_transform; }
+			const Transform& getTransform() const { return m_transform; }
 
-			void setMaterial(Material* material) { this->material = material; }
-			Material* getMaterial() const { return material; }
+			void setMaterial(Material* p_material) { m_material = p_material; }
+			Material* getMaterial() const { return m_material; }
 
-			void setMesh(Mesh* mesh) { this->mesh = mesh; }
-			Mesh* getMesh() const { return mesh; }
+			void setMesh(Mesh* p_mesh) { m_mesh = p_mesh; }
+			Mesh* getMesh() const { return m_mesh; }
 
-			void setPosition(const glm::vec3& position) { transform.position = position; }
-			glm::vec3 getPosition() const { return transform.position; }
+			void setPosition(const glm::vec3& p_position) { m_transform.position = p_position; }
+			glm::vec3 getPosition() const { return m_transform.position; }
 
-			void setRotation(const glm::vec3& rotation) { transform.rotation = rotation; }
-			glm::vec3 getRotation() const { return transform.rotation; }
+			void setRotation(const glm::vec3& p_rotation) { m_transform.rotation = p_rotation; }
+			glm::vec3 getRotation() const { return m_transform.rotation; }
 
-			void setScale(const glm::vec3& scale) { transform.scale = scale; }
-			glm::vec3 getScale() const { return transform.scale; }
+			void setScale(const glm::vec3& p_scale) { m_transform.scale = p_scale; }
+			glm::vec3 getScale() const { return m_transform.scale; }
 		protected:
-			Transform transform;
-			Mesh* mesh;
-			Material* material;
+			Transform m_transform;
+			Mesh* m_mesh;
+			Material* m_material;
 	};
 }

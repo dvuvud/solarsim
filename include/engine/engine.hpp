@@ -2,17 +2,17 @@
 
 #include <GLFW/glfw3.h>
 #include <string>
+#include <core/input_manager.hpp>
+#include <core/window.hpp>
+#include <simulation/planet.hpp>
+#include <simulation/simulation.hpp>
+#include <graphics/material.hpp>
+#include <graphics/mesh.hpp>
+#include <graphics/shader.hpp>
+#include <graphics/renderer.hpp>
 #include <memory>
 
 namespace solarsim {
-
-	class Mesh;
-	class Material;
-	class Shader;
-	class Window;
-	class Renderer;
-	class InputManager;
-	class Simulation;
 
 	class Engine {
 		public:
@@ -20,17 +20,21 @@ namespace solarsim {
 			~Engine();
 			void run();
 		private:
-			Window* window;
-			Simulation* simulation;
-			Renderer* renderer;
-			InputManager* inputManager;
+			std::unique_ptr<Window> m_window;
+			std::unique_ptr<Simulation> m_simulation;
+			std::unique_ptr<Renderer> m_renderer;
+			std::unique_ptr<InputManager> m_inputManager;
 
 			// Temporary for testing, move to respective factories or similar
-			Mesh* tmpMesh;
-			Material* tmpMat;
-			Shader* tmpShader;
+			std::unique_ptr<Shader> m_tmpShader;
+			std::unique_ptr<Material> m_tmpMat;
 
-			Material* tmpLightMat;
-			Shader* tmpLightShader;
+			std::unique_ptr<Shader> m_tmpLightShader;
+			std::unique_ptr<Material> m_tmpLightMat;
+
+			std::unique_ptr<Mesh> m_tmpMesh;
+
+			std::unique_ptr<Planet> m_tmpPlanet;
+			std::unique_ptr<Planet> m_tmpLightPlanet;
 	};
 }

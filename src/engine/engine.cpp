@@ -1,12 +1,4 @@
 #include <engine/engine.hpp>
-#include <core/input_manager.hpp>
-#include <core/window.hpp>
-#include <simulation/planet.hpp>
-#include <simulation/simulation.hpp>
-#include <graphics/material.hpp>
-#include <graphics/mesh.hpp>
-#include <graphics/shader.hpp>
-#include <graphics/renderer.hpp>
 #include <iostream>
 
 namespace solarsim {
@@ -54,52 +46,42 @@ namespace solarsim {
 		if (!glfwInit()) {
 			throw std::runtime_error("Failed to initialize glfw");
 		}
-		window = new Window(width, height, title.c_str());
-		simulation = new Simulation();
-		renderer = new Renderer(simulation->getEntities(), simulation->getCamera());
-		inputManager = new InputManager(window, simulation->getCamera());
-
+		m_window = std::make_unique<Window>(width, height, title.c_str());
+		m_simulation = std::make_unique<Simulation>();
+		m_renderer = std::make_unique<Renderer>();
+		m_inputManager = std::make_unique<InputManager>(m_window.get(), m_simulation->getCamera());
 		// TODO: Put this logic into the material class and create a mesh/model factory for common shapes
-		tmpShader = new Shader("assets/shaders/shader.vs", "assets/shaders/shader.fs");
-		tmpLightShader = new Shader("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
-		tmpMat = new Material();
-		tmpMat->shader = tmpShader;
-		tmpLightMat = new Material();
-		tmpLightMat->shader = tmpLightShader;
 
-		tmpMesh = new Mesh(vertices, indices);
+		m_tmpShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/shader.fs");
+		m_tmpMat = std::make_unique<Material>(m_tmpShader.get());
+		m_tmpLightShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
+		m_tmpLightMat = std::make_unique<Material>(m_tmpLightShader.get());
+		m_tmpMesh = std::make_unique<Mesh>(vertices, indices);
+		m_tmpPlanet = std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(0.f,0.f,0.f));
+		m_tmpLightPlanet = std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,3.f,-5.f));
 
-		simulation->spawnEntity(new Planet(tmpMesh, tmpMat, glm::vec3(0.f,0.f,0.f)));
-		simulation->spawnEntity(new Planet(tmpMesh, tmpLightMat, glm::vec3(3.f,3.f,-5.f)));
+		m_simulation->spawnEntity(m_tmpPlanet.get());
+		m_simulation->spawnEntity(m_tmpLightPlanet.get());
 	}
 
 	Engine::~Engine() { 
-		delete window;
-		delete simulation;
-		delete renderer;
-		delete inputManager;
-		delete tmpShader;
-		delete tmpLightShader;
-		delete tmpMat;
-		delete tmpLightMat;
-		delete tmpMesh;
 		if (glfwInit()) glfwTerminate();
 	}
 
 	void Engine::run()
 	{
 		float deltaTime = 0.f, lastFrame = 0.f;
-		while (!window->shouldClose())
+		while (!m_window->shouldClose())
 		{
 			float currentFrame = glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			inputManager->processInput(deltaTime);
-			simulation->update(deltaTime);
-			renderer->render();
-			window->swapBuffers();
-			window->pollEvents();
+			m_inputManager->processInput(deltaTime);
+			m_simulation->update(deltaTime);
+			m_renderer->render(m_simulation->getEntities(), m_simulation->getCamera());
+			m_window->swapBuffers();
+			m_window->pollEvents();
 		}
 	}
 }

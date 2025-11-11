@@ -7,21 +7,21 @@ namespace solarsim {
 	class Entity;
 	class Simulation {
 		public:
-			Simulation() : camera(glm::vec3(0.f, 0.f, 5.f)) {};
+			Simulation();
 			~Simulation();
 
-			void spawnEntity(Entity* entity);
+			void spawnEntity(Entity* p_entity);
 
 			void update(float deltaTime);        
 
 			void clearAllEntities();
 
-			size_t getEntityCount() const { return entities.size(); };
-			Camera* getCamera() { return &camera; }
-			const std::vector<Entity*>& getEntities() const { return entities; }
+			size_t getEntityCount() const { return m_entities.size(); };
+			Camera* getCamera() { return &m_camera; }
+			const std::vector<Entity*>& getEntities() const { return m_entities; }
 		private:
-			std::vector<Entity*> entities;
-			Camera camera;
+			std::vector<Entity*> m_entities;
+			Camera m_camera;
 
 			// TODO: Implement physics system
 			// PhysicsSystem physicsSystem;
