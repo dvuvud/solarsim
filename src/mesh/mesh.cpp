@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include <graphics/mesh.hpp>
+#include <mesh/mesh.hpp>
 
 namespace solarsim {
 	Mesh::Mesh(const std::vector<Vertex>& p_vertices, const std::vector<unsigned int>& p_indices)

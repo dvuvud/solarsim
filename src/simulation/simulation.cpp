@@ -1,3 +1,4 @@
+#include <memory>
 #include <simulation/simulation.hpp>
 #include <simulation/entity.hpp>
 
@@ -11,7 +12,7 @@ namespace solarsim {
 
 	}
 
-	void Simulation::spawnEntity(Entity* p_entity) 
+	void Simulation::spawnEntity(std::unique_ptr<Entity> p_entity) 
 	{
 		if (!p_entity) return;
 		m_entities.push_back(std::move(p_entity));
@@ -20,7 +21,7 @@ namespace solarsim {
 	void Simulation::update(float deltaTime) 
 	{
 		// Apply physics
-		for (Entity* entity : m_entities) {
+		for (auto& entity : m_entities) {
 			entity->update(deltaTime);
 		}
 	}

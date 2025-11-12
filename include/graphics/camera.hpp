@@ -28,6 +28,13 @@ namespace solarsim {
 
 			glm::mat4 getViewMatrix() const;
 			glm::mat4 getProjectionMatrix() const;
+			glm::vec3 getPosition() const { return Position; }
+			float getYaw() const { return m_yaw; }
+			float getPitch() const { return m_pitch; }
+			float getFov() const { return m_fov; }
+			float getRenderDistance() const { return m_renderDistance; }
+			float getMovementSpeed() const { return m_movementSpeed; }
+			float getMouseSensitivity() const { return m_mouseSensitivity; }
 			void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 			void ProcessMouseMovement(float xoffset, float yoffset);
 			void ProcessMouseScroll(float yoffset);
