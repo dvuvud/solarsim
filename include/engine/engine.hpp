@@ -7,9 +7,9 @@
 #include <simulation/planet.hpp>
 #include <simulation/simulation.hpp>
 #include <graphics/material.hpp>
-#include <graphics/mesh.hpp>
 #include <graphics/shader.hpp>
 #include <graphics/renderer.hpp>
+#include <mesh/mesh.hpp>
 #include <memory>
 
 namespace solarsim {
@@ -33,8 +33,5 @@ namespace solarsim {
 			std::unique_ptr<Material> m_tmpLightMat;
 
 			std::unique_ptr<Mesh> m_tmpMesh;
-
-			std::unique_ptr<Planet> m_tmpPlanet;
-			std::unique_ptr<Planet> m_tmpLightPlanet;
 	};
 }

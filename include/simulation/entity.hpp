@@ -30,8 +30,6 @@ namespace solarsim {
 				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material) {}
 			virtual ~Entity() = default;
 
-			virtual void render(const Camera& p_camera) = 0;
-
 			virtual void update(float deltaTime) = 0;
 
 			void setTransform(const Transform& p_transform) { m_transform = p_transform; }
