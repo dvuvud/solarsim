@@ -10,7 +10,7 @@ namespace solarsim {
 			bool shouldClose() { return glfwWindowShouldClose(m_window); }
 			void swapBuffers() { glfwSwapBuffers(m_window); }
 			void pollEvents() { glfwPollEvents(); }
-			GLFWwindow* getNativeWindow() { return m_window; }
+			GLFWwindow* getNativeWindow() const { return m_window; }
 		private:
 			GLFWwindow* m_window;
 

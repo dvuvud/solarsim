@@ -22,8 +22,8 @@ namespace solarsim {
 
 		m_tmpMesh = std::make_unique<Cube>();
 
-		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(0.f,0.f,0.f)));
-		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,3.f,-5.f)));
+		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(-3.f,0.f,0.f)));
+		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,1.5f,-12.f)));
 	}
 
 	Engine::~Engine() { 

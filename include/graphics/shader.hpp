@@ -12,7 +12,7 @@ namespace solarsim {
 
 			Shader(const char* p_vertexPath, const char* p_fragmentPath);
 			
-			void bind();
+			void bind() const;
 
 			// utility uniform functions
 			void setBool(const std::string &name, bool value) const;  

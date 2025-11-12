@@ -17,6 +17,7 @@ namespace solarsim {
 			void clearAllEntities();
 
 			size_t getEntityCount() const { return m_entities.size(); };
+			// TODO: Make this function const and add API calls for the input manager to handle input
 			Camera* getCamera() { return &m_camera; }
 			const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
 		private:

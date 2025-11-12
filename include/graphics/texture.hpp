@@ -8,6 +8,6 @@ namespace solarsim {
 			int m_width, m_height, m_nrChannels;
 
 			Texture(const char* p_texturePath, unsigned int p_textureUnit = 0, bool p_useMipmap = true);
-			void bind();
+			void bind() const;
 	};
 }
