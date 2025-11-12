@@ -48,7 +48,7 @@ namespace solarsim {
 		stbi_image_free(data);
 	}
 
-	void Texture::bind() {
+	void Texture::bind() const {
 		glActiveTexture(GL_TEXTURE0+m_unit);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}

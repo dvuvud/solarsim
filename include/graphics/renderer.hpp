@@ -9,6 +9,6 @@ namespace solarsim {
 		public:
 			Renderer();
 			~Renderer() = default;
-			void render(const std::vector<std::unique_ptr<Entity>>& p_entities, const Camera* p_camera);
+			void render(const std::vector<std::unique_ptr<Entity>>& p_entities, const Camera* p_camera) const;
 	};
 }

@@ -84,7 +84,7 @@ namespace solarsim {
 		glDeleteShader(fragment);
 	}
 
-	void Shader::bind() {
+	void Shader::bind() const {
 		glUseProgram(m_ID);
 	}
 
