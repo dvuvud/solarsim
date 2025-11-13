@@ -7,7 +7,15 @@ build:
 	cmake --build build
 
 run:
+ifeq ($(OS),Windows_NT)
+	build\Debug\solarsim.exe
+else
 	./build/solarsim
+endif
 
 clean:
+ifeq ($(OS),Windows_NT)
+	rmdir /s /q build
+else
 	rm -rf build
+endif
