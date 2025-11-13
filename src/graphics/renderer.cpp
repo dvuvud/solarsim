@@ -29,7 +29,8 @@ namespace solarsim {
 
 			shader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 			shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-			shader->setVec3("lightPos", glm::vec3(3.f,3.f,-5.f));
+			// TODO: Give the renderer a pointer to the light source and create a new class for them
+			shader->setVec3("lightPos", glm::vec3(3.f,1.5f,-12.f));
 			shader->setVec3("viewPos", p_camera->getPosition());
 			mesh->render();
 		}
