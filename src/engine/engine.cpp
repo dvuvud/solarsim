@@ -15,8 +15,8 @@ namespace solarsim {
 		m_renderer = std::make_unique<Renderer>();
 		m_inputManager = std::make_unique<InputManager>(m_window.get(), m_simulation->getCamera());
 
-		m_simulation->spawnEntity(std::make_unique<Planet>(glm::vec3(-5.f,0.f,0.f), 5.f, 1));
-		m_simulation->spawnEntity(std::make_unique<Sun>(glm::vec3(0.f,0.f,0.f), 10000.f, 1));
+		m_simulation->spawnEntity(std::make_unique<Planet>(glm::vec3(-5.f,1.f,0.f), 10.f, 1));
+		m_simulation->spawnEntity(std::make_unique<Sun>(glm::vec3(0.f,1.f,0.f), 10.f, 1));
 	}
 
 	Engine::~Engine() { 

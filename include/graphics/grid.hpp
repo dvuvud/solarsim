@@ -24,7 +24,9 @@ namespace solarsim {
 			int m_size;
 			float m_spacing;
 			Shader m_shader;
-			std::vector<float> m_vertices;
-			GLuint m_VBO, m_VAO;
+			std::vector<GLfloat> m_originalVertices;
+			std::vector<GLfloat> m_vertices;
+			std::vector<GLuint> m_indices;
+			GLuint m_VBO, m_VAO, m_EBO;
 	};
 }
