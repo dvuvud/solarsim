@@ -4,7 +4,7 @@
 #include <graphics/grid.hpp>
 #include <simulation/simulation.hpp>
 #include <mesh/mesh.hpp>
-#include <simulation/entity.hpp>
+#include <simulation/planet.hpp>
 #include <simulation/sun.hpp>
 #include <iostream>
 
@@ -21,29 +21,27 @@ namespace solarsim {
 		const Camera* camera = p_sim->getCamera();
 		if (!camera) return;
 		draw_sun(p_sim->getSun(), camera);
-		draw_entities(p_sim, camera);
+		draw_planets(p_sim, camera);
 		draw_grid(p_sim->getGrid(), camera);
 	}
 
-	void Renderer::draw_entities(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const
+	void Renderer::draw_planets(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const
 	{
-		const std::vector<std::unique_ptr<Entity>>& entities = p_sim->getEntities();
-		for (auto& entity : entities) {
-			if (!entity || !p_camera) return;
-			const Material& material = entity->getMaterial();
-			const Mesh& mesh = entity->getMesh();
-			const Shader& shader = material.m_shader;
+		const std::vector<Planet*>& planets = p_sim->getPlanets();
+		for (auto& planet : planets) {
+			if (!planet || !p_camera) return;
+			const Shader& shader = planet->getMaterial().m_shader;
+			const Mesh& mesh = planet->getMesh();
 			shader.bind();
 			shader.setMat4("view", p_camera->getViewMatrix());
 			shader.setMat4("projection", p_camera->getProjectionMatrix());
-			shader.setMat4("model", entity->getTransform().getModelMatrix());
+			shader.setMat4("model", planet->getTransform().getModelMatrix());
 
-			shader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+			shader.setVec3("objectColor", glm::vec3(0.15f, 0.175f, 0.925f));
 
-			const Sun* sun = p_sim->getSun();
-			if (sun) {
+			if (const Sun* s = p_sim->getSun()) {
 				shader.setVec3("lightColor", glm::vec3(1.f, 1.f, 1.f));
-				shader.setVec3("lightPos", sun->getPosition());
+				shader.setVec3("lightPos", s->getPosition());
 			} else {
 				shader.setVec3("lightColor", glm::vec3(0.f, 0.f, 0.f));
 				shader.setVec3("lightPos", glm::vec3(0.f,0.f,0.f));

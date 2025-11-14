@@ -5,13 +5,15 @@
 #include <simulation/entity.hpp>
 
 namespace solarsim {
-	class Planet : public Entity {
+	class Sun : public Entity {
 		public:
-			Planet(const glm::vec3& position = glm::vec3(0.0f), float m = 0.f, float r=1.f);
-			virtual ~Planet() = default;
+			Sun(const glm::vec3& position = glm::vec3(0.0f), float m = 0.f, float r=1.f);
+			virtual ~Sun() = default;
 			void update(float deltaTime) override;
 		private:
 			Material m_material;
 			Cube m_mesh;
+			float m_mass;
+			float m_radius;
 	};
 }
