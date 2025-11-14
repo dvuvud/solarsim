@@ -1,6 +1,7 @@
 #include <engine/engine.hpp>
 #include <mesh/cube.hpp>
-#include <iostream>
+#include <simulation/sun.hpp>
+#include <simulation/planet.hpp>
 
 namespace solarsim {
 
@@ -13,15 +14,9 @@ namespace solarsim {
 		m_simulation = std::make_unique<Simulation>();
 		m_renderer = std::make_unique<Renderer>();
 		m_inputManager = std::make_unique<InputManager>(m_window.get(), m_simulation->getCamera());
-		// TODO: Put this logic into the material class and create a mesh/model factory for common shapes
 
-		m_tmpMat = std::make_unique<Material>("assets/shaders/shader.vs", "assets/shaders/shader.fs");
-		m_tmpLightMat = std::make_unique<Material>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
-
-		m_tmpMesh = std::make_unique<Cube>();
-
-		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpMat.get(), glm::vec3(-3.f,0.f,0.f)));
-		m_simulation->spawnEntity(std::make_unique<Planet>(m_tmpMesh.get(), m_tmpLightMat.get(), glm::vec3(3.f,1.5f,-12.f)));
+		m_simulation->spawnEntity(std::make_unique<Planet>(glm::vec3(-5.f,0.f,0.f)));
+		m_simulation->spawnEntity(std::make_unique<Sun>(glm::vec3(0.f,0.f,0.f)));
 	}
 
 	Engine::~Engine() { 

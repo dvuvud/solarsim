@@ -29,10 +29,9 @@ namespace solarsim {
 
 	void Renderer::draw_entity(const std::unique_ptr<Entity>& p_entity, const Camera& p_camera) const
 	{
-			Material* material = p_entity ? p_entity->getMaterial() : nullptr;
-			Shader& shader = material->m_shader;
-			Mesh* mesh = p_entity->getMesh();
-			if (!mesh) return;
+			const Material& material = p_entity->getMaterial();
+			const Shader& shader = material.m_shader;
+			const Mesh& mesh = p_entity->getMesh();
 			shader.bind();
 			shader.setMat4("view", p_camera.getViewMatrix());
 			shader.setMat4("projection", p_camera.getProjectionMatrix());
@@ -40,10 +39,11 @@ namespace solarsim {
 
 			shader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 			shader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+			
 			// TODO: Give the renderer a pointer to the light source and create a new class for them
-			shader.setVec3("lightPos", glm::vec3(3.f,1.5f,-12.f));
+			shader.setVec3("lightPos", glm::vec3(0.f, 0.f, 0.f));
 			shader.setVec3("viewPos", p_camera.getPosition());
-			mesh->render();
+			mesh.render();
 	}
 
 	void Renderer::draw_grid(const Grid& p_grid, const Camera& p_camera) const {

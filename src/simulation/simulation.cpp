@@ -3,7 +3,7 @@
 #include <simulation/entity.hpp>
 
 namespace solarsim {
-	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,5.f)), m_grid()
+	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,10.f)), m_grid()
 	{
 
 	}
