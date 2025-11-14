@@ -33,7 +33,7 @@ namespace solarsim {
 			virtual void update(float deltaTime) {
 				glm::vec3 acceleration = m_accumulatedForce / m_mass;
 
-				m_transform.position += acceleration * deltaTime;
+				m_velocity += acceleration * deltaTime;
 				m_transform.position += m_velocity * deltaTime;
 
 				m_accumulatedForce = glm::vec3(0.0f);

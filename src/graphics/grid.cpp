@@ -41,7 +41,9 @@ namespace solarsim {
 			float distance = glm::length(toEntity);
 
 			if (distance > 0.01f) {
-				float gravityEffect = -entity->getMass() / (distance * distance);
+				// Magnitude decreases exponentially with distance
+				// Adjust the exponent factor to change the rate of falloff
+				float gravityEffect = -entity->getMass() * (exp(-distance * 0.1f));
 				warped.y += gravityEffect * warpIntensity;
 			}
 		}
