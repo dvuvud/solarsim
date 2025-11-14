@@ -26,8 +26,8 @@ namespace solarsim {
 
 	class Entity {
 		public:
-			Entity(const Transform& p_transform, const Mesh& p_mesh, const Material& p_material)
-				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material) {}
+			Entity(const Transform& p_transform, const Mesh& p_mesh, const Material& p_material, float m, float r)
+				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material), m_mass(m), m_radius(r) {}
 			virtual ~Entity() = default;
 
 			virtual void update(float deltaTime) = 0;
@@ -48,9 +48,14 @@ namespace solarsim {
 
 			void setScale(const glm::vec3& p_scale) { m_transform.scale = p_scale; }
 			glm::vec3 getScale() const { return m_transform.scale; }
+
+			float getMass() const { return m_mass; }
+			float getRadius() const { return m_radius; }
 		protected:
 			Transform m_transform;
 			const Mesh& m_mesh;
 			const Material& m_material;
+			float m_mass;
+			float m_radius;
 	};
 }

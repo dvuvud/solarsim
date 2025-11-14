@@ -1,6 +1,7 @@
 #include <memory>
 #include <simulation/simulation.hpp>
 #include <simulation/sun.hpp>
+#include <simulation/planet.hpp>
 #include <simulation/entity.hpp>
 
 namespace solarsim {
@@ -16,19 +17,17 @@ namespace solarsim {
 	void Simulation::spawnEntity(std::unique_ptr<Entity> p_entity) 
 	{
 		if (!p_entity) return;
+		if (Sun* s = dynamic_cast<Sun*>(p_entity.get())) {
+			m_sun = s;
+		} else if (Planet* p = dynamic_cast<Planet*>(p_entity.get())) {
+			m_planets.push_back(p);
+		}
 		m_entities.push_back(std::move(p_entity));
 	}
 	
-	void Simulation::spawnSun(std::unique_ptr<Sun> p_sun) {
-		if (m_sun != nullptr) return;
-		m_sun = std::move(p_sun);
-	}
 	void Simulation::update(float deltaTime) 
 	{
-		// Apply physics
-		for (auto& entity : m_entities) {
-			entity->update(deltaTime);
-		}
+		m_grid.update(*this);
 	}
 
 	void Simulation::clearAllEntities() 
