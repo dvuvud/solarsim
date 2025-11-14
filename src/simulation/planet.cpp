@@ -4,9 +4,9 @@
 #include <iostream>
 
 namespace solarsim {
-	Planet::Planet(const glm::vec3& position, float m, float p)
+	Planet::Planet(const glm::vec3& position, float m, float r)
 		: m_material("assets/shaders/planet.vert", "assets/shaders/planet.frag"),
-		Entity(Transform{.position=position}, m_mesh, m_material)
+		Entity(Transform{.position=position}, m_mesh, m_material, m, r)
 		{
 
 		}
