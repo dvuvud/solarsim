@@ -4,9 +4,9 @@
 #include <iostream>
 
 namespace solarsim {
-	Sun::Sun(const glm::vec3& position, float m, float r)
+	Sun::Sun(const Transform& transform, float m, float r)
 		: m_material("assets/shaders/sun.vert", "assets/shaders/sun.frag"),
-		Entity(Transform{.position=position}, m_mesh, m_material, m, r)
+		Entity(transform, m_mesh, m_material, m, r)
 		{
 
 		}

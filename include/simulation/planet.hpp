@@ -7,7 +7,7 @@
 namespace solarsim {
 	class Planet : public Entity {
 		public:
-			Planet(const glm::vec3& position = glm::vec3(0.0f), float m = 0.f, float r=1.f);
+			Planet(const Transform& transform = Transform{.position = glm::vec3(0.f)}, float m = 0.f, float r=1.f);
 			virtual ~Planet() = default;
 			void update(float deltaTime) override;
 		private:

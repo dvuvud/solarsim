@@ -43,7 +43,7 @@ namespace solarsim {
 			if (distance > 0.01f) {
 				// Magnitude decreases exponentially with distance
 				// Adjust the exponent factor to change the rate of falloff
-				float gravityEffect = -entity->getMass() * (exp(-distance * 0.1f));
+				float gravityEffect = -entity->getMass() * (exp(-distance * 0.01));
 				warped.y += gravityEffect * warpIntensity;
 			}
 		}
