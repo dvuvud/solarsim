@@ -32,6 +32,7 @@ add_executable(solarsim
 	src/graphics/grid.cpp
 	src/simulation/simulation.cpp
 	src/simulation/planet.cpp
+	src/simulation/sun.cpp
 	src/mesh/mesh.cpp
 	src/mesh/cube.cpp
 )
