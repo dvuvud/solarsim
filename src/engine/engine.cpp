@@ -15,10 +15,8 @@ namespace solarsim {
 		m_inputManager = std::make_unique<InputManager>(m_window.get(), m_simulation->getCamera());
 		// TODO: Put this logic into the material class and create a mesh/model factory for common shapes
 
-		m_tmpShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/shader.fs");
-		m_tmpMat = std::make_unique<Material>(m_tmpShader.get());
-		m_tmpLightShader = std::make_unique<Shader>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
-		m_tmpLightMat = std::make_unique<Material>(m_tmpLightShader.get());
+		m_tmpMat = std::make_unique<Material>("assets/shaders/shader.vs", "assets/shaders/shader.fs");
+		m_tmpLightMat = std::make_unique<Material>("assets/shaders/shader.vs", "assets/shaders/light_source.fs");
 
 		m_tmpMesh = std::make_unique<Cube>();
 
@@ -41,7 +39,7 @@ namespace solarsim {
 
 			m_inputManager->processInput(deltaTime);
 			m_simulation->update(deltaTime);
-			m_renderer->render(m_simulation->getEntities(), m_simulation->getCamera());
+			m_renderer->render(m_simulation);
 			m_window->swapBuffers();
 			m_window->pollEvents();
 		}
