@@ -1,13 +1,12 @@
 #include <simulation/planet.hpp>
-#include <mesh/mesh.hpp>
 #include <graphics/shader.hpp>
-#include <graphics/material.hpp>
 #include <graphics/camera.hpp>
 #include <iostream>
 
 namespace solarsim {
-	Planet::Planet(Mesh* mesh, Material* material, const glm::vec3& position)
-		: Entity(Transform{.position=position}, mesh, material)
+	Planet::Planet(const glm::vec3& position, float m, float p)
+		: m_material("assets/shaders/planet.vert", "assets/shaders/planet.frag"),
+		Entity(Transform{.position=position}, m_mesh, m_material)
 		{
 
 		}
