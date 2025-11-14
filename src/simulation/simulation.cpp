@@ -40,7 +40,7 @@ namespace solarsim {
 	}
 
 	void Simulation::calculateGravityForces() {
-		const float G = 6.f; // Arbitrary value for the gravitational constant
+		const float G = 1.5; // Arbitrary value for the gravitational constant
 		const float MIN_DISTANCE = 1.5f; // Clamping distance and force to avoid extreme values
 		const float MAX_FORCE = 50.0f;
 		

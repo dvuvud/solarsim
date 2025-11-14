@@ -12,7 +12,7 @@ namespace solarsim {
 	class Entity;
 	class Grid {
 		public:
-			Grid(size_t p_size = 150, float p_spacing = 1.f);
+			Grid(size_t p_size = 50, float p_spacing = 10.f);
 			~Grid();
 			void update(const Simulation& p_sim);
 			void draw(const glm::mat4& uMVP) const;

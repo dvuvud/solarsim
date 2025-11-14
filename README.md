@@ -1,6 +1,6 @@
 # SolarSim
 
-A solar system simulator that models celestial mechanics with real-time physics.
+I built this to learn OpenGL, and somewhere between the shader errors and matrix math, I ended up with something that actually looks like space.
 
 ## Build & Run
 

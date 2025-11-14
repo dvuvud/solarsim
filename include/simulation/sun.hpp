@@ -7,7 +7,7 @@
 namespace solarsim {
 	class Sun : public Entity {
 		public:
-			Sun(const glm::vec3& position = glm::vec3(0.0f), float m = 0.f, float r=1.f);
+			Sun(const Transform& transform = Transform{.position = glm::vec3(0.f)}, float m = 0.f, float r=1.f);
 			virtual ~Sun() = default;
 			void update(float deltaTime) override;
 		private:
