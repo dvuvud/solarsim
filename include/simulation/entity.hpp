@@ -27,10 +27,21 @@ namespace solarsim {
 	class Entity {
 		public:
 			Entity(const Transform& p_transform, const Mesh& p_mesh, const Material& p_material, float m, float r)
-				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material), m_mass(m), m_radius(r) {}
+				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material), m_mass(m), m_radius(r), m_velocity(glm::vec3(0.f)) {}
 			virtual ~Entity() = default;
 
-			virtual void update(float deltaTime) = 0;
+			virtual void update(float deltaTime) {
+				glm::vec3 acceleration = m_accumulatedForce / m_mass;
+
+				m_transform.position += acceleration * deltaTime;
+				m_transform.position += m_velocity * deltaTime;
+
+				m_accumulatedForce = glm::vec3(0.0f);
+			}
+
+			virtual void applyForce(const glm::vec3& force) {
+				m_accumulatedForce += force;
+			}
 
 			void setTransform(const Transform& p_transform) { m_transform = p_transform; }
 			Transform& getTransform() { return m_transform; }
@@ -39,6 +50,9 @@ namespace solarsim {
 			const Material& getMaterial() const { return m_material; }
 
 			const Mesh& getMesh() const { return m_mesh; }
+
+			void setVelocity(const glm::vec3& p_velocity) { m_velocity = p_velocity; }
+			const glm::vec3& getVelocity() { return m_velocity; }
 
 			void setPosition(const glm::vec3& p_position) { m_transform.position = p_position; }
 			glm::vec3 getPosition() const { return m_transform.position; }
@@ -53,6 +67,8 @@ namespace solarsim {
 			float getRadius() const { return m_radius; }
 		protected:
 			Transform m_transform;
+			glm::vec3 m_velocity;
+			glm::vec3 m_accumulatedForce;
 			const Mesh& m_mesh;
 			const Material& m_material;
 			float m_mass;

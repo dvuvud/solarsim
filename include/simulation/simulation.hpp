@@ -18,6 +18,8 @@ namespace solarsim {
 
 			void update(float deltaTime);        
 
+			void calculateGravityForces();
+
 			void clearAllEntities();
 
 			const Grid* getGrid() const { return &m_grid; }

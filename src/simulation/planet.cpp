@@ -8,11 +8,11 @@ namespace solarsim {
 		: m_material("assets/shaders/planet.vert", "assets/shaders/planet.frag"),
 		Entity(Transform{.position=position}, m_mesh, m_material, m, r)
 		{
-
+			this->setVelocity(glm::vec3(0.5, 0.f, 0.f)); // Initial velocity
 		}
 
 	void Planet::update(float deltaTime)
 	{
-		// TODO: Implement planet specific update logic
+		Entity::update(deltaTime);
 	}
 }
