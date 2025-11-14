@@ -34,6 +34,7 @@ namespace solarsim {
 
 	glm::vec3 Grid::applyGravityWarp(glm::vec3 p_vertex, const std::vector<std::unique_ptr<Entity>>& p_entities) {
 		glm::vec3 warped = p_vertex;
+		float warpIntensity = 0.05f;
 
 		for (const auto& entity : p_entities) {
 			glm::vec3 toEntity = entity->getPosition() - p_vertex;
@@ -41,7 +42,7 @@ namespace solarsim {
 
 			if (distance > 0.01f) {
 				float gravityEffect = -entity->getMass() / (distance * distance);
-				warped.y += gravityEffect * 0.1f;
+				warped.y += gravityEffect * warpIntensity;
 			}
 		}
 		return warped;

@@ -13,6 +13,6 @@ namespace solarsim {
 
 	void Sun::update(float deltaTime)
 	{
-		// TODO: Implement sun specific update logic
+		Entity::update(deltaTime);
 	}
 }
