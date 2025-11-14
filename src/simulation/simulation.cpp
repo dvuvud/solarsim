@@ -1,5 +1,6 @@
 #include <memory>
 #include <simulation/simulation.hpp>
+#include <simulation/sun.hpp>
 #include <simulation/entity.hpp>
 
 namespace solarsim {
@@ -17,7 +18,11 @@ namespace solarsim {
 		if (!p_entity) return;
 		m_entities.push_back(std::move(p_entity));
 	}
-
+	
+	void Simulation::spawnSun(std::unique_ptr<Sun> p_sun) {
+		if (m_sun != nullptr) return;
+		m_sun = std::move(p_sun);
+	}
 	void Simulation::update(float deltaTime) 
 	{
 		// Apply physics
