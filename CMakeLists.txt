@@ -29,6 +29,7 @@ add_executable(solarsim
 	src/graphics/texture.cpp
 	src/graphics/camera.cpp
 	src/graphics/renderer.cpp
+	src/graphics/grid.cpp
 	src/simulation/simulation.cpp
 	src/simulation/planet.cpp
 	src/mesh/mesh.cpp

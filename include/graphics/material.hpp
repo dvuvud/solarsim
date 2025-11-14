@@ -1,10 +1,14 @@
 #pragma once
 
+#include <graphics/shader.hpp>
+#include <string>
+
 namespace solarsim {
-	class Shader;
 	class Material {
 		public:
-			Material(Shader* p_shader) : m_shader(p_shader) {}
-			Shader* m_shader;
+			Material(const std::string& vertexPath, const std::string& fragPath) : m_shader(vertexPath.c_str(), fragPath.c_str()) {}
+			void bind() {m_shader.bind();}
+			Shader m_shader;
+		private:
 	};
 }
