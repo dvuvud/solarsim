@@ -26,7 +26,7 @@ namespace solarsim {
 
 	class Entity {
 		public:
-			Entity(const Transform& p_transform, Mesh* p_mesh, Material* p_material)
+			Entity(const Transform& p_transform, const Mesh& p_mesh, const Material& p_material)
 				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material) {}
 			virtual ~Entity() = default;
 
@@ -36,11 +36,9 @@ namespace solarsim {
 			Transform& getTransform() { return m_transform; }
 			const Transform& getTransform() const { return m_transform; }
 
-			void setMaterial(Material* p_material) { m_material = p_material; }
-			Material* getMaterial() const { return m_material; }
+			const Material& getMaterial() const { return m_material; }
 
-			void setMesh(Mesh* p_mesh) { m_mesh = p_mesh; }
-			Mesh* getMesh() const { return m_mesh; }
+			const Mesh& getMesh() const { return m_mesh; }
 
 			void setPosition(const glm::vec3& p_position) { m_transform.position = p_position; }
 			glm::vec3 getPosition() const { return m_transform.position; }
@@ -52,7 +50,7 @@ namespace solarsim {
 			glm::vec3 getScale() const { return m_transform.scale; }
 		protected:
 			Transform m_transform;
-			Mesh* m_mesh;
-			Material* m_material;
+			const Mesh& m_mesh;
+			const Material& m_material;
 	};
 }

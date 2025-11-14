@@ -5,7 +5,6 @@
 #include <string>
 #include <core/input_manager.hpp>
 #include <core/window.hpp>
-#include <simulation/planet.hpp>
 #include <simulation/simulation.hpp>
 #include <graphics/material.hpp>
 #include <graphics/shader.hpp>
