@@ -5,16 +5,16 @@
 namespace solarsim {
 
 	class Window;
-	class Camera;
+	class Simulation;
 
 	class InputManager {
 		public:
-			InputManager(Window* p_window, Camera* p_camera);
-			void processInput(float deltaTime);
-			void setCamera(Camera* p_camera) { m_camera = p_camera; }
+			InputManager(Window* p_window, Simulation* p_sim);
+			void processInput(float& deltaTime);
+			void setSimulation(Simulation* p_sim) { m_sim = p_sim; }
 		private:
 			Window* m_window;
-			Camera* m_camera;
+			Simulation* m_sim;
 
 			bool m_shouldCaptureMouse = true;
 			bool m_firstMouse = true;
