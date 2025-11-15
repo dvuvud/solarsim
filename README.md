@@ -8,6 +8,7 @@ I built this to learn OpenGL, and somewhere between the shader errors and matrix
 - **OpenGL** (3.3+)
 - **CMake** (3.10+)
 - **C++20 compiler**
+- **Make** (for the Makefile commands)
 
 ### Included Dependencies (No installation needed)
 The following are included as submodules or source code:
@@ -17,9 +18,30 @@ The following are included as submodules or source code:
 - **stb_image** - Image loading library
 
 ### Commands
+
+#### Using Makefile (Recommended)
 ```bash
+# Clone with submodules
 git clone --recursive https://github.com/dvuvud/solarsim.git
 cd solarsim
+
+# Build and run using the provided Makefile
 make build
 make run
+
+# Or build and run in one command
+make all
+
+# Clean build artifacts
+make clean
+```
+### Using CMake Directly
+```bash
+# Configure and build
+cmake -B build
+cmake --build build
+
+# Run the application
+./build/solarsim # Linux/macOS
+build\Debug\solarsim.exe # Windows
 ```
