@@ -4,9 +4,9 @@
 #include <iostream>
 
 namespace solarsim {
-	Sun::Sun(const Transform& transform, float m, float r)
+	Sun::Sun(const Transform& transform, float m, float r, float lr)
 		: m_material("assets/shaders/sun.vert", "assets/shaders/sun.frag"),
-		Entity(transform, m_mesh, m_material, m, r)
+		Entity(transform, m_mesh, m_material, m, r), m_lightRadius(lr)
 		{
 
 		}

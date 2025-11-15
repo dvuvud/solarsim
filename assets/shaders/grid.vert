@@ -2,12 +2,14 @@
 
 layout(location = 0) in vec3 aPos;
 
+out vec3 WorldPos;
+
 uniform vec4 uEntities[64]; // Limits the amount of entities that can have an effect
 uniform int uEntityCount;
 uniform mat4 uVP;
 
 void main() {
-	const float WARP_INTENSITY = 0.005;
+	const float WARP_INTENSITY = 0.01;
 	const float DISTANCE_SMOOTHING = 0.1;
 	const float FALLOFF = 0.01;
 
@@ -25,6 +27,6 @@ void main() {
 		warpedPos.y += gravityEffect * WARP_INTENSITY;
 	}
 
+	WorldPos = warpedPos;
 	gl_Position = uVP * vec4(warpedPos, 1.0);
 }
-

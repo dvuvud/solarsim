@@ -83,6 +83,12 @@ namespace solarsim {
 		}
 		shader->setVec4Array("uEntities", entityData);
 		shader->setInt("uEntityCount", entities.size());
+
+		const Sun* sun = p_sim->getSun();
+		if (sun) {
+			shader->setVec3("uLightPos", sun->getPosition());
+			shader->setFloat("uLightRadius", sun->getLightRadius()); // Determines at what distance the light fades completely
+		}
 		grid->draw();
 	}
 }

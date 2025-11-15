@@ -12,7 +12,7 @@ namespace solarsim {
 	class Entity;
 	class Grid {
 		public:
-			Grid(size_t p_size = 50, float p_spacing = 10.f);
+			Grid(size_t p_size = 100, float p_spacing = 3.5f);
 			~Grid();
 			void draw() const;
 			const Shader* getShader() const { return &m_shader; }
