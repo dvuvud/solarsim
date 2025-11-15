@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace solarsim {
-	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,20.f)), m_grid()
+	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,50.f)), m_grid()
 	{
 
 	}
@@ -35,8 +35,6 @@ namespace solarsim {
 		for (auto& entity : m_entities) {
 			entity->update(deltaTime);
 		}
-
-		m_grid.update(*this);
 	}
 
 	void Simulation::calculateGravityForces() {
