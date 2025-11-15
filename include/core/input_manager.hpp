@@ -23,6 +23,7 @@ namespace solarsim {
 
 			void handleMouseMovement(float p_xpos, float p_ypos);
 			void handleMouseScroll(double p_xoffset, double p_yoffset);
+			void toggleMouseCapture(GLFWwindow* w);
 
 			static void mouseCallback(GLFWwindow* p_window, double p_xpos, double p_ypos);
 			static void scrollCallback(GLFWwindow* p_window, double p_xoffset, double p_yoffset);

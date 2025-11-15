@@ -45,3 +45,18 @@ cmake --build build
 ./build/solarsim # Linux/macOS
 build\Debug\solarsim.exe # Windows
 ```
+
+## Controls / Keybinds
+
+| Key           | Action                                      |
+|---------------|---------------------------------------------|
+| `W`           | Move camera forward                         |
+| `S`           | Move camera backward                        |
+| `A`           | Move camera left                            |
+| `D`           | Move camera right                           |
+| `Space`       | Move camera up                              |
+| `Left Shift`  | Move camera down                            |
+| `R`           | Toggle time reversal (rewind / forward)     |
+| `Tab`         | Toggle mouse capture / release              |
+| `Escape`      | Quit application                            |
+

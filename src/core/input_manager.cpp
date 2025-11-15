@@ -43,17 +43,25 @@ namespace solarsim {
 		} else {
 			rPressedLastFrame = false;
 		}
+		static bool tabPressedLastFrame = false;
 		if (glfwGetKey(w, GLFW_KEY_TAB) == GLFW_PRESS) {
-			if (m_shouldCaptureMouse) {
-				glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-				m_shouldCaptureMouse = false;
+			if (!tabPressedLastFrame) {
+				tabPressedLastFrame = true;
+				toggleMouseCapture(w);
 			}
 		} else {
-			if (!m_shouldCaptureMouse) {
-				glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-				m_firstMouse = true;
-				m_shouldCaptureMouse = true;
-			}
+			tabPressedLastFrame = false;
+		}
+	}
+
+	void InputManager::toggleMouseCapture(GLFWwindow* w) {
+		if (m_shouldCaptureMouse) {
+			glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			m_shouldCaptureMouse = false;
+		} else {
+			glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			m_firstMouse = true;
+			m_shouldCaptureMouse = true;
 		}
 	}
 
