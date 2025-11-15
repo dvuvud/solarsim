@@ -14,13 +14,11 @@ namespace solarsim {
 		public:
 			Grid(size_t p_size = 50, float p_spacing = 10.f);
 			~Grid();
-			void update(const Simulation& p_sim);
-			void draw(const glm::mat4& uMVP) const;
+			void draw() const;
+			const Shader* getShader() const { return &m_shader; }
 		private:
 			void generateGrid();
 			void setupBuffer();
-			void updateGPUBuffer();
-			glm::vec3 applyGravityWarp(glm::vec3 p_vertex, const std::vector<std::unique_ptr<Entity>>& p_entities);
 			int m_size;
 			float m_spacing;
 			Shader m_shader;

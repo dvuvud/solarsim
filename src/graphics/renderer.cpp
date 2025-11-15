@@ -22,7 +22,7 @@ namespace solarsim {
 		if (!camera) return;
 		draw_sun(p_sim->getSun(), camera);
 		draw_planets(p_sim, camera);
-		draw_grid(p_sim->getGrid(), camera);
+		draw_grid(p_sim, camera);
 	}
 
 	void Renderer::draw_planets(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const
@@ -63,9 +63,26 @@ namespace solarsim {
 		mesh.render();
 	}
 
-	void Renderer::draw_grid(const Grid* p_grid, const Camera* p_camera) const {
-		if (!p_grid || !p_camera) return;
-		glm::mat4 uMVP = p_camera->getProjectionMatrix() * p_camera->getViewMatrix();
-		p_grid->draw(uMVP);
+	void Renderer::draw_grid(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const {
+		const Grid* grid = p_sim->getGrid();
+		if (!grid || !p_camera) return;
+
+		const Shader* shader = grid->getShader();
+		if (!shader) return;
+
+		shader->bind();
+
+		glm::mat4 uVP = p_camera->getProjectionMatrix() * p_camera->getViewMatrix();
+		shader->setMat4("uVP", uVP);
+
+		const auto& entities = p_sim->getEntities();
+		std::vector<glm::vec4> entityData;
+		for (const auto& entity : entities) {
+			glm::vec3 pos = entity->getPosition();
+			entityData.push_back(glm::vec4(pos.x, pos.y, pos.z, entity->getMass()));
+		}
+		shader->setVec4Array("uEntities", entityData);
+		shader->setInt("uEntityCount", entities.size());
+		grid->draw();
 	}
 }
