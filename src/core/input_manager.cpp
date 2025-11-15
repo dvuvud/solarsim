@@ -1,11 +1,11 @@
-#include <graphics/camera.hpp>
+#include <simulation/simulation.hpp>
 #include <core/window.hpp>
 #include <core/input_manager.hpp>
 
 namespace solarsim {
-	InputManager::InputManager(Window* p_window, Camera* p_camera) {
+	InputManager::InputManager(Window* p_window, Simulation* p_sim) {
 		m_window = p_window;
-		m_camera = p_camera;
+		m_sim = p_sim;
 
 		GLFWwindow* w = p_window->getNativeWindow();
 		glfwSetWindowUserPointer(w, this);
@@ -15,24 +15,34 @@ namespace solarsim {
 		glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
-	void InputManager::processInput(float deltaTime) {
-		if (!m_window || !m_camera) return;
+	void InputManager::processInput(float& deltaTime) {
+		Camera* cam = m_sim ? m_sim->getCamera() : nullptr;
+		if (!m_window || !cam) return;
 		GLFWwindow* w = m_window->getNativeWindow();
 		if (glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(FORWARD, deltaTime);
+			cam->ProcessKeyboard(FORWARD, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(BACKWARD, deltaTime);
+			cam->ProcessKeyboard(BACKWARD, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(LEFT, deltaTime);
+			cam->ProcessKeyboard(LEFT, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(RIGHT, deltaTime);
+			cam->ProcessKeyboard(RIGHT, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_SPACE) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(UP, deltaTime);
+			cam->ProcessKeyboard(UP, deltaTime);
 		if (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			m_camera->ProcessKeyboard(DOWN, deltaTime);
+			cam->ProcessKeyboard(DOWN, deltaTime);
 
 		if (glfwGetKey(w, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(w, true);
+		static bool rPressedLastFrame = false;
+		if (glfwGetKey(w, GLFW_KEY_R) == GLFW_PRESS) {
+			if (!rPressedLastFrame) {
+				m_sim->toggleReverse();
+				rPressedLastFrame = true;
+			}
+		} else {
+			rPressedLastFrame = false;
+		}
 		if (glfwGetKey(w, GLFW_KEY_TAB) == GLFW_PRESS) {
 			if (m_shouldCaptureMouse) {
 				glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -69,8 +79,9 @@ namespace solarsim {
 		m_lastX = p_xpos;
 		m_lastY = p_ypos;
 
-		if (m_camera) {
-			m_camera->ProcessMouseMovement(xoffset, yoffset);
+		Camera* cam = m_sim ? m_sim->getCamera() : nullptr;
+		if (cam) {
+			cam->ProcessMouseMovement(xoffset, yoffset);
 		}
 	}
 
@@ -82,8 +93,9 @@ namespace solarsim {
 	}
 
 	void InputManager::handleMouseScroll(double p_xoffset, double p_yoffset) {
-		if (m_camera) {
-			m_camera->ProcessMouseScroll(static_cast<float>(p_yoffset)); 
+		Camera* cam = m_sim ? m_sim->getCamera() : nullptr;
+		if (cam) {
+			cam->ProcessMouseScroll(static_cast<float>(p_yoffset)); 
 		}
 	}
 }

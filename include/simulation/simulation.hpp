@@ -16,7 +16,7 @@ namespace solarsim {
 
 			void spawnEntity(std::unique_ptr<Entity> p_entity);
 
-			void update(float deltaTime);        
+			void update(float deltaTime);
 
 			void calculateGravityForces();
 
@@ -31,6 +31,7 @@ namespace solarsim {
 			const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
 			const std::vector<Planet*>& getPlanets() const { return m_planets; }
 			const Sun* getSun() const { return m_sun; }
+			void toggleReverse() { isReversing = !isReversing; }
 		private:
 			Grid m_grid;
 			// Entities are currently synonymous with planets, should be changed later both for clarity and functionality
@@ -38,6 +39,7 @@ namespace solarsim {
 			std::vector<Planet*> m_planets;
 			Sun* m_sun;
 			Camera m_camera;
+			bool isReversing;
 
 			// TODO: Implement physics system
 			// PhysicsSystem physicsSystem;
