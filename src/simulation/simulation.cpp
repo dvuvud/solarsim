@@ -6,7 +6,8 @@
 #include <iostream>
 
 namespace solarsim {
-	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,50.f)), m_grid()
+	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,50.f)),
+	m_grid()
 	{
 
 	}
@@ -25,7 +26,7 @@ namespace solarsim {
 		}
 		m_entities.push_back(std::move(p_entity));
 	}
-	
+
 	void Simulation::update(float deltaTime) 
 	{
 		deltaTime = isReversing ? -deltaTime : deltaTime;
@@ -41,14 +42,14 @@ namespace solarsim {
 	void Simulation::calculateGravityForces() {
 		const float G = .5f; // Arbitrary value for the gravitational constant (TODO: Make member var)
 		const float MIN_DISTANCE = 1.5f; // Clamping distance and force to avoid extreme values
-		
+
 		for (size_t i = 0; i < m_entities.size(); ++i) {
 			for (size_t j = i + 1; j < m_entities.size(); ++j) {
 				auto& entityA = m_entities[i];
 				auto& entityB = m_entities[j];
 				glm::vec3 direction = entityB->getPosition() - entityA->getPosition();
 				float distance = glm::length(direction);
-				
+
 				if (distance < MIN_DISTANCE) continue;
 
 				direction = glm::normalize(direction);

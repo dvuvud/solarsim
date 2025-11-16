@@ -36,9 +36,9 @@ namespace solarsim {
 			// Entities are currently synonymous with planets, should be changed later both for clarity and functionality
 			std::vector<std::unique_ptr<Entity>> m_entities;
 			std::vector<Planet*> m_planets;
-			Sun* m_sun;
+			Sun* m_sun = nullptr;
 			Camera m_camera;
-			bool isReversing;
+			bool isReversing = false;
 
 			// TODO: Implement physics system
 			// PhysicsSystem physicsSystem;
