@@ -19,10 +19,9 @@ namespace solarsim {
 	void Mesh::render() const {
 		glBindVertexArray(m_VAO);
 		if (m_indices.empty()) {
-			glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
+			glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_vertices.size());
 		} else {
-
-			glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0);
 		}
 		glBindVertexArray(0);
 	}

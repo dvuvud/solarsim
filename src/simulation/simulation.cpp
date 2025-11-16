@@ -65,6 +65,8 @@ namespace solarsim {
 
 	void Simulation::clearAllEntities() 
 	{
-		m_entities.clear();
+		for (auto& entity : m_entities) {
+			entity.reset();
+		}
 	}
 }

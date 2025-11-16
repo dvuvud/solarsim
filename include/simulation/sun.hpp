@@ -1,7 +1,5 @@
 #pragma once
 
-#include <mesh/cube.hpp>
-#include <graphics/material.hpp>
 #include <simulation/entity.hpp>
 
 namespace solarsim {
@@ -12,10 +10,6 @@ namespace solarsim {
 			void update(float deltaTime) override;
 			float getLightRadius() const { return m_lightRadius; }
 		private:
-			Material m_material;
-			Cube m_mesh;
-			float m_mass;
-			float m_radius;
 			float m_lightRadius;
 	};
 }

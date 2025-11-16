@@ -82,7 +82,7 @@ namespace solarsim {
 			entityData.push_back(glm::vec4(pos.x, pos.y, pos.z, entity->getMass()));
 		}
 		shader->setVec4Array("uEntities", entityData);
-		shader->setInt("uEntityCount", entities.size());
+		shader->setInt("uEntityCount", (int)entities.size());
 
 		const Sun* sun = p_sim->getSun();
 		if (sun) {

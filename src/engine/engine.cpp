@@ -35,7 +35,7 @@ namespace solarsim {
 		float deltaTime = 0.f, lastFrame = 0.f;
 		while (!m_window->shouldClose())
 		{
-			float currentFrame = glfwGetTime();
+			float currentFrame = (float)glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 

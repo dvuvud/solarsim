@@ -1,11 +1,11 @@
 #pragma once
 
+#include <mesh/mesh.hpp>
+#include <graphics/material.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace solarsim {
-	class Mesh;
-	class Material;
 	class Shader;
 	class Camera;
 	struct Transform {
@@ -69,8 +69,8 @@ namespace solarsim {
 			Transform m_transform;
 			glm::vec3 m_velocity;
 			glm::vec3 m_accumulatedForce;
-			const Mesh& m_mesh;
-			const Material& m_material;
+			Mesh m_mesh;
+			Material m_material;
 			float m_mass;
 			float m_radius;
 	};

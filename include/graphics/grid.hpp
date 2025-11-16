@@ -12,15 +12,15 @@ namespace solarsim {
 	class Entity;
 	class Grid {
 		public:
-			Grid(size_t p_size = 100, float p_spacing = 3.5f);
+			Grid(GLint p_size = 100, GLfloat p_spacing = 3.5f);
 			~Grid();
 			void draw() const;
 			const Shader* getShader() const { return &m_shader; }
 		private:
 			void generateGrid();
 			void setupBuffer();
-			int m_size;
-			float m_spacing;
+			GLint m_size;
+			GLfloat m_spacing;
 			Shader m_shader;
 			std::vector<GLfloat> m_originalVertices;
 			std::vector<GLfloat> m_vertices;

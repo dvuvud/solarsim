@@ -3,7 +3,7 @@
 #include <simulation/entity.hpp>
 
 namespace solarsim {
-	Grid::Grid(size_t p_size, float p_spacing) : m_shader("assets/shaders/grid.vert", "assets/shaders/grid.frag"),
+	Grid::Grid(GLint p_size, GLfloat p_spacing) : m_shader("assets/shaders/grid.vert", "assets/shaders/grid.frag"),
 	m_VAO(0), m_VBO(0), m_EBO(0), m_size(p_size), m_spacing(p_spacing) {
 		generateGrid();
 		setupBuffer();
@@ -23,13 +23,13 @@ namespace solarsim {
 		// Create individual points at each vertex in the grid
 		for (int z = -m_size; z < m_size; ++z) {
 			for (int x = -m_size; x < m_size; ++x) {
-				float xPos = x * m_spacing;
-				float zPos = z * m_spacing;
+				GLfloat xPos = x * m_spacing;
+				GLfloat zPos = z * m_spacing;
 				m_vertices.insert(m_vertices.end(), {xPos, 0.f, zPos});
 			}
 		}
 
-		int pointsPerSide = m_size * 2;
+		GLuint pointsPerSide = m_size * 2;
 
 		// Link those points together 2x2 to create horizontal lines
 		for (GLuint z = 0; z < pointsPerSide; ++z) {
@@ -69,6 +69,6 @@ namespace solarsim {
 
 	void Grid::draw() const {
 		glBindVertexArray(m_VAO);
-		glDrawElements(GL_LINES, m_indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_LINES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0);
 	}
 }
