@@ -3,7 +3,6 @@
 #include <graphics/camera.hpp>
 #include <memory>
 #include <graphics/grid.hpp>
-#include <sys/wait.h>
 
 namespace solarsim {
 	class Entity;

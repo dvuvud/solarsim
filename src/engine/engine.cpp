@@ -2,6 +2,7 @@
 #include <mesh/cube.hpp>
 #include <simulation/sun.hpp>
 #include <simulation/planet.hpp>
+#include <stdexcept>
 
 namespace solarsim {
 

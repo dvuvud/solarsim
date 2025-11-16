@@ -35,7 +35,7 @@ make all
 # Clean build artifacts
 make clean
 ```
-### Using CMake Directly
+#### Using CMake Directly
 ```bash
 # Configure and build
 cmake -B build
