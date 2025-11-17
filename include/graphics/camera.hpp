@@ -16,7 +16,7 @@ namespace solarsim {
 	struct CameraConfig {
 		float Yaw = -90.0f;
 		float Pitch = 0.0f;
-		float Speed = 30.f;
+		float Speed = 100.f;
 		float Sensitivity = 0.1f;
 		float Fov = 45.0f;
 		float RenderDistance = 1000.f;

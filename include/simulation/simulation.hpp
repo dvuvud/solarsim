@@ -29,14 +29,14 @@ namespace solarsim {
 			const Camera* getCamera() const { return m_camera.get(); }
 			const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
 			const std::vector<Planet*>& getPlanets() const { return m_planets; }
-			const Sun* getSun() const { return m_sun; }
+			const std::vector<Sun*>& getSuns() const { return m_suns; }
 			void toggleReverse() { isReversing = !isReversing; }
 		private:
 			std::unique_ptr<Grid> m_grid;
 			// Entities are currently synonymous with planets, should be changed later both for clarity and functionality
 			std::vector<std::unique_ptr<Entity>> m_entities;
 			std::vector<Planet*> m_planets;
-			Sun* m_sun = nullptr;
+			std::vector<Sun*> m_suns;
 			std::unique_ptr<Camera> m_camera;
 			bool isReversing = false;
 
