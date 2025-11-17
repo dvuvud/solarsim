@@ -41,13 +41,14 @@ namespace solarsim {
 			shader.setVec3("objectColor", glm::vec3(0.15f, 0.175f, 0.925f));
 
 			if (const Sun* s = p_sim->getSun()) {
+				// TODO: Make light color a member variable and add a getter for it
 				shader.setVec3("lightColor", glm::vec3(1.f, 1.f, 1.f));
 				shader.setVec3("lightPos", s->getPosition());
 			} else {
 				shader.setVec3("lightColor", glm::vec3(0.f, 0.f, 0.f));
 				shader.setVec3("lightPos", glm::vec3(0.f,0.f,0.f));
 			}	
-				
+
 
 			shader.setVec3("viewPos", p_camera->getPosition());
 

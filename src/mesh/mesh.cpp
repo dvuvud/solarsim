@@ -10,15 +10,15 @@ namespace solarsim {
 
 	Mesh::Mesh(Mesh&& other) noexcept
 		: m_vertices(std::move(other.m_vertices)),
-		  m_indices(std::move(other.m_indices)),
-		  m_VAO(other.m_VAO),
-		  m_VBO(other.m_VBO),
-		  m_EBO(other.m_EBO)
-	{
-		other.m_VAO = 0;
-		other.m_VBO = 0;
-		other.m_EBO = 0;
-	}
+		m_indices(std::move(other.m_indices)),
+		m_VAO(other.m_VAO),
+		m_VBO(other.m_VBO),
+		m_EBO(other.m_EBO)
+		{
+			other.m_VAO = 0;
+			other.m_VBO = 0;
+			other.m_EBO = 0;
+		}
 
 	Mesh& Mesh::operator=(Mesh&& other) noexcept {
 		if (this != &other) {
