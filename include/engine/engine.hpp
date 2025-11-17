@@ -24,14 +24,5 @@ namespace solarsim {
 			std::unique_ptr<Simulation> m_simulation;
 			std::unique_ptr<Renderer> m_renderer;
 			std::unique_ptr<InputManager> m_inputManager;
-
-			// Temporary for testing, move to respective factories or similar
-			std::unique_ptr<Shader> m_tmpShader;
-			std::unique_ptr<Material> m_tmpMat;
-
-			std::unique_ptr<Shader> m_tmpLightShader;
-			std::unique_ptr<Material> m_tmpLightMat;
-
-			std::unique_ptr<Mesh> m_tmpMesh;
 	};
 }
