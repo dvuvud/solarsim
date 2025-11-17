@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <mesh/cube.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <memory>
 
 namespace solarsim {
 	class Camera;
@@ -26,9 +27,13 @@ namespace solarsim {
 
 	class Entity {
 		public:
+			Entity(const Transform& p_transform, float m = 0.f, float r = 1.f)
+				: m_transform(p_transform),
+				m_mass(m),
+				m_radius(r) {};
 			Entity(const Transform& p_transform,
-					Mesh p_mesh = Cube(),
-					Material p_material = Material("assets/shaders/planet.vert", "assets/shaders/planet.vert"),
+					std::unique_ptr<Mesh> p_mesh,
+					std::unique_ptr<Material> p_material,
 					float m = 0.f,
 					float r = 1.f)
 				: m_transform(p_transform),
@@ -57,9 +62,9 @@ namespace solarsim {
 			Transform& getTransform() { return m_transform; }
 			const Transform& getTransform() const { return m_transform; }
 
-			const Material& getMaterial() const { return m_material; }
+			const Material& getMaterial() const { return *m_material; }
 
-			const Mesh& getMesh() const { return m_mesh; }
+			const Mesh& getMesh() const { return *m_mesh; }
 
 			void setVelocity(const glm::vec3& p_velocity) { m_velocity = p_velocity; }
 			const glm::vec3& getVelocity() { return m_velocity; }
@@ -79,8 +84,8 @@ namespace solarsim {
 			Transform m_transform;
 			glm::vec3 m_velocity;
 			glm::vec3 m_accumulatedForce;
-			Mesh m_mesh;
-			Material m_material;
+			std::unique_ptr<Mesh> m_mesh;
+			std::unique_ptr<Material> m_material;
 			float m_mass;
 			float m_radius;
 	};

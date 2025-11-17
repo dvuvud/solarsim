@@ -10,6 +10,7 @@ namespace solarsim {
 
 			unsigned int m_ID;
 
+			Shader() = default;
 			Shader(const char* p_vertexPath, const char* p_fragmentPath);
 
 			~Shader();
