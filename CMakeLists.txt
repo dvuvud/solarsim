@@ -68,8 +68,10 @@ enable_testing()
 add_subdirectory(vendor/googletest)
 
 add_executable(solarsim_tests
+	test/simulation/test_simulation.cpp
 	test/simulation/test_entity.cpp
 	test/simulation/test_planet.cpp
+	test/simulation/test_sun.cpp
 )
 
 target_link_libraries(solarsim_tests

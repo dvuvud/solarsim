@@ -6,10 +6,10 @@
 #include <iostream>
 
 namespace solarsim {
-	Simulation::Simulation() : m_camera(glm::vec3(0.f,2.f,50.f)),
-	m_grid()
+	Simulation::Simulation(bool shouldMakeGrid) 
+		: m_camera(std::make_unique<Camera>(glm::vec3(0.f,2.f,50.f)))
 	{
-
+		if (shouldMakeGrid) m_grid = std::make_unique<Grid>();
 	}
 	Simulation::~Simulation() 
 	{
@@ -66,8 +66,8 @@ namespace solarsim {
 
 	void Simulation::clearAllEntities() 
 	{
-		for (auto& entity : m_entities) {
-			entity.reset();
-		}
+		m_entities.clear();
+		m_planets.clear();
+		m_sun = nullptr;
 	}
 }
