@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
 if(UNIX)
-    cmake_policy(SET CMP0072 NEW)
-    set(OpenGL_GL_PREFERENCE GLVND)
+	cmake_policy(SET CMP0072 NEW)
+	set(OpenGL_GL_PREFERENCE GLVND)
 endif()
 
 project(SolarSim LANGUAGES C CXX)
@@ -20,8 +20,9 @@ add_subdirectory(lib/glm)
 
 find_package(OpenGL REQUIRED)
 
-add_executable(solarsim 
-	src/main.cpp
+
+## Library for core functionality
+add_library(solarsim_core
 	src/engine/engine.cpp
 	src/core/window.cpp
 	src/core/input_manager.cpp
@@ -37,18 +38,48 @@ add_executable(solarsim
 	src/mesh/cube.cpp
 )
 
-if(APPLE)
-    target_compile_options(solarsim PRIVATE -Wno-deprecated-declarations)
-endif()
+target_include_directories(solarsim_core PUBLIC
+	include
+	lib/stb
+)
 
-target_link_libraries(solarsim
+target_link_libraries(solarsim_core
 	glfw
 	glm
 	glad_c
 	OpenGL::GL
 )
 
-target_include_directories(solarsim PRIVATE
-	include
-	lib/stb
+if(APPLE)
+	target_compile_options(solarsim_core PRIVATE -Wno-deprecated-declarations)
+endif()
+
+
+## Main executable
+add_executable(solarsim src/main.cpp)
+target_link_libraries(solarsim solarsim_core)
+
+
+###########################################################
+#			Tests				  #
+###########################################################
+
+enable_testing()
+add_subdirectory(vendor/googletest)
+
+add_executable(solarsim_tests
+	test/simulation/test_entity.cpp
 )
+
+target_link_libraries(solarsim_tests
+	solarsim_core
+	gtest
+	gtest_main
+)
+
+target_include_directories(solarsim_tests PRIVATE
+	include
+)
+
+include(GoogleTest)
+gtest_discover_tests(solarsim_tests)
