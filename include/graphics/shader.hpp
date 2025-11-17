@@ -11,7 +11,15 @@ namespace solarsim {
 			unsigned int m_ID;
 
 			Shader(const char* p_vertexPath, const char* p_fragmentPath);
-			
+
+			~Shader();
+
+			Shader(const Shader&) = delete;
+			Shader& operator=(const Shader&) = delete;
+
+			Shader(Shader&& other) noexcept;
+			Shader& operator=(Shader&& other) noexcept;
+
 			void bind() const;
 
 			// utility uniform functions

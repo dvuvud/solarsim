@@ -15,7 +15,7 @@ namespace solarsim {
 			Grid(GLint p_size = 100, GLfloat p_spacing = 3.5f);
 			~Grid();
 			void draw() const;
-			const Shader* getShader() const { return &m_shader; }
+			const Shader& getShader() const { return m_shader; }
 		private:
 			void generateGrid();
 			void setupBuffer();

@@ -55,7 +55,6 @@ namespace solarsim {
 		} else {
 			glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0);
 		}
-		glBindVertexArray(0);
 	}
 
 	void Mesh::setupMesh() {

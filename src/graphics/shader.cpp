@@ -84,6 +84,30 @@ namespace solarsim {
 		glDeleteShader(fragment);
 	}
 
+	Shader::Shader(Shader&& other) noexcept
+		: m_ID(other.m_ID)
+		{
+			other.m_ID = 0;
+		}
+
+	Shader& Shader::operator=(Shader&& other) noexcept {
+		if (this != &other) {
+			if (m_ID != 0) {
+				glDeleteProgram(m_ID);
+			}
+			m_ID = other.m_ID;
+			other.m_ID = 0;
+		}
+		return *this;
+	}
+
+	Shader::~Shader() {
+		if (m_ID != 0) {
+			glDeleteProgram(m_ID);
+			m_ID = 0;
+		}
+	}
+
 	void Shader::bind() const {
 		glUseProgram(m_ID);
 	}
@@ -111,7 +135,7 @@ namespace solarsim {
 	void Shader::setVec4(const std::string &name, const glm::vec4& value) const {
 		glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), 1, glm::value_ptr(value));
 	}
-	
+
 	void Shader::setVec4Array(const std::string &name, const std::vector<glm::vec4>& value) const {
 		glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), (const GLfloat*)value.data());
 	}

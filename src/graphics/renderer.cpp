@@ -32,6 +32,7 @@ namespace solarsim {
 			if (!planet || !p_camera) return;
 			const Shader& shader = planet->getMaterial().m_shader;
 			const Mesh& mesh = planet->getMesh();
+			
 			shader.bind();
 			shader.setMat4("view", p_camera->getViewMatrix());
 			shader.setMat4("projection", p_camera->getProjectionMatrix());
@@ -69,13 +70,12 @@ namespace solarsim {
 		const Grid* grid = p_sim->getGrid();
 		if (!grid || !p_camera) return;
 
-		const Shader* shader = grid->getShader();
-		if (!shader) return;
+		const Shader& shader = grid->getShader();
 
-		shader->bind();
+		shader.bind();
 
 		glm::mat4 uVP = p_camera->getProjectionMatrix() * p_camera->getViewMatrix();
-		shader->setMat4("uVP", uVP);
+		shader.setMat4("uVP", uVP);
 
 		const auto& entities = p_sim->getEntities();
 		std::vector<glm::vec4> entityData;
@@ -83,13 +83,13 @@ namespace solarsim {
 			glm::vec3 pos = entity->getPosition();
 			entityData.push_back(glm::vec4(pos.x, pos.y, pos.z, entity->getMass()));
 		}
-		shader->setVec4Array("uEntities", entityData);
-		shader->setInt("uEntityCount", (int)entities.size());
+		shader.setVec4Array("uEntities", entityData);
+		shader.setInt("uEntityCount", (int)entities.size());
 
 		const Sun* sun = p_sim->getSun();
 		if (sun) {
-			shader->setVec3("uLightPos", sun->getPosition());
-			shader->setFloat("uLightRadius", sun->getLightRadius()); // Determines at what distance the light fades completely
+			shader.setVec3("uLightPos", sun->getPosition());
+			shader.setFloat("uLightRadius", sun->getLightRadius()); // Determines at what distance the light fades completely
 		}
 		grid->draw();
 	}
