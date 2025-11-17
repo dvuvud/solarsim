@@ -1,4 +1,4 @@
-.PHONY: all build run clean
+.PHONY: all build run test memcheck clean
 
 all: build run
 

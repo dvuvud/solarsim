@@ -28,7 +28,7 @@ namespace solarsim {
 		std::unique_ptr<Mesh> sunMesh = std::make_unique<Cube>();
 
 		m_simulation->spawnEntity(std::make_unique<Planet>(earthTransform, earthMesh, earthMat, 200.0f, 1.0f, glm::vec3(5.75f, 0.0f, 1.0f)));
-		m_simulation->spawnEntity(std::make_unique<Sun>(sunTransform, sunMesh, sunMat, 5000.f, 1.0f, 100.0f, glm::vec3(1.0f, 1.0f, 1.0f)));
+		m_simulation->spawnEntity(std::make_unique<Sun>(sunTransform, sunMesh, sunMat, 5000.f, 1.0f, 100.0f, glm::vec3(0.5f, 1.0f, 1.0f)));
 	}
 
 	Engine::~Engine() { 
