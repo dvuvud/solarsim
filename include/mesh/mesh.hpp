@@ -14,13 +14,17 @@ namespace solarsim {
 		public:
 			Mesh() = default;
 			Mesh(const std::vector<Vertex>& p_vertices, const std::vector<unsigned int>& p_indices = {});
+			Mesh(const Mesh&) = delete;
+			Mesh& operator=(const Mesh&) = delete;
+			Mesh(Mesh&& other) noexcept;
+			Mesh& operator=(Mesh&& other) noexcept;
 			~Mesh();
 			void render() const;
 		protected:
 			std::vector<Vertex> m_vertices;
 			std::vector<unsigned int> m_indices;
 
-			GLuint m_VAO, m_VBO, m_EBO;
+			GLuint m_VAO = 0, m_VBO = 0, m_EBO = 0;
 
 			void setupMesh();
 	};

@@ -26,8 +26,8 @@ namespace solarsim {
 
 	class Entity {
 		public:
-			Entity(const Transform& p_transform, const Mesh& p_mesh, const Material& p_material, float m, float r)
-				: m_transform(p_transform), m_mesh(p_mesh), m_material(p_material), m_mass(m), m_radius(r), m_velocity(glm::vec3(0.f)) {}
+			Entity(const Transform& p_transform, Mesh p_mesh, const Material& p_material, float m, float r)
+				: m_transform(p_transform), m_mesh(std::move(p_mesh)), m_material(p_material), m_mass(m), m_radius(r), m_velocity(glm::vec3(0.f)) {}
 			virtual ~Entity() = default;
 
 			virtual void update(float deltaTime) {

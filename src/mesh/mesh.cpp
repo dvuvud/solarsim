@@ -8,6 +8,38 @@ namespace solarsim {
 		setupMesh();
 	}
 
+	Mesh::Mesh(Mesh&& other) noexcept
+		: m_vertices(std::move(other.m_vertices)),
+		  m_indices(std::move(other.m_indices)),
+		  m_VAO(other.m_VAO),
+		  m_VBO(other.m_VBO),
+		  m_EBO(other.m_EBO)
+	{
+		other.m_VAO = 0;
+		other.m_VBO = 0;
+		other.m_EBO = 0;
+	}
+
+	Mesh& Mesh::operator=(Mesh&& other) noexcept {
+		if (this != &other) {
+			// free existing GL resources owned by this
+			if (m_VAO != 0) glDeleteVertexArrays(1, &m_VAO);
+			if (m_VBO != 0) glDeleteBuffers(1, &m_VBO);
+			if (m_EBO != 0) glDeleteBuffers(1, &m_EBO);
+
+			m_vertices = std::move(other.m_vertices);
+			m_indices = std::move(other.m_indices);
+			m_VAO = other.m_VAO;
+			m_VBO = other.m_VBO;
+			m_EBO = other.m_EBO;
+
+			other.m_VAO = 0;
+			other.m_VBO = 0;
+			other.m_EBO = 0;
+		}
+		return *this;
+	}
+
 	Mesh::~Mesh() {
 		glDeleteVertexArrays(1, &m_VAO);
 		glDeleteBuffers(1, &m_VBO);

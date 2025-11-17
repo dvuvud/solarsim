@@ -113,6 +113,6 @@ namespace solarsim {
 	}
 	
 	void Shader::setVec4Array(const std::string &name, const std::vector<glm::vec4>& value) const {
-		glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), (const float*)value.data());
+		glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), (const GLfloat*)value.data());
 	}
 }
