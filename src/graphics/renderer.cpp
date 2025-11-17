@@ -48,7 +48,7 @@ namespace solarsim {
 				shader.setVec3("lightColor", glm::vec3(0.f, 0.f, 0.f));
 				shader.setVec3("lightPos", glm::vec3(0.f,0.f,0.f));
 			}	
-				
+
 
 			shader.setVec3("viewPos", p_camera->getPosition());
 
