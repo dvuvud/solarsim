@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 #include <simulation/entity.hpp>
-#include <graphics/material.hpp>
-#include <mesh/mesh.hpp>
 
 using namespace solarsim;
 

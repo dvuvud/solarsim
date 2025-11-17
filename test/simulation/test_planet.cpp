@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 #include <simulation/planet.hpp>
-#include <mesh/cube.hpp>
-#include <graphics/material.hpp>
 #include <memory>
 
 using namespace solarsim;

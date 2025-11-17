@@ -22,7 +22,7 @@ class SimulationTest : public ::testing::Test {
 // Test 1: Simulation construction and initial state
 TEST_F(SimulationTest, InitialState) {
 	EXPECT_EQ(simulation->getEntityCount(), 0);
-	EXPECT_EQ(simulation->getSun(), nullptr);
+	EXPECT_TRUE(simulation->getSuns().empty());
 	EXPECT_TRUE(simulation->getPlanets().empty());
 	EXPECT_NE(simulation->getCamera(), nullptr);
 	EXPECT_EQ(simulation->getGrid(), nullptr);
@@ -37,7 +37,7 @@ TEST_F(SimulationTest, SpawnSun) {
 	simulation->spawnEntity(std::move(sun));
 
 	EXPECT_EQ(simulation->getEntityCount(), 1);
-	EXPECT_NE(simulation->getSun(), nullptr);
+	EXPECT_FALSE(simulation->getSuns().empty());
 	EXPECT_TRUE(simulation->getPlanets().empty());
 }
 
@@ -50,7 +50,7 @@ TEST_F(SimulationTest, SpawnPlanet) {
 	simulation->spawnEntity(std::move(planet));
 
 	EXPECT_EQ(simulation->getEntityCount(), 1);
-	EXPECT_EQ(simulation->getSun(), nullptr);
+	EXPECT_TRUE(simulation->getSuns().empty());
 	EXPECT_EQ(simulation->getPlanets().size(), 1);
 }
 
@@ -72,7 +72,7 @@ TEST_F(SimulationTest, SpawnMultipleEntities) {
 	simulation->spawnEntity(std::move(mars));
 
 	EXPECT_EQ(simulation->getEntityCount(), 3);
-	EXPECT_NE(simulation->getSun(), nullptr);
+	EXPECT_FALSE(simulation->getSuns().empty());
 	EXPECT_EQ(simulation->getPlanets().size(), 2);
 }
 
@@ -143,7 +143,7 @@ TEST_F(SimulationTest, ClearEntities) {
 	simulation->clearAllEntities();
 
 	EXPECT_EQ(simulation->getEntityCount(), 0);
-	EXPECT_EQ(simulation->getSun(), nullptr);
+	EXPECT_TRUE(simulation->getSuns().empty());
 	EXPECT_TRUE(simulation->getPlanets().empty());
 }
 
@@ -212,7 +212,7 @@ TEST_F(SimulationTest, EntityCategorization) {
 	simulation->spawnEntity(std::move(planet1));
 	simulation->spawnEntity(std::move(planet2));
 
-	EXPECT_NE(simulation->getSun(), nullptr);
+	EXPECT_FALSE(simulation->getSuns().empty());
 	EXPECT_EQ(simulation->getPlanets().size(), 2);
 
 	const auto& planets = simulation->getPlanets();
