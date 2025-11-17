@@ -30,36 +30,44 @@ namespace solarsim {
 		const std::vector<Planet*>& planets = p_sim->getPlanets();
 		for (auto& planet : planets) {
 			if (!planet || !p_camera) return;
-			const Shader& shader = planet->getMaterial().m_shader;
-			const Mesh& mesh = planet->getMesh();
+			const Mesh* mesh = planet->getMesh();
+			if (!mesh) return;
+			const Material* mat = planet->getMaterial();
+			if (!mat) return;
+			const Shader* shader = mat->getShader();
+			if (!shader) return;
 
-			shader.bind();
-			shader.setMat4("view", p_camera->getViewMatrix());
-			shader.setMat4("projection", p_camera->getProjectionMatrix());
-			shader.setMat4("model", planet->getTransform().getModelMatrix());
+			shader->bind();
+			shader->setMat4("view", p_camera->getViewMatrix());
+			shader->setMat4("projection", p_camera->getProjectionMatrix());
+			shader->setMat4("model", planet->getTransform().getModelMatrix());
 
 			// TODO: Make this a member variable on planets/materials
-			shader.setVec3("objectColor", glm::vec3(0.15f, 0.175f, 0.925f));
+			shader->setVec3("objectColor", glm::vec3(0.15f, 0.175f, 0.925f));
 
 			// TODO: After multiple light sources are made possible, add functionality for handling no light being present
 			if (const Sun* s = p_sim->getSun()) {
-				// TODO: Make light color a member variable and add a getter for it
-				shader.setVec3("lightColor", glm::vec3(1.f, 1.f, 1.f));
-				shader.setVec3("lightPos", s->getPosition());
+				shader->setVec3("lightColor", s->getLightColor());
+				shader->setVec3("lightPos", s->getPosition());
 			}
 
-			shader.setVec3("viewPos", p_camera->getPosition());
-			mesh.render();
+			shader->setVec3("viewPos", p_camera->getPosition());
+			mesh->render();
 		}
 	}
 
 	void Renderer::draw_sun(const Sun* p_sun, const Camera* p_camera) const {
 		if (!p_sun || !p_camera) return;
-		const Shader& shader = p_sun->getMaterial().m_shader;
-		const Mesh& mesh = p_sun->getMesh();
-		shader.bind();
-		shader.setMat4("uMVP", p_camera->getProjectionMatrix() * p_camera->getViewMatrix() * p_sun->getTransform().getModelMatrix());
-		mesh.render();
+		const Mesh* mesh = p_sun->getMesh();
+		if (!mesh) return;
+		const Material* mat = p_sun->getMaterial();
+		if (!mat) return;
+		const Shader* shader = mat->getShader();
+		if (!shader) return;
+		shader->bind();
+		shader->setMat4("uMVP", p_camera->getProjectionMatrix() * p_camera->getViewMatrix() * p_sun->getTransform().getModelMatrix());
+		shader->setVec3("uLightColor", p_sun->getLightColor());
+		mesh->render();
 	}
 
 	void Renderer::draw_grid(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const {
@@ -85,6 +93,7 @@ namespace solarsim {
 		const Sun* sun = p_sim->getSun();
 		if (sun) {
 			shader.setVec3("uLightPos", sun->getPosition());
+			shader.setVec3("uLightColor", sun->getLightColor());
 			shader.setFloat("uLightRadius", sun->getLightRadius()); // Determines at what distance the light fades completely
 		}
 

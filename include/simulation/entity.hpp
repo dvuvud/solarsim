@@ -32,8 +32,8 @@ namespace solarsim {
 				m_mass(m),
 				m_radius(r) {};
 			Entity(const Transform& p_transform,
-					std::unique_ptr<Mesh> p_mesh,
-					std::unique_ptr<Material> p_material,
+					std::unique_ptr<Mesh>& p_mesh,
+					std::unique_ptr<Material>& p_material,
 					float m = 0.f,
 					float r = 1.f)
 				: m_transform(p_transform),
@@ -62,9 +62,11 @@ namespace solarsim {
 			Transform& getTransform() { return m_transform; }
 			const Transform& getTransform() const { return m_transform; }
 
-			const Material& getMaterial() const { return *m_material; }
+			const Material* getMaterial() const { return m_material.get(); }
+			void getMaterial(std::unique_ptr<Material> p_mat) { m_material = std::move(p_mat); }
 
-			const Mesh& getMesh() const { return *m_mesh; }
+			const Mesh* getMesh() const { return m_mesh.get(); }
+			void setMesh(std::unique_ptr<Mesh>& p_mesh) { m_mesh = std::move(p_mesh); }
 
 			void setVelocity(const glm::vec3& p_velocity) { m_velocity = p_velocity; }
 			const glm::vec3& getVelocity() { return m_velocity; }

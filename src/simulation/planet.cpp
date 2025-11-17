@@ -6,14 +6,16 @@
 #include <iostream>
 
 namespace solarsim {
-	Planet::Planet(const Transform& transform, float m, float r)
-		: Entity(transform,
-				std::make_unique<Cube>(),
-				std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag"),
-				m,
-				r)
+	Planet::Planet(const Transform& transform, float m, float r, const glm::vec3& iv)
+		: Entity(transform, m, r)
 	{
-		this->setVelocity(glm::vec3(5.75f, 0.f, 1.f)); // Initial velocity
+		this->setVelocity(iv);
+	}
+
+	Planet::Planet(const Transform& transform, std::unique_ptr<Mesh>& p_mesh, std::unique_ptr<Material>& p_mat, float m, float r, const glm::vec3& iv)
+		: Entity(transform, p_mesh, p_mat, m, r)
+	{
+		this->setVelocity(iv);
 	}
 
 	void Planet::update(float deltaTime)

@@ -17,8 +17,9 @@ namespace solarsim {
 			Material& operator=(Material&&) noexcept = default;
 
 			virtual ~Material() = default;
-			virtual void bind() {m_shader.bind();}
-			Shader m_shader;
+
+			const Shader* getShader() const { return &m_shader; }
 		private:
+			Shader m_shader;
 	};
 }

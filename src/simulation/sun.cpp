@@ -6,15 +6,22 @@
 #include <iostream>
 
 namespace solarsim {
-	Sun::Sun(const Transform& transform, float m, float r, float lr)
-		: Entity(transform,
-				std::make_unique<Cube>(),
-				std::make_unique<Material>("assets/shaders/sun.vert", "assets/shaders/sun.frag"),
-				m,
-				r),
-		m_lightRadius(lr)
+	Sun::Sun(const Transform& transform, float m, float r, float lr, const glm::vec3& lc, const glm::vec3& iv)
+		: Entity(transform, m, r), m_lightRadius(lr), m_lightColor(lc)
 	{
-
+		this->setVelocity(iv);
+	}
+	Sun::Sun(const Transform& transform,
+					std::unique_ptr<Mesh>& p_mesh,
+					std::unique_ptr<Material>& p_mat,
+					float m,
+					float r,
+					float lr,
+					const glm::vec3& lc,
+					const glm::vec3& iv)
+		: Entity(transform, p_mesh, p_mat, m, r), m_lightRadius(lr), m_lightColor(lc)
+	{
+		this->setVelocity(iv);
 	}
 
 	void Sun::update(float deltaTime)
