@@ -40,7 +40,7 @@ namespace solarsim {
 	}
 
 	void Simulation::calculateGravityForces() {
-		const float G = .5f; // Arbitrary value for the gravitational constant (TODO: Make member var)
+		const float G = 0.5f; // Arbitrary value for the gravitational constant (TODO: Make member var)
 		const float MIN_DISTANCE = 1.5f; // Clamping distance and force to avoid extreme values
 
 		for (size_t i = 0; i < m_entities.size(); ++i) {

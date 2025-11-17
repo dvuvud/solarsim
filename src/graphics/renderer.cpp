@@ -32,7 +32,7 @@ namespace solarsim {
 			if (!planet || !p_camera) return;
 			const Shader& shader = planet->getMaterial().m_shader;
 			const Mesh& mesh = planet->getMesh();
-			
+
 			shader.bind();
 			shader.setMat4("view", p_camera->getViewMatrix());
 			shader.setMat4("projection", p_camera->getProjectionMatrix());
@@ -41,18 +41,14 @@ namespace solarsim {
 			// TODO: Make this a member variable on planets/materials
 			shader.setVec3("objectColor", glm::vec3(0.15f, 0.175f, 0.925f));
 
+			// TODO: After multiple light sources are made possible, add functionality for handling no light being present
 			if (const Sun* s = p_sim->getSun()) {
 				// TODO: Make light color a member variable and add a getter for it
 				shader.setVec3("lightColor", glm::vec3(1.f, 1.f, 1.f));
 				shader.setVec3("lightPos", s->getPosition());
-			} else {
-				shader.setVec3("lightColor", glm::vec3(0.f, 0.f, 0.f));
-				shader.setVec3("lightPos", glm::vec3(0.f,0.f,0.f));
-			}	
-
+			}
 
 			shader.setVec3("viewPos", p_camera->getPosition());
-
 			mesh.render();
 		}
 	}
@@ -91,6 +87,7 @@ namespace solarsim {
 			shader.setVec3("uLightPos", sun->getPosition());
 			shader.setFloat("uLightRadius", sun->getLightRadius()); // Determines at what distance the light fades completely
 		}
+
 		grid->draw();
 	}
 }
