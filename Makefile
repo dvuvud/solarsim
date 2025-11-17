@@ -21,7 +21,7 @@ else
 endif
 
 memcheck:
-	cd build && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./solarsim_tests
+	cd build && valgrind --leak-check=full ./solarsim_tests
 
 clean:
 ifeq ($(OS),Windows_NT)
