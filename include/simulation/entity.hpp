@@ -3,6 +3,7 @@
 #include <mesh/mesh.hpp>
 #include <graphics/material.hpp>
 #include <glm/glm.hpp>
+#include <mesh/cube.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace solarsim {
@@ -25,7 +26,11 @@ namespace solarsim {
 
 	class Entity {
 		public:
-			Entity(const Transform& p_transform, Mesh p_mesh, Material p_material, float m, float r)
+			Entity(const Transform& p_transform,
+					Mesh p_mesh = Cube(),
+					Material p_material = Material("assets/shaders/planet.vert", "assets/shaders/planet.vert"),
+					float m = 0.f,
+					float r = 1.f)
 				: m_transform(p_transform),
 				m_mesh(std::move(p_mesh)),
 				m_material(std::move(p_material)),
