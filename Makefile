@@ -13,12 +13,15 @@ else
 	./build/solarsim
 endif
 
-test: build
+test:
 ifeq ($(OS),Windows_NT)
 	cd build && cmake --build . --target solarsim_tests && ctest -C Debug
 else
 	cd build && cmake --build . --target solarsim_tests && ctest --output-on-failure
 endif
+
+memcheck:
+	cd build && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./solarsim_tests
 
 clean:
 ifeq ($(OS),Windows_NT)
