@@ -37,6 +37,10 @@ make clean
 ```
 #### Using CMake Directly
 ```bash
+# Clone with submodules
+git clone --recursive https://github.com/dvuvud/solarsim.git
+cd solarsim
+
 # Configure and build
 cmake -B build
 cmake --build build --target solarsim
