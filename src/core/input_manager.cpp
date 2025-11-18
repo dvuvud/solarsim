@@ -37,8 +37,8 @@ namespace solarsim {
 		static bool rPressedLastFrame = false;
 		if (glfwGetKey(w, GLFW_KEY_R) == GLFW_PRESS) {
 			if (!rPressedLastFrame) {
-				m_sim->toggleReverse();
 				rPressedLastFrame = true;
+				m_sim->toggleReverse();
 			}
 		} else {
 			rPressedLastFrame = false;
@@ -51,6 +51,15 @@ namespace solarsim {
 			}
 		} else {
 			tabPressedLastFrame = false;
+		}
+		static bool pPressedLastFrame = false;
+		if (glfwGetKey(w, GLFW_KEY_P) == GLFW_PRESS) {
+			if (!pPressedLastFrame) {
+				pPressedLastFrame = true;
+				m_sim->togglePause();
+			}
+		} else {
+			pPressedLastFrame = false;
 		}
 	}
 

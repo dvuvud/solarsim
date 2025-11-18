@@ -30,6 +30,7 @@ namespace solarsim {
 			const std::vector<Planet*>& getPlanets() const { return m_planets; }
 			const std::vector<Sun*>& getSuns() const { return m_suns; }
 			void toggleReverse() { isReversing = !isReversing; }
+			void togglePause() { isPausing = !isPausing; }
 		private:
 			std::unique_ptr<Grid> m_grid;
 			std::vector<std::unique_ptr<Entity>> m_entities;
@@ -37,6 +38,7 @@ namespace solarsim {
 			std::vector<Sun*> m_suns;
 			std::unique_ptr<Camera> m_camera;
 			bool isReversing = false;
+			bool isPausing = false;
 
 			// Gravity constants
 			const float G = 10.0f;

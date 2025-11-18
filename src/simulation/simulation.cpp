@@ -29,6 +29,7 @@ namespace solarsim {
 
 	void Simulation::update(float deltaTime) 
 	{
+		if (isPausing) return;
 		deltaTime = isReversing ? -deltaTime : deltaTime;
 		calculateGravityForces();
 
