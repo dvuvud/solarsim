@@ -30,8 +30,6 @@ namespace solarsim {
 	void Simulation::update(float deltaTime) 
 	{
 		deltaTime = isReversing ? -deltaTime : deltaTime;
-		// TODO: Time complexity of force calculation is currently O(n^2)
-		// Might improve this if I ever increase the same of the simulation
 		calculateGravityForces();
 
 		for (auto& entity : m_entities) {
@@ -40,22 +38,19 @@ namespace solarsim {
 	}
 
 	void Simulation::calculateGravityForces() {
-		const float G = 3.5f; // Arbitrary value for the gravitational constant (TODO: Make member var)
-		const float MIN_DISTANCE = 1.5f; // Clamping distance and force to avoid extreme values
-
 		for (size_t i = 0; i < m_entities.size(); ++i) {
 			for (size_t j = i + 1; j < m_entities.size(); ++j) {
 				auto& entityA = m_entities[i];
 				auto& entityB = m_entities[j];
 				glm::vec3 direction = entityB->getPosition() - entityA->getPosition();
-				float distance = glm::length(direction);
+				float distanceSquared = glm::dot(direction, direction);
 
-				if (distance < MIN_DISTANCE) continue;
+				float softenedDistanceSquared = distanceSquared + SOFTENING_SQUARED;
 
 				direction = glm::normalize(direction);
 
 				// Newton's law of universal gravitation: F = G * (m1 * m2) / r^2
-				float forceMagnitude = G * (entityA->getMass() * entityB->getMass()) / (distance * distance);
+				float forceMagnitude = G * (entityA->getMass() * entityB->getMass()) / (softenedDistanceSquared);
 
 				glm::vec3 force = direction * forceMagnitude;
 				entityA->applyForce(force);

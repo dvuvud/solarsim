@@ -176,31 +176,7 @@ TEST_F(SimulationTest, OrbitalMechanics) {
 	EXPECT_LT(sunMovement, planetMovement);
 }
 
-// Test 9: Minimum distance clamping in gravity calculation
-TEST_F(SimulationTest, MinimumDistanceClamping) {
-	Transform transform1, transform2;
-	transform1.position = glm::vec3(0.0f, 0.0f, 0.0f);
-	transform2.position = glm::vec3(1.0f, 0.0f, 0.0f); // Within MIN_DISTANCE (1.5f)
-
-	auto planet1 = std::make_unique<Planet>(transform1, 1000.0f, 1.0f);
-	auto planet2 = std::make_unique<Planet>(transform2, 1000.0f, 1.0f);
-
-	simulation->spawnEntity(std::move(planet1));
-	simulation->spawnEntity(std::move(planet2));
-
-	const auto& entities = simulation->getEntities();
-	glm::vec3 initialVel1 = entities[0]->getVelocity();
-	glm::vec3 initialVel2 = entities[1]->getVelocity();
-
-	simulation->calculateGravityForces();
-	simulation->update(1.0f);
-
-	// Velocities should remain unchanged (due tolimiting minimum distance)
-	EXPECT_EQ(entities[0]->getVelocity(), initialVel1);
-	EXPECT_EQ(entities[1]->getVelocity(), initialVel2);
-}
-
-// Test 10: Entity type categorization
+// Test 9: Entity type categorization
 TEST_F(SimulationTest, EntityCategorization) {
 	Transform transform;
 
