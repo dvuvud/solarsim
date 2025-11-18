@@ -39,7 +39,7 @@ make clean
 ```bash
 # Configure and build
 cmake -B build
-cmake --build build
+cmake --build build --target solarsim
 
 # Run the application
 ./build/solarsim # Linux/macOS
