@@ -18,7 +18,7 @@ namespace solarsim {
 			void render(const std::unique_ptr<Simulation>& p_sim) const;
 		private:
 			void draw_planets(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const;
-			void draw_sun(const Sun* p_sun, const Camera* p_camera) const;
+			void draw_sun(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const;
 			void draw_grid(const std::unique_ptr<Simulation>& p_sim, const Camera* p_camera) const;
 	};
 }

@@ -9,9 +9,9 @@ uniform int uEntityCount;
 uniform mat4 uVP;
 
 void main() {
-	const float WARP_INTENSITY = 0.01;
+	const float WARP_INTENSITY = 0.1;
 	const float DISTANCE_SMOOTHING = 0.1;
-	const float FALLOFF = 0.01;
+	const float FALLOFF = 0.1;
 
 	vec3 warpedPos = aPos;
 

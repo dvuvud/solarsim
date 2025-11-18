@@ -3,7 +3,7 @@
 #include <simulation/entity.hpp>
 
 namespace solarsim {
-	Grid::Grid(GLint p_size, GLfloat p_spacing) : m_shader("assets/shaders/grid.vert", "assets/shaders/grid.frag"),
+	Grid::Grid(GLint p_size, GLfloat p_spacing) : m_shader(std::make_unique<Shader>("assets/shaders/grid.vert", "assets/shaders/grid.frag")),
 	m_VAO(0), m_VBO(0), m_EBO(0), m_size(p_size), m_spacing(p_spacing) {
 		generateGrid();
 		setupBuffer();

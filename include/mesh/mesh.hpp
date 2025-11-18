@@ -19,7 +19,7 @@ namespace solarsim {
 			Mesh(Mesh&& other) noexcept;
 			Mesh& operator=(Mesh&& other) noexcept;
 			~Mesh();
-			void render() const;
+			virtual void render() const;
 		protected:
 			std::vector<Vertex> m_vertices;
 			std::vector<unsigned int> m_indices;

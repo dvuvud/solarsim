@@ -1,10 +1,10 @@
-.PHONY: all build run clean
+.PHONY: all build run test memcheck clean
 
 all: build run
 
 build:
 	cmake -B build
-	cmake --build build
+	cmake --build build --target solarsim
 
 run:
 ifeq ($(OS),Windows_NT)
@@ -12,6 +12,16 @@ ifeq ($(OS),Windows_NT)
 else
 	./build/solarsim
 endif
+
+test:
+ifeq ($(OS),Windows_NT)
+	cd build && cmake --build . --target solarsim_tests && ctest -C Debug
+else
+	cd build && cmake --build . --target solarsim_tests && ctest --output-on-failure
+endif
+
+memcheck:
+	cd build && valgrind --leak-check=full ./solarsim_tests
 
 clean:
 ifeq ($(OS),Windows_NT)

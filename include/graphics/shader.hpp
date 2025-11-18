@@ -10,6 +10,7 @@ namespace solarsim {
 
 			unsigned int m_ID;
 
+			Shader() = default;
 			Shader(const char* p_vertexPath, const char* p_fragmentPath);
 
 			~Shader();
@@ -30,5 +31,7 @@ namespace solarsim {
 			void setVec3(const std::string &name, const glm::vec3& value) const;
 			void setVec4(const std::string &name, const glm::vec4& value) const;
 			void setVec4Array(const std::string &name, const std::vector<glm::vec4>& value) const;
+			void setVec3Array(const std::string &name, const std::vector<glm::vec3>& value) const;
+			void setFloatArray(const std::string &name, const std::vector<float>& value) const;
 	};
 }

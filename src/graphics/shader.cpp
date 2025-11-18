@@ -7,6 +7,9 @@
 
 namespace solarsim {
 	Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath) {
+		// Always intialize m_ID
+		m_ID = glCreateProgram();
+
 		std::string vertexCode;
 		std::string fragmentCode;
 		std::ifstream vShaderFile;
@@ -66,8 +69,7 @@ namespace solarsim {
 			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 		};
 
-		// shader Program
-		m_ID = glCreateProgram();
+		// attach to created shader Program
 		glAttachShader(m_ID, vertex);
 		glAttachShader(m_ID, fragment);
 		glLinkProgram(m_ID);
@@ -138,5 +140,13 @@ namespace solarsim {
 
 	void Shader::setVec4Array(const std::string &name, const std::vector<glm::vec4>& value) const {
 		glUniform4fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), (const GLfloat*)value.data());
+	}
+
+	void Shader::setVec3Array(const std::string &name, const std::vector<glm::vec3>& value) const {
+		glUniform3fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), (const GLfloat*)value.data());
+	}
+
+	void Shader::setFloatArray(const std::string &name, const std::vector<float>& value) const {
+		glUniform1fv(glGetUniformLocation(m_ID, name.c_str()), (GLsizei)value.size(), value.data());
 	}
 }

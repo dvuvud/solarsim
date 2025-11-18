@@ -6,6 +6,7 @@
 namespace solarsim {
 	class Material {
 		public:
+			Material() = default;
 			Material(const std::string& vertexPath, const std::string& fragPath) : m_shader(vertexPath.c_str(), fragPath.c_str()) {}
 
 			Material(const Material&) = delete;
@@ -15,8 +16,10 @@ namespace solarsim {
 			Material(Material&&) noexcept = default;
 			Material& operator=(Material&&) noexcept = default;
 
-			void bind() {m_shader.bind();}
-			Shader m_shader;
+			virtual ~Material() = default;
+
+			const Shader* getShader() const { return &m_shader; }
 		private:
+			Shader m_shader;
 	};
 }

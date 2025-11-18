@@ -16,7 +16,7 @@ namespace solarsim {
 	struct CameraConfig {
 		float Yaw = -90.0f;
 		float Pitch = 0.0f;
-		float Speed = 30.f;
+		float Speed = 100.f;
 		float Sensitivity = 0.1f;
 		float Fov = 45.0f;
 		float RenderDistance = 1000.f;
@@ -29,6 +29,10 @@ namespace solarsim {
 			glm::mat4 getViewMatrix() const;
 			glm::mat4 getProjectionMatrix() const;
 			glm::vec3 getPosition() const { return Position; }
+			glm::vec3 getFront() const { return Front; }
+			glm::vec3 getUp() const { return Up; }
+			glm::vec3 getRight() const { return Right; }
+			glm::vec3 getWorldUp() const { return WorldUp; }
 			float getYaw() const { return m_yaw; }
 			float getPitch() const { return m_pitch; }
 			float getFov() const { return m_fov; }
