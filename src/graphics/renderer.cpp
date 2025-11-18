@@ -30,13 +30,13 @@ namespace solarsim {
 		const std::vector<Planet*>& planets = p_sim->getPlanets();
 		if (planets.empty() || !p_camera) return;
 		for (auto& planet : planets) {
-			if (!planet) return;
+			if (!planet) continue;
 			const Mesh* mesh = planet->getMesh();
-			if (!mesh) return;
+			if (!mesh) continue;
 			const Material* mat = planet->getMaterial();
-			if (!mat) return;
+			if (!mat) continue;
 			const Shader* shader = mat->getShader();
-			if (!shader) return;
+			if (!shader) continue;
 
 			shader->bind();
 			shader->setMat4("view", p_camera->getViewMatrix());
@@ -73,13 +73,13 @@ namespace solarsim {
 		const std::vector<Sun*>& suns = p_sim->getSuns();
 		if (suns.empty() || !p_camera) return;
 		for (auto& sun : suns) {
-			if(!sun) continue;
+			if (!sun) continue;
 			const Mesh* mesh = sun->getMesh();
-			if (!mesh) return;
+			if (!mesh) continue;
 			const Material* mat = sun->getMaterial();
-			if (!mat) return;
+			if (!mat) continue;
 			const Shader* shader = mat->getShader();
-			if (!shader) return;
+			if (!shader) continue;
 			shader->bind();
 			shader->setMat4("uMVP", p_camera->getProjectionMatrix() * p_camera->getViewMatrix() * sun->getTransform().getModelMatrix());
 			shader->setVec3("uLightColor", sun->getLightColor());

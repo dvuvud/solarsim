@@ -43,7 +43,7 @@ namespace solarsim {
 			bool isPausing = false;
 
 			// Gravity constants
-			const float G = 10.0f;
+			const float G = 5.0f;
 			const float SOFTENING_SQUARED = 100.0f;
 	};
 }
