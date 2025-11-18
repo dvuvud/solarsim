@@ -29,6 +29,10 @@ namespace solarsim {
 			glm::mat4 getViewMatrix() const;
 			glm::mat4 getProjectionMatrix() const;
 			glm::vec3 getPosition() const { return Position; }
+			glm::vec3 getFront() const { return Front; }
+			glm::vec3 getUp() const { return Up; }
+			glm::vec3 getRight() const { return Right; }
+			glm::vec3 getWorldUp() const { return WorldUp; }
 			float getYaw() const { return m_yaw; }
 			float getPitch() const { return m_pitch; }
 			float getFov() const { return m_fov; }

@@ -72,6 +72,7 @@ add_executable(solarsim_tests
 	test/simulation/test_entity.cpp
 	test/simulation/test_planet.cpp
 	test/simulation/test_sun.cpp
+	test/graphics/test_camera.cpp
 )
 
 target_link_libraries(solarsim_tests
