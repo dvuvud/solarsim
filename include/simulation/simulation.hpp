@@ -20,6 +20,8 @@ namespace solarsim {
 			void calculateGravityForces();
 
 			void clearAllEntities();
+			
+			void setCameraAspectRatio(float ar) { if (m_camera) m_camera->setAspectRatio(ar); }
 
 			const Grid* getGrid() const { return m_grid.get(); }
 			size_t getEntityCount() const { return m_entities.size(); };

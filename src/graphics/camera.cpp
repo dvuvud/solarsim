@@ -1,4 +1,5 @@
 #include <graphics/camera.hpp>
+#include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -11,7 +12,8 @@ namespace solarsim {
 		m_fov(p_config.Fov),
 		m_renderDistance(p_config.RenderDistance),
 		m_movementSpeed(p_config.Speed),
-		m_mouseSensitivity(p_config.Sensitivity)
+		m_mouseSensitivity(p_config.Sensitivity),
+		m_aspectRatio(p_config.AspectRatio)
 		{
 			updateCameraVectors();
 		}
@@ -23,8 +25,7 @@ namespace solarsim {
 
 	glm::mat4 Camera::getProjectionMatrix() const
 	{
-		// TODO: 800.f / 600.f should be replaced by m_aspectRation or similar
-		return glm::perspective(glm::radians(m_fov), 800.f / 600.f, 0.1f, m_renderDistance);
+		return glm::perspective(glm::radians(m_fov), m_aspectRatio, 0.1f, m_renderDistance);
 	}
 
 	void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)

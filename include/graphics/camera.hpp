@@ -20,11 +20,14 @@ namespace solarsim {
 		float Sensitivity = 0.1f;
 		float Fov = 45.0f;
 		float RenderDistance = 1000.f;
+		float AspectRatio = 800.0f / 600.0f;
 	};
 
 	class Camera {
 		public:
 			Camera(glm::vec3 p_position, const CameraConfig& p_config = {});
+
+			void setAspectRatio(float ar) { m_aspectRatio = ar; }
 
 			glm::mat4 getViewMatrix() const;
 			glm::mat4 getProjectionMatrix() const;
@@ -37,6 +40,7 @@ namespace solarsim {
 			float getPitch() const { return m_pitch; }
 			float getFov() const { return m_fov; }
 			float getRenderDistance() const { return m_renderDistance; }
+			float getAspectRatio() const { return m_aspectRatio; }
 			float getMovementSpeed() const { return m_movementSpeed; }
 			float getMouseSensitivity() const { return m_mouseSensitivity; }
 			void ProcessKeyboard(Camera_Movement direction, float deltaTime);
@@ -52,6 +56,7 @@ namespace solarsim {
 			float m_pitch;
 			float m_fov;
 			float m_renderDistance;
+			float m_aspectRatio;
 
 			float m_movementSpeed;
 			float m_mouseSensitivity;
