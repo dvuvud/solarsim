@@ -19,16 +19,18 @@ namespace solarsim {
 		Transform earthTransform;
 		earthTransform.position = glm::vec3(0.f, 1.0f, -100.f);
 		earthTransform.scale = glm::vec3(5.0f);
-		std::unique_ptr<Material> earthMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag");
+		std::unique_ptr<Material> earthMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag",
+				glm::vec3(0.0215, 0.1745, 0.0215), glm::vec3(0.07568, 0.61424, 0.07568), glm::vec3(0.633, 0.727811, 0.633), 0.6);
 		std::unique_ptr<Mesh> earthMesh = std::make_unique<Cube>();
 		m_simulation->spawnEntity(std::make_unique<Planet>(earthTransform, earthMesh, earthMat, 100.0f, 1.0f, glm::vec3(-20.0f, 0.0f, 0.0f)));
 
 		Transform planetTransform;
 		planetTransform.position = glm::vec3(100.0f, 1.0f, 0.0f);
 		planetTransform.scale = glm::vec3(5.0f);
-		std::unique_ptr<Material> planetMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag");
+		std::unique_ptr<Material> planetMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag",
+				glm::vec3(0.135, 0.2225, 0.1575), glm::vec3(0.54, 0.89, 0.63), glm::vec3(0.316228, 0.316228, 0.316228), 0.1);
 		std::unique_ptr<Mesh> planetMesh = std::make_unique<Cube>();
-		m_simulation->spawnEntity(std::make_unique<Planet>(planetTransform, planetMesh, planetMat, 100.0f, 1.0f, glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3(0.2f, 0.4f, 0.7f)));
+		m_simulation->spawnEntity(std::make_unique<Planet>(planetTransform, planetMesh, planetMat, 100.0f, 1.0f, glm::vec3(0.0f, 0.0f, -20.0f)));
 
 		Transform sunTransform;
 		sunTransform.position = glm::vec3(0.0f, 1.0f, 0.0f);

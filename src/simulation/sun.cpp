@@ -6,6 +6,7 @@
 #include <iostream>
 
 namespace solarsim {
+	// TODO: Replace or adjust the general material member variable on suns with something more fitting
 	Sun::Sun(const Transform& transform, float m, float r, float lr, const glm::vec3& lc, const glm::vec3& iv)
 		: Entity(transform, m, r), m_lightRadius(lr), m_lightColor(lc)
 	{

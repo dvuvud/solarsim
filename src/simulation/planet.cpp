@@ -6,14 +6,14 @@
 #include <iostream>
 
 namespace solarsim {
-	Planet::Planet(const Transform& transform, float m, float r, const glm::vec3& iv, const glm::vec3& c)
-		: Entity(transform, m, r), m_color(c)
+	Planet::Planet(const Transform& transform, float m, float r, const glm::vec3& iv)
+		: Entity(transform, m, r)
 	{
 		this->setVelocity(iv);
 	}
 
-	Planet::Planet(const Transform& transform, std::unique_ptr<Mesh>& p_mesh, std::unique_ptr<Material>& p_mat, float m, float r, const glm::vec3& iv, const glm::vec3& c)
-		: Entity(transform, p_mesh, p_mat, m, r), m_color(c)
+	Planet::Planet(const Transform& transform, std::unique_ptr<Mesh>& p_mesh, std::unique_ptr<Material>& p_mat, float m, float r, const glm::vec3& iv)
+		: Entity(transform, p_mesh, p_mat, m, r)
 	{
 		this->setVelocity(iv);
 	}

@@ -43,8 +43,7 @@ namespace solarsim {
 			shader->setMat4("projection", p_camera->getProjectionMatrix());
 			shader->setMat4("model", planet->getTransform().getModelMatrix());
 
-			// TODO: Make this a member variable on planets/materials
-			shader->setVec3("objectColor", glm::vec3(planet->getColor()));
+			mat->apply();
 
 			const std::vector<Sun*>& suns = p_sim->getSuns();
 			std::vector<glm::vec3> lightPositions;
