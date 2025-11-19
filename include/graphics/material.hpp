@@ -19,7 +19,10 @@ namespace solarsim {
 			virtual ~Material() = default;
 
 			const Shader* getShader() const { return &m_shader; }
+			const void apply();
 		private:
 			Shader m_shader;
+			glm::vec3 ambient, specular, diffise;
+			float shininess;
 	};
 }
