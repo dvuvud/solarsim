@@ -9,6 +9,6 @@ namespace solarsim {
 		public:
 			Mesh* m_meshAsset;
 			Material* m_materialAsset;
-			void draw();
+			void render() const;
 	};
 }
