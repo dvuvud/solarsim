@@ -1,94 +1,25 @@
 #pragma once
 
 #include <mesh/mesh.hpp>
-#include <graphics/material.hpp>
-#include <glm/glm.hpp>
-#include <mesh/cube.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <components/transform_component.hpp>
 #include <memory>
 
 namespace solarsim {
-	class Camera;
-	struct Transform {
-		glm::vec3 position = glm::vec3(0.f,0.f,0.f);
-		glm::vec3 rotation = glm::vec3(0.f,0.f,0.f);
-		glm::vec3 scale = glm::vec3(1.f,1.f,1.f);
-
-		glm::mat4 getModelMatrix() const {
-			glm::mat4 model = glm::mat4(1.f);
-			model = glm::translate(model, position);
-			model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-			model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));  
-			model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-			model = glm::scale(model, scale);
-			return model;
-		}
-	};
-
 	class Entity {
 		public:
-			Entity(const Transform& p_transform, float m = 0.f, float r = 1.f)
-				: m_transform(p_transform),
-				m_mass(m),
-				m_radius(r) {};
-			Entity(const Transform& p_transform,
-					std::unique_ptr<Mesh>& p_mesh,
-					std::unique_ptr<Material>& p_material,
-					float m = 0.f,
-					float r = 1.f)
-				: m_transform(p_transform),
-				m_mesh(std::move(p_mesh)),
-				m_material(std::move(p_material)),
-				m_mass(m),
-				m_radius(r),
-				m_velocity(glm::vec3(0.f)),
-				m_accumulatedForce(glm::vec3(0.f)) {}
+			std::vector<Component*> m_components;
+			TransformComponent* m_transform;
+			template <typename T, typename... Args>
+				T* AddComponent(Args&&... args) {
+					T* newComponent = new T(std::forward<Args>(args)...);
+					newComponent->Owner = this;
+					m_components.push_back(newComponent);
+					return newComponent;
+				}
 			virtual ~Entity() = default;
-
 			virtual void update(float deltaTime) {
-				glm::vec3 acceleration = m_accumulatedForce / m_mass;
-
-				m_velocity += acceleration * deltaTime;
-				m_transform.position += m_velocity * deltaTime;
-
-				m_accumulatedForce = glm::vec3(0.0f);
+				for (Component* c : m_components)
+					if (c->m_isActive) c->Update(deltaTime);
 			}
-
-			virtual void applyForce(const glm::vec3& force) {
-				m_accumulatedForce += force;
-			}
-
-			void setTransform(const Transform& p_transform) { m_transform = p_transform; }
-			Transform& getTransform() { return m_transform; }
-			const Transform& getTransform() const { return m_transform; }
-
-			const Material* getMaterial() const { return m_material.get(); }
-			void getMaterial(std::unique_ptr<Material> p_mat) { m_material = std::move(p_mat); }
-
-			const Mesh* getMesh() const { return m_mesh.get(); }
-			void setMesh(std::unique_ptr<Mesh>& p_mesh) { m_mesh = std::move(p_mesh); }
-
-			void setVelocity(const glm::vec3& p_velocity) { m_velocity = p_velocity; }
-			const glm::vec3& getVelocity() { return m_velocity; }
-
-			void setPosition(const glm::vec3& p_position) { m_transform.position = p_position; }
-			glm::vec3 getPosition() const { return m_transform.position; }
-
-			void setRotation(const glm::vec3& p_rotation) { m_transform.rotation = p_rotation; }
-			glm::vec3 getRotation() const { return m_transform.rotation; }
-
-			void setScale(const glm::vec3& p_scale) { m_transform.scale = p_scale; }
-			glm::vec3 getScale() const { return m_transform.scale; }
-
-			float getMass() const { return m_mass; }
-			float getRadius() const { return m_radius; }
-		protected:
-			Transform m_transform;
-			glm::vec3 m_velocity;
-			glm::vec3 m_accumulatedForce;
-			std::unique_ptr<Mesh> m_mesh;
-			std::unique_ptr<Material> m_material;
-			float m_mass;
-			float m_radius;
 	};
 }
