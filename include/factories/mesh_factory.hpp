@@ -15,7 +15,7 @@ namespace solarsim {
 				return instance;
 			}
 
-			std::shared_ptr<Mesh> loadMesh(const std::string& meshID) {
+			std::shared_ptr<Mesh> LoadMesh(const std::string& meshID) {
 				auto it = loadedMeshes.find(meshID);
 				if (it != loadedMeshes.end()) {
 					return it->second;

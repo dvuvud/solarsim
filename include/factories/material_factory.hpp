@@ -14,7 +14,7 @@ namespace solarsim {
 				return instance;
 			}
 
-			std::shared_ptr<Material> loadMaterial(const std::string& materialID) {
+			std::shared_ptr<Material> LoadMaterial(const std::string& materialID) {
 				auto it = loadedMaterials.find(materialID);
 				if (it != loadedMaterials.end()) {
 					return it->second;
