@@ -16,10 +16,13 @@ namespace solarsim {
 
 	class Engine {
 		public:
+			static Engine* Current() { return current; }
+			void SetCurrent() { current = this; }
 			Engine(unsigned int width = 800, unsigned int height = 600, const std::string& title = "solarsim");
 			~Engine();
 			void run();
 		private:
+			static Engine* current;
 			std::unique_ptr<Window> m_window;
 			std::unique_ptr<Simulation> m_simulation;
 			std::unique_ptr<Renderer> m_renderer;
