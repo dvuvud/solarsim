@@ -20,12 +20,13 @@ namespace solarsim {
 					return it->second;
 				}
 				// TODO: Add functionality for loading materials
-				auto material = std::make_shared<Material>(materialID);
+				auto material = std::make_shared<Material>();
+				loadedMaterials[materialID] = material;
 				return material;
 			}
 		private:
 			MaterialFactory() {}
 			~MaterialFactory() {}
 			std::unordered_map<std::string, std::shared_ptr<Material>> loadedMaterials;
-	}
+	};
 }

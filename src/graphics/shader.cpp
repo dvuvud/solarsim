@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace solarsim {
-	Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath) {
+	void Shader::LoadFromFile(const std::string& p_vertexPath, const std::string& p_fragmentPath) {
 		// Always intialize m_ID
 		m_ID = glCreateProgram();
 

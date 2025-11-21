@@ -5,6 +5,7 @@
 #include <memory>
 
 namespace solarsim {
+	class LightComponent;
 	class Entity {
 		public:
 			std::vector<Component*> m_components;
@@ -14,6 +15,10 @@ namespace solarsim {
 					T* newComponent = new T(std::forward<Args>(args)...);
 					newComponent->Owner = this;
 					m_components.push_back(newComponent);
+					if constexpr (std::is_same<T, LightComponent>)
+						SimulationManager::getActiveSimulation()->RegisterLight(this);
+					if constexpr (std::is_same<T, MeshComponent>)
+						SimulationManager::getActiveSimulation()->RegisterRenderable(this);
 					return newComponent;
 				}
 			virtual ~Entity() = default;

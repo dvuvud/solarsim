@@ -5,9 +5,8 @@
 #include <graphics/grid.hpp>
 
 namespace solarsim {
+	class LightComponent;
 	class Entity;
-	class Planet;
-	class Sun;
 	class Simulation {
 		public:
 			Simulation(bool shouldMakeGrid = true);
@@ -17,27 +16,21 @@ namespace solarsim {
 
 			void update(float deltaTime);
 
-			void calculateGravityForces();
-
 			void clearAllEntities();
 			
-			void setCameraAspectRatio(float ar) { if (m_camera) m_camera->setAspectRatio(ar); }
-
 			const Grid* getGrid() const { return m_grid.get(); }
 			size_t getEntityCount() const { return m_entities.size(); };
 
 			Camera* getCamera() { return m_camera.get(); }
 			const Camera* getCamera() const { return m_camera.get(); }
 			const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
-			const std::vector<Planet*>& getPlanets() const { return m_planets; }
-			const std::vector<Sun*>& getSuns() const { return m_suns; }
 			void toggleReverse() { isReversing = !isReversing; }
 			void togglePause() { isPausing = !isPausing; }
+			void setCameraAspectRatio(float ar) { if (m_camera) m_camera->setAspectRatio(ar); }
 		private:
+			std::vector<LightComponent*> lights;
 			std::unique_ptr<Grid> m_grid;
 			std::vector<std::unique_ptr<Entity>> m_entities;
-			std::vector<Planet*> m_planets;
-			std::vector<Sun*> m_suns;
 			std::unique_ptr<Camera> m_camera;
 			bool isReversing = false;
 			bool isPausing = false;

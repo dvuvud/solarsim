@@ -48,7 +48,7 @@ namespace solarsim {
 		}
 	}
 
-	void Mesh::render() const {
+	void Mesh::draw() const {
 		glBindVertexArray(m_VAO);
 		if (m_indices.empty()) {
 			glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_vertices.size());

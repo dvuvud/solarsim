@@ -11,7 +11,7 @@ namespace solarsim {
 			unsigned int m_ID;
 
 			Shader() = default;
-			Shader(const char* p_vertexPath, const char* p_fragmentPath);
+			void LoadFromFile(const std::string& p_vertexPath, const std::string& p_fragmentPath);
 
 			~Shader();
 
