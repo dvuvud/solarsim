@@ -1,37 +1,43 @@
 #pragma once
 
 #include <graphics/camera.hpp>
+#include <unordered_map>
+#include <string>
 #include <memory>
-#include <graphics/grid.hpp>
 
 namespace solarsim {
 	class LightComponent;
+	class MeshComponent;
 	class Entity;
 	class Simulation {
 		public:
-			Simulation(bool shouldMakeGrid = true);
+			Simulation();
 			~Simulation();
 
-			void spawnEntity(std::unique_ptr<Entity> p_entity);
+			void RegisterEntity(const std::string& type, std::unique_ptr<Entity> p_entity);
 
 			void update(float deltaTime);
 
 			void clearAllEntities();
 			
-			const Grid* getGrid() const { return m_grid.get(); }
-			size_t getEntityCount() const { return m_entities.size(); };
-
 			Camera* getCamera() { return m_camera.get(); }
 			const Camera* getCamera() const { return m_camera.get(); }
-			const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
+
+			const std::vector<std::unique_ptr<Entity>>* getType(const std::string& type) const { 
+				auto it = EntityByType.find(type); 
+				if (it != EntityByType.end()) {
+					return &it->second;
+				}
+				return nullptr;
+			}
+
 			void toggleReverse() { isReversing = !isReversing; }
 			void togglePause() { isPausing = !isPausing; }
 			void setCameraAspectRatio(float ar) { if (m_camera) m_camera->setAspectRatio(ar); }
 		private:
-			std::vector<LightComponent*> lights;
-			std::unique_ptr<Grid> m_grid;
-			std::vector<std::unique_ptr<Entity>> m_entities;
+			std::unordered_map<std::string, std::vector<std::unique_ptr<Entity>>> EntityByType;
 			std::unique_ptr<Camera> m_camera;
+
 			bool isReversing = false;
 			bool isPausing = false;
 

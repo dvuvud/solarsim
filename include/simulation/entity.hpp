@@ -2,6 +2,7 @@
 
 #include <mesh/mesh.hpp>
 #include <components/transform_component.hpp>
+#include <managers/simulation_manager.hpp>
 #include <memory>
 
 namespace solarsim {
@@ -15,10 +16,6 @@ namespace solarsim {
 					T* newComponent = new T(std::forward<Args>(args)...);
 					newComponent->Owner = this;
 					m_components.push_back(newComponent);
-					if constexpr (std::is_same<T, LightComponent>)
-						SimulationManager::getActiveSimulation()->RegisterLight(this);
-					if constexpr (std::is_same<T, MeshComponent>)
-						SimulationManager::getActiveSimulation()->RegisterRenderable(this);
 					return newComponent;
 				}
 			virtual ~Entity() = default;

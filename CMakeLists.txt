@@ -24,18 +24,6 @@ find_package(OpenGL REQUIRED)
 ## Library for core functionality
 add_library(solarsim_core
 	src/engine/engine.cpp
-	src/core/window.cpp
-	src/core/input_manager.cpp
-	src/graphics/shader.cpp
-	src/graphics/texture.cpp
-	src/graphics/camera.cpp
-	src/graphics/renderer.cpp
-	src/graphics/grid.cpp
-	src/simulation/simulation.cpp
-	src/simulation/planet.cpp
-	src/simulation/sun.cpp
-	src/mesh/mesh.cpp
-	src/mesh/cube.cpp
 )
 
 target_include_directories(solarsim_core PUBLIC
