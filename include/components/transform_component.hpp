@@ -2,35 +2,23 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include "component.hpp"
 #include "glm/ext/quaternion_transform.hpp"
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 #include <glm/gtx/quaternion.hpp>
 
 namespace solarsim {
-	class TransformComponent : public Component {
-		public:
-			glm::vec3 m_position{0.0f};
-			glm::quat m_rotation{1.0f, 0.0f, 0.0f, 0.0f};
-			glm::vec3 m_scale{1.0f};
+	struct TransformComponent {
+		glm::vec3 position{0.0f};
+		glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
+		glm::vec3 scale{1.0f};
 
-			void setPosition(const glm::vec3& pos) { m_position = pos; m_dirty = true; }
-			void setRotation(const glm::quat& rot) { m_rotation = rot; m_dirty = true; }
-			void setScale(const glm::vec3& scale) { m_scale = scale; m_dirty = true; }
+		glm::vec3 forward() const { return rotation * glm::vec3(0, 0, -1); }
+		glm::vec3 up() const { return rotation * glm::vec3(0, 1,  0); }
+		glm::vec3 right() const { return rotation * glm::vec3(1, 0,  0); }
 
-			[[nodiscard]] glm::mat4 getModelMatrix() const noexcept {
-				if (m_dirty) {
-					m_cachedMatrix = glm::translate(glm::mat4(1.0f), m_position) *
-						glm::toMat4(m_rotation) *
-						glm::scale(glm::mat4(1.0f), m_scale);
-					m_dirty = false;
-				}
-				return m_cachedMatrix;
-			}
-		private:
-			mutable glm::mat4 m_cachedMatrix{1.0f};
-			mutable bool m_dirty{true};
+		mutable glm::mat4 modelMatrix;
+		mutable bool dirty = true;
 	};
 }
 
