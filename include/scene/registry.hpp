@@ -26,13 +26,13 @@ namespace solarsim {
 				}
 
 			template<typename Component>
-				bool hasComponent(Entity e) const {
+				bool hasComponent(Entity e) {
 					auto& storage = getComponentStorage<Component>();
 					return storage.find(e) != storage.end();
 				}
 
 			template<typename... Components>
-				std::vector<Entity> view() const {
+				std::vector<Entity> view() {
 					std::vector<Entity> result;
 					if constexpr (sizeof...(Components) == 0) return result;
 
@@ -45,7 +45,6 @@ namespace solarsim {
 
 					return result;
 				}
-
 		private:
 			std::unordered_set<Entity> entities;
 			unsigned int nextEntity = 0;

@@ -37,7 +37,7 @@ namespace solarsim {
 		return shader;
 	}
 
-	unsigned int compileShader(const std::string& shaderID) {
+	unsigned int AssetManager::compileShader(const std::string& shaderID) {
 		return 0;
 	}
 }
