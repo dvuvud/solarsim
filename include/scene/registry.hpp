@@ -21,7 +21,7 @@ namespace solarsim {
 				}
 
 			template<typename Component>
-				Component& getComponent(Entity e) const {
+				Component& getComponent(Entity e) {
 					return getComponentStorage<Component>().at(e);
 				}
 

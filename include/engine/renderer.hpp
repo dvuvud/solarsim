@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <scene/entity.hpp>
 
 namespace solarsim {
@@ -9,7 +10,7 @@ namespace solarsim {
 		public:
 			void render();
 		private:
-			Entity getPrimaryCamera(const Registry& registry);
+			std::optional<Entity> getPrimaryCamera(Registry& registry);
 	};
 
 }
