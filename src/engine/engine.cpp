@@ -28,6 +28,11 @@ namespace solarsim {
 		m_renderer = std::make_unique<Renderer>();
 		SceneManager::get().loadScene(std::make_unique<Scene>());
 		Registry& reg = SceneManager::get().active()->registry;
+		
+		Entity grid = reg.createEntity();
+		reg.addComponent<TransformComponent>(grid, TransformComponent());
+		reg.addComponent<MeshComponent>(grid, MeshComponent{.meshID="grid", .materialID="simple1"});
+
 		Entity e1 = reg.createEntity();
 		reg.addComponent<TransformComponent>(e1, TransformComponent());
 		reg.addComponent<MeshComponent>(e1, MeshComponent{.meshID="cube", .materialID="simple1"});

@@ -71,6 +71,41 @@ namespace solarsim {
 				-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f
 			};
 			mesh->vertexCount = 36;
+		} else if (meshID == "grid") {
+			int m_size = 100;
+			float m_spacing = 3.5f;
+
+			// Create individual points at each vertex in the grid
+			for (int z = -m_size; z < m_size; ++z) {
+				for (int x = -m_size; x < m_size; ++x) {
+					GLfloat xPos = x * m_spacing;
+					GLfloat zPos = z * m_spacing;
+					mesh->vertices.insert(mesh->vertices.end(), {xPos, 0.f, zPos});
+				}
+			}
+
+			GLuint pointsPerSide = m_size * 2;
+
+			// Link those points together 2x2 to create horizontal lines
+			for (GLuint z = 0; z < pointsPerSide; ++z) {
+				for (GLuint x = 0; x < pointsPerSide - 1; ++x) {
+					GLuint start = z * pointsPerSide + x;
+					GLuint end = start + 1;
+					mesh->indices.insert(mesh->indices.end(), {start, end});
+				}
+			}
+
+			// Link those points together 2x2 to create vertical lines
+			for (GLuint x = 0; x < pointsPerSide; ++x) {
+				for (GLuint z = 0; z < pointsPerSide - 1; ++z) {
+					GLuint start = z * pointsPerSide + x;
+					GLuint end = start + pointsPerSide;
+					mesh->indices.insert(mesh->indices.end(), {start, end});
+				}
+			}
+			mesh->vertexCount = mesh->indices.size();
+			mesh->useElements = true;
+			mesh->drawMode = GL_LINES;
 		}
 
 		mesh->setupBuffers();
