@@ -9,7 +9,7 @@
 namespace solarsim {
 	class Registry {
 		public:
-			Entity createEntity() {
+			[[nodiscard]] Entity createEntity() {
 				Entity e = nextEntity++;
 				entities.insert(e);
 				return e;
