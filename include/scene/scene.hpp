@@ -1,7 +1,9 @@
 #pragma once
 
 #include "registry.hpp"
+#include <systems/render_system.hpp>
 #include <systems/physics_system.hpp>
+#include <managers/input_manager.hpp>
 
 namespace solarsim {
 	struct Scene {
