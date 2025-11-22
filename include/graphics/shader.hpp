@@ -10,13 +10,26 @@
 namespace solarsim {
 	struct Shader
 	{
-		unsigned int programID;
+		unsigned int programID = 0;
 
 		void use() {
 			glUseProgram(programID);
 		}
+		
 		void setUniform(const std::string& name, const glm::mat4& value) {
 			glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		}
+		void setUniform(const std::string& name, const glm::vec3& value) {
+			glUniform3fv(glGetUniformLocation(programID, name.c_str()), 1, glm::value_ptr(value));
+		}
+		void setUniform(const std::string& name, float value) {
+			glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
+		}
+		void setUniform(const std::string& name, int value) {
+			glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+		}
+		void setUniform(const std::string& name, bool value) {
+			glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
 		}
 
 		void compile(const std::string& vertexSrc, const std::string& fragmentSrc) {
