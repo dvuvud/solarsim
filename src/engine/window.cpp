@@ -5,6 +5,7 @@
 
 namespace solarsim {
 	Window::Window(const unsigned int p_width, const unsigned int p_height, const char* p_title) {
+		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -22,6 +23,10 @@ namespace solarsim {
 		{
 			throw std::runtime_error("Failed to initialize GLAD");
 		}
+	}
+	Window::~Window() {
+		if (m_window) glfwDestroyWindow(m_window);
+		if (glfwInit()) glfwTerminate();
 	}
 	void Window::framebuffer_size_callback(GLFWwindow* w, int p_width, int p_height) {
 		glViewport(0, 0, p_width, p_height);

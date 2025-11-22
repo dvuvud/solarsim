@@ -14,7 +14,7 @@ namespace solarsim {
 
 	void Engine::init() {
 		m_window = std::make_unique<Window>(800, 600, "solarsim");
-		m_inputSystem = std::make_unique<InputSystem>();
+		m_inputSystem = std::make_unique<InputSystem>(m_window->getNativeWindow());
 		m_physicsSystem = std::make_unique<PhysicsSystem>();
 		m_renderer = std::make_unique<Renderer>();
 	}

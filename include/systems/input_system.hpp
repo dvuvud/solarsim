@@ -5,7 +5,7 @@
 namespace solarsim {
 	class InputSystem {
 		public:
-			InputSystem();
+			InputSystem(GLFWwindow* window);
 			~InputSystem();
 			void processInput(float deltaTime);
 		private:

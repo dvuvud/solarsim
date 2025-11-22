@@ -3,13 +3,10 @@
 #include <engine/engine.hpp>
 
 namespace solarsim {
-	InputSystem::InputSystem() {
-		Window* window = Engine::get().window();
+	InputSystem::InputSystem(GLFWwindow* window) {
 		if (window) {
-			GLFWwindow* w = window->getNativeWindow();
-
-			glfwSetCursorPosCallback(w, mouseCallback);
-			glfwSetInputMode(w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetCursorPosCallback(window, mouseCallback);
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 	}
 
