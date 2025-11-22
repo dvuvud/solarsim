@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 #include <unordered_set>
-#include <simulation/entity.hpp>
 
 namespace solarsim {
 	class Registry {
@@ -20,7 +19,10 @@ namespace solarsim {
 				}
 
 			template<typename... Components>
-				std::vector<Entity> view();
+				std::vector<Entity> view() {
+					
+				}
+					
 
 		private:
 			std::unordered_set<Entity> entities;
