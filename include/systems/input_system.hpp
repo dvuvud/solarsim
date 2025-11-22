@@ -9,6 +9,8 @@ namespace solarsim {
 			~InputSystem();
 			void processInput(float deltaTime);
 		private:
-			static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+			void toggleMouseCapture();
+			bool mouseCaptured = true;
+			GLFWwindow* m_window;
 	};
 }
