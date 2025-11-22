@@ -21,7 +21,7 @@ namespace solarsim {
 	void InputSystem::processInput(float deltaTime) {
 		Scene* scene = SceneManager::get().active();
 		if (!scene) return;
-		Registry& registry = scene->registry;
+		auto& registry = scene->registry;
 
 		static bool rLast = false;
 		static bool tabLast = false;
@@ -37,20 +37,32 @@ namespace solarsim {
 
 			float speed = input.movementSpeed * deltaTime;
 
-			if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+			if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS) {
 				transform.position += forward * speed;
-			if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+				transform.dirty = true;
+			}
+			if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS) {
 				transform.position -= forward * speed;
+				transform.dirty = true;
+			}
 
-			if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+			if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS) {
 				transform.position += right * speed;
-			if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+				transform.dirty = true;
+			}
+			if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS) {
 				transform.position -= right * speed;
+				transform.dirty = true;
+			}
 
-			if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+			if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 				transform.position += up * speed;
-			if (glfwGetKey(m_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+				transform.dirty = true;
+			}
+			if (glfwGetKey(m_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
 				transform.position -= up * speed;
+				transform.dirty = true;
+			}
 
 			if (mouseCaptured) {
 				double mouseX, mouseY;
@@ -75,6 +87,7 @@ namespace solarsim {
 				glm::quat yaw = glm::angleAxis(glm::radians(-dx * sens), glm::vec3(0,1,0));
 				glm::quat pitch = glm::angleAxis(glm::radians(dy * sens), glm::vec3(1,0,0));
 				transform.rotation = yaw * transform.rotation * pitch;
+				transform.dirty = true;
 			}
 		}
 

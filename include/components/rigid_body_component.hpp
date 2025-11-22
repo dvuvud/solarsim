@@ -4,9 +4,9 @@
 
 namespace solarsim {
 	struct Rigidbodycomponent {
-		float mass;
-		glm::vec3 vel;
-		bool useGravity;
+		float mass = 1.0f;
+		glm::vec3 vel = glm::vec3(0.0f);
+		bool useGravity = true;
 	};
 }
 

@@ -83,8 +83,11 @@ namespace solarsim {
 
 		// TODO: Add functionality for loading materials
 		auto material = std::make_shared<Material>();
-		if (materialID == "simple") {
-			material->shaderID = materialID;
+		if (materialID == "simple1") {
+			material->shaderID = "simple";
+		} else if (materialID == "simple2") {
+			material->shaderID = "simple";
+			material->albedo = glm::vec3(1.0f, 0.0f, 0.0f);
 		}
 		loadedMaterials[materialID] = material;
 		return material;
