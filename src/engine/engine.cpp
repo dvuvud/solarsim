@@ -10,6 +10,7 @@
 
 #include <components/transform_component.hpp>
 #include <components/mesh_component.hpp>
+#include <components/grid_component.hpp>
 #include <components/camera_component.hpp>
 #include <components/input_component.hpp>
 #include <components/rigid_body_component.hpp>
@@ -30,8 +31,7 @@ namespace solarsim {
 		Registry& reg = SceneManager::get().active()->registry;
 		
 		Entity grid = reg.createEntity();
-		reg.addComponent<TransformComponent>(grid, TransformComponent());
-		reg.addComponent<MeshComponent>(grid, MeshComponent{.meshID="grid", .materialID="simple1"});
+		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
 		Entity e1 = reg.createEntity();
 		reg.addComponent<TransformComponent>(e1, TransformComponent());

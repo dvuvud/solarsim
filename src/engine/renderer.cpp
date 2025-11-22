@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <components/mesh_component.hpp>
+#include <components/grid_component.hpp>
 #include <components/transform_component.hpp>
 #include <components/camera_component.hpp>
 
@@ -25,6 +26,8 @@ namespace solarsim {
 		if (!scene) return;
 
 		Registry& registry = scene->registry;
+
+		// ------- CAMERA MATRICES --------
 		auto cameraEntityOpt = getPrimaryCamera(registry);
 		if (cameraEntityOpt == -1) return;
 		Entity cameraEntity = *cameraEntityOpt;
@@ -42,7 +45,33 @@ namespace solarsim {
 		glm::mat4 projection = glm::perspective(glm::radians(cam.fov),
 				cam.aspect, cam.near, cam.far);
 
-		for (Entity e : registry.view<TransformComponent, MeshComponent>()) {
+		// ------- RENDER GRID --------
+		for (auto e : registry.view<GridComponent>()) {
+			auto& meshComp = registry.getComponent<GridComponent>(e);
+
+			auto mesh = AssetManager::get().LoadMesh(meshComp.meshID);
+			auto material = AssetManager::get().LoadMaterial(meshComp.materialID);
+			if (!mesh || !material) continue;
+			auto shader = AssetManager::get().LoadShader(material->shaderID);
+			if (!shader) return;
+
+			shader->use();
+			shader->setUniform("uVP", projection * view);
+
+			shader->setUniform("uMaterial.albedo", material->albedo);
+			shader->setUniform("uMaterial.metallic", material->metallic);
+			shader->setUniform("uMaterial.roughness", material->roughness);
+
+			glBindVertexArray(mesh->vao);
+			if (mesh->useElements)
+				glDrawElements(mesh->drawMode, mesh->vertexCount, GL_UNSIGNED_INT, 0);
+			else
+				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
+		}
+
+
+		// ------- RENDER MESHES --------
+		for (auto e : registry.view<TransformComponent, MeshComponent>()) {
 			auto& transform = registry.getComponent<TransformComponent>(e);
 			auto& meshComp = registry.getComponent<MeshComponent>(e);
 
@@ -50,9 +79,8 @@ namespace solarsim {
 
 			// TODO: Add logs for when things go wrong
 			auto mesh = AssetManager::get().LoadMesh(meshComp.meshID);
-			if (!mesh) continue;
 			auto material = AssetManager::get().LoadMaterial(meshComp.materialID);
-			if (!material) continue;
+			if (!mesh || !material) continue;
 			auto shader = AssetManager::get().LoadShader(material->shaderID);
 			if (!shader) continue;
 

@@ -106,6 +106,7 @@ namespace solarsim {
 			mesh->vertexCount = mesh->indices.size();
 			mesh->useElements = true;
 			mesh->drawMode = GL_LINES;
+			mesh->useNormals = false;
 		}
 
 		mesh->setupBuffers();
@@ -123,6 +124,8 @@ namespace solarsim {
 		} else if (materialID == "simple2") {
 			material->shaderID = "simple";
 			material->albedo = glm::vec3(1.0f, 0.0f, 0.0f);
+		} else if (materialID == "grid") {
+			material->shaderID = "grid";
 		}
 		loadedMaterials[materialID] = material;
 		return material;

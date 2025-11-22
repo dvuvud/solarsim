@@ -13,6 +13,8 @@ namespace solarsim {
 		GLenum drawMode = GL_TRIANGLES;
 		bool useElements = false;
 
+		bool useNormals = true;
+
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
 
@@ -30,12 +32,17 @@ namespace solarsim {
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 			}
 
+			size_t fields = useNormals ? 2 : 1;
+			size_t stride = fields * 3;
+
 			// TODO: Add more vertex data
 			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)0);
 
-			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+			if (useNormals) {
+				glEnableVertexAttribArray(1);
+				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(3 * sizeof(float)));
+			}
 
 			glBindVertexArray(0);
 		}
