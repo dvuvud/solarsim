@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace solarsim {
 	struct Scene;
 	class SceneManager {
@@ -11,9 +13,10 @@ namespace solarsim {
 
 			Scene* active();
 
-			void setActive(Scene* scene);
+			void loadScene(std::unique_ptr<Scene> newScene);
+			void unloadScene();
 		private:
-			Scene* activeScene;
+			std::unique_ptr<Scene> m_activeScene;
 			SceneManager() {}
 			~SceneManager() {}
 	};

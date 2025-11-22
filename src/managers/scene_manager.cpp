@@ -1,7 +1,5 @@
 #include <managers/scene_manager.hpp>
 
-#include <scene/scene.hpp>
-
 namespace solarsim {
 	SceneManager& SceneManager::get() {
 		static SceneManager instance;
@@ -9,10 +7,14 @@ namespace solarsim {
 	}
 
 	Scene* SceneManager::active() {
-		return activeScene;
+		return m_activeScene.get();
 	}
 
-	void SceneManager::setActive(Scene* scene) {
-		activeScene = scene;
+	void SceneManager::loadScene(std::unique_ptr<Scene> newScene) {
+		m_activeScene = std::move(newScene);
+	}
+
+	void SceneManager::unloadScene() {
+		m_activeScene.reset();
 	}
 }
