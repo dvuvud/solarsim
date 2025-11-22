@@ -52,21 +52,30 @@ namespace solarsim {
 			if (glfwGetKey(m_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 				transform.position -= up * speed;
 
-			double mouseX, mouseY;
-			glfwGetCursorPos(m_window, &mouseX, &mouseY);
+			if (mouseCaptured) {
+				double mouseX, mouseY;
+				glfwGetCursorPos(m_window, &mouseX, &mouseY);
 
-			static double lastX = mouseX, lastY = mouseY;
-			float dx = float(mouseX - lastX);
-			float dy = float(lastY - mouseY);
+				static double lastX = mouseX, lastY = mouseY;
 
-			lastX = mouseX;
-			lastY = mouseY;
+				if (justCaptured) {
+					lastX = mouseX;
+					lastY = mouseY;
+					justCaptured = false;
+				}
 
-			float sens = input.mouseSensitivity;;
+				float dx = float(mouseX - lastX);
+				float dy = float(lastY - mouseY);
 
-			glm::quat yaw = glm::angleAxis(glm::radians(dx * sens), glm::vec3(0,1,0));
-			glm::quat pitch = glm::angleAxis(glm::radians(dy * sens), glm::vec3(1,0,0));
-			transform.rotation = yaw * transform.rotation * pitch;
+				lastX = mouseX;
+				lastY = mouseY;
+
+				float sens = input.mouseSensitivity;;
+
+				glm::quat yaw = glm::angleAxis(glm::radians(-dx * sens), glm::vec3(0,1,0));
+				glm::quat pitch = glm::angleAxis(glm::radians(dy * sens), glm::vec3(1,0,0));
+				transform.rotation = yaw * transform.rotation * pitch;
+			}
 		}
 
 		// ------ GLOBAL KEYS -------
@@ -102,15 +111,8 @@ namespace solarsim {
 
 	void InputSystem::toggleMouseCapture() {
 		mouseCaptured = !mouseCaptured;
-
-		if (mouseCaptured) {
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			// Clear initial mouse delta spike
-			double x, y;
-			glfwGetCursorPos(m_window, &x, &y);
-		} else {
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		}
+		glfwSetInputMode(m_window, GLFW_CURSOR, mouseCaptured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		justCaptured = mouseCaptured;
 	}
 
 }

@@ -9,10 +9,6 @@ namespace solarsim {
 	void PhysicsSystem::update(float deltaTime) {
 		Scene* scene = SceneManager::get().active();
 		if (!scene) return;
-		if (scene->reverse)
-			std::cout << "reversing" << std::endl;
-		if (scene->paused)
-			std::cout << "pausing" << std::endl;
 		// Get scene from scene manager
 		//
 		// Get registry from scene

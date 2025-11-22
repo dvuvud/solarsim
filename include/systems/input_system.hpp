@@ -11,6 +11,7 @@ namespace solarsim {
 		private:
 			void toggleMouseCapture();
 			bool mouseCaptured = true;
+			bool justCaptured = true;
 			GLFWwindow* m_window;
 	};
 }
