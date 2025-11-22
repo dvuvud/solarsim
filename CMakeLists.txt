@@ -23,7 +23,6 @@ find_package(OpenGL REQUIRED)
 
 ## Library for core functionality
 add_library(solarsim_core
-	src/app.cpp
 	src/engine/engine.cpp
 	src/engine/renderer.cpp
 	src/engine/window.cpp
@@ -31,7 +30,6 @@ add_library(solarsim_core
 	src/managers/scene_manager.cpp
 	src/systems/input_system.cpp
 	src/systems/physics_system.cpp
-
 )
 
 target_include_directories(solarsim_core PUBLIC
@@ -52,7 +50,7 @@ endif()
 
 
 ## Main executable
-add_executable(solarsim src/main.cpp)
+add_executable(solarsim src/app.cpp)
 target_link_libraries(solarsim solarsim_core)
 
 
@@ -60,21 +58,21 @@ target_link_libraries(solarsim solarsim_core)
 #			Tests				  #
 ###########################################################
 
-enable_testing()
-add_subdirectory(vendor/googletest)
+#enable_testing()
+#add_subdirectory(vendor/googletest)
 
-add_executable(solarsim_tests
-)
+#add_executable(solarsim_tests test/
+#)
 
-target_link_libraries(solarsim_tests
-	solarsim_core
-	gtest
-	gtest_main
-)
+#target_link_libraries(solarsim_tests
+#	solarsim_core
+#	gtest
+#	gtest_main
+#)
 
-target_include_directories(solarsim_tests PRIVATE
-	include
-)
+#target_include_directories(solarsim_tests PRIVATE
+#	include
+#)
 
-include(GoogleTest)
-gtest_discover_tests(solarsim_tests)
+#include(GoogleTest)
+#gtest_discover_tests(solarsim_tests)
