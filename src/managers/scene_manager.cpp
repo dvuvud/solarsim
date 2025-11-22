@@ -1,5 +1,7 @@
 #include <managers/scene_manager.hpp>
 
+#include <scene/scene.hpp>
+
 namespace solarsim {
 	SceneManager& SceneManager::get() {
 		static SceneManager instance;

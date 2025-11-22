@@ -15,6 +15,19 @@ namespace solarsim {
 
 		// TODO: Implement assimp and replace the following with model loading
 		auto mesh = std::make_shared<Mesh>();
+		if (meshID == "cube") {
+			mesh->vertices = {
+
+			};
+			
+			mesh->indices = {
+			};
+
+			mesh->vertexCount = mesh->indices.size();
+			mesh->useElements = true;
+		}
+
+		mesh->setupBuffers();
 		loadedMeshes[meshID] = mesh;
 		return mesh;
 	}

@@ -61,9 +61,11 @@ namespace solarsim {
 			// Set other uniforms like applying materials and light etc
 			// Could for example loop over registry.view(TransformComponent, LightComponent>()
 
-			// TODO: Move options like the following over to mesh
 			glBindVertexArray(mesh->vao);
-			glDrawArrays(GL_TRIANGLES, 0, mesh->vertexCount);
+			if (mesh->useElements)
+				glDrawElements(mesh->drawMode, mesh->vertexCount, GL_UNSIGNED_INT, 0);
+			else
+				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
 		}
 	}
 
