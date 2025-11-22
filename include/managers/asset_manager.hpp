@@ -2,8 +2,6 @@
 
 #include <unordered_map>
 #include <string>
-#include <mesh/cube.hpp>
-#include <graphics/material.hpp>
 
 namespace solarsim {
 	class AssetManager {

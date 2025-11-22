@@ -1,6 +1,6 @@
 #pragma once
 
 namespace solarsim {
-	class PhysicsSystem {
+	class InputManager {
 	};
 }

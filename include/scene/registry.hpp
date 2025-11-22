@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <unordered_set>
+#include "entity.hpp"
 
 namespace solarsim {
 	class Registry {
