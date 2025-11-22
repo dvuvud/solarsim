@@ -11,6 +11,7 @@
 #include <components/transform_component.hpp>
 #include <components/mesh_component.hpp>
 #include <components/camera_component.hpp>
+#include <components/input_component.hpp>
 
 namespace solarsim {
 	Engine::Engine() {
@@ -32,7 +33,8 @@ namespace solarsim {
 
 		Entity camEntity = reg.createEntity();
 		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(0.0f,0.0f,5.0f)});
-		reg.addComponent<CameraComponent>(camEntity, CameraComponent{.primary=true});
+		reg.addComponent<CameraComponent>(camEntity, CameraComponent());
+		reg.addComponent<InputComponent>(camEntity, InputComponent());
 	}
 
 	void Engine::run() {

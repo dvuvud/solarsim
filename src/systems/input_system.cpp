@@ -62,10 +62,10 @@ namespace solarsim {
 			lastX = mouseX;
 			lastY = mouseY;
 
-			float sens = input.mouseSensitivity;
+			float sens = input.mouseSensitivity;;
 
-			glm::quat yaw = glm::angleAxis(dx * sens, glm::vec3(0,1,0));
-			glm::quat pitch = glm::angleAxis(dy * sens, glm::vec3(1,0,0));
+			glm::quat yaw = glm::angleAxis(glm::radians(dx * sens), glm::vec3(0,1,0));
+			glm::quat pitch = glm::angleAxis(glm::radians(dy * sens), glm::vec3(1,0,0));
 			transform.rotation = yaw * transform.rotation * pitch;
 		}
 
@@ -103,15 +103,12 @@ namespace solarsim {
 	void InputSystem::toggleMouseCapture() {
 		mouseCaptured = !mouseCaptured;
 
-		if (mouseCaptured)
-		{
+		if (mouseCaptured) {
 			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			// Clear initial mouse delta spike
 			double x, y;
 			glfwGetCursorPos(m_window, &x, &y);
-		}
-		else
-		{
+		} else {
 			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}
