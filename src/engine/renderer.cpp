@@ -19,6 +19,8 @@
 
 namespace solarsim {
 	void Renderer::render() {
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Scene* scene = SceneManager::get().active();
 		if (!scene) return;
 
@@ -46,7 +48,7 @@ namespace solarsim {
 
 			glm::mat4 model = transform.getModelMatrix();
 
-			// TODO: Add logs when things go wrong
+			// TODO: Add logs for when things go wrong
 			auto mesh = AssetManager::get().LoadMesh(meshComp.meshID);
 			if (!mesh) continue;
 			auto material = AssetManager::get().LoadMaterial(meshComp.materialID);
@@ -58,7 +60,16 @@ namespace solarsim {
 			shader->setUniform("uProj", projection);
 			shader->setUniform("uView", view);
 			shader->setUniform("uModel", model);
-			// Set other uniforms like applying materials and light etc
+
+			shader->setUniform("uLightPos", glm::vec3(5.0f));
+			shader->setUniform("uLightColor", glm::vec3(1.0f));
+			shader->setUniform("uCameraPos", camTransform.position);
+
+			shader->setUniform("uMaterial.albedo", material->albedo);
+			shader->setUniform("uMaterial.metallic", material->metallic);
+			shader->setUniform("uMaterial.roughness", material->roughness);
+
+			// Set other uniforms like applying light etc
 			// Could for example loop over registry.view(TransformComponent, LightComponent>()
 
 			glBindVertexArray(mesh->vao);

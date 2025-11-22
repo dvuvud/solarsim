@@ -24,8 +24,6 @@ namespace solarsim {
 			std::unordered_map<std::string, std::shared_ptr<Mesh>> loadedMeshes;
 			std::unordered_map<std::string, std::shared_ptr<Shader>> loadedShaders;
 
-			unsigned int compileShader(const std::string& shaderID);
-
 			AssetManager() {}
 			~AssetManager() {}
 	};

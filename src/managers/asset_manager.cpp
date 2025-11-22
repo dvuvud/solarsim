@@ -1,7 +1,11 @@
 #include <managers/asset_manager.hpp>
+
 #include <graphics/mesh.hpp>
 #include <graphics/material.hpp>
 #include <graphics/shader.hpp>
+
+#include <fstream>
+#include <istream>
 
 namespace solarsim {
 	AssetManager& AssetManager::get() {
@@ -17,14 +21,56 @@ namespace solarsim {
 		auto mesh = std::make_shared<Mesh>();
 		if (meshID == "cube") {
 			mesh->vertices = {
+				// positions          // normals
+				// Front face
+				-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+				0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+				0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+				0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+				-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+				-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-			};
-			
-			mesh->indices = {
-			};
+				// Back face
+				-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+				-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+				0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+				0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+				0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+				-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-			mesh->vertexCount = mesh->indices.size();
-			mesh->useElements = true;
+				// Left face
+				-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+				-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+				-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+				-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+				-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+				-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+				// Right face
+				0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+				0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+				0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+				0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+				0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+				0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+				// Top face
+				-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+				-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+				0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+				0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+				0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+				-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+
+				// Bottom face
+				-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+				0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+				0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+				0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+				-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+				-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f
+			};
+			mesh->vertexCount = 36;
 		}
 
 		mesh->setupBuffers();
@@ -37,6 +83,9 @@ namespace solarsim {
 
 		// TODO: Add functionality for loading materials
 		auto material = std::make_shared<Material>();
+		if (materialID == "simple") {
+			material->shaderID = materialID;
+		}
 		loadedMaterials[materialID] = material;
 		return material;
 	}
@@ -44,13 +93,21 @@ namespace solarsim {
 		auto it = loadedShaders.find(shaderID);
 		if (it != loadedShaders.end()) return it->second;
 
+		std::string vertexPath = "assets/shaders/" + shaderID + ".vert";
+		std::string fragmentPath = "assets/shaders/" + shaderID + ".frag";
+
+		std::ifstream vFile(vertexPath), fFile(fragmentPath);
+		if (!vFile || !fFile) {
+			std::cerr << "Failed to open shader files for " << shaderID << "\n";
+			return nullptr;
+		}
+
+		std::string vertexSrc((std::istreambuf_iterator<char>(vFile)), std::istreambuf_iterator<char>());
+		std::string fragmentSrc((std::istreambuf_iterator<char>(fFile)), std::istreambuf_iterator<char>());
+
 		auto shader = std::make_shared<Shader>();
-		shader->programID = compileShader(shaderID);
+		shader->compile(vertexSrc, fragmentSrc);
 		loadedShaders[shaderID] = shader;
 		return shader;
-	}
-
-	unsigned int AssetManager::compileShader(const std::string& shaderID) {
-		return 0;
 	}
 }

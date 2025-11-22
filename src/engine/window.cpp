@@ -1,11 +1,14 @@
 #include <glad/glad.h>
 #include <engine/window.hpp>
+#include <stdexcept>
 
 #include <iostream>
 
 namespace solarsim {
 	Window::Window(const unsigned int p_width, const unsigned int p_height, const char* p_title) {
-		glfwInit();
+		if (!glfwInit())
+			throw std::runtime_error("Failed to initialize GLFW");
+
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -23,6 +26,7 @@ namespace solarsim {
 		{
 			throw std::runtime_error("Failed to initialize GLAD");
 		}
+		glEnable(GL_DEPTH_TEST);
 	}
 	Window::~Window() {
 		if (m_window) glfwDestroyWindow(m_window);
