@@ -1,9 +1,8 @@
 #pragma once
 
 #include "registry.hpp"
-#include <systems/render_system.hpp>
+#include <engine/renderer.hpp>
 #include <systems/physics_system.hpp>
-#include <managers/input_manager.hpp>
 
 namespace solarsim {
 	struct Scene {
@@ -12,9 +11,5 @@ namespace solarsim {
 		float timeScale = 1.0f;
 		bool paused = false;
 		bool reverse = false;
-
-		PhysicsSystem physicsSystem;
-		RenderSystem renderSystem;
-		InputManager inputManager;
 	};
 }

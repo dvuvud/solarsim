@@ -1,15 +1,19 @@
 #pragma once
 
-#include <scene/scene.hpp>
-
 namespace solarsim {
+	struct Scene;
 	class SceneManager {
 		public:
-			static Scene& getActiveScene() {
-				return activeScene;
-			}
+			SceneManager(const SceneManager&) = delete;
+			SceneManager& operator=(const SceneManager&) = delete;
+
+			static SceneManager& get();
+
+			Scene* active();
+
+			void setActive(Scene* scene);
 		private:
-			mutable Scene activeScene;
+			Scene* activeScene;
 			SceneManager() {}
 			~SceneManager() {}
 	};

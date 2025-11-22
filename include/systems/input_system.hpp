@@ -1,0 +1,14 @@
+#pragma once
+
+#include <GLFW/glfw3.h>
+
+namespace solarsim {
+	class InputSystem {
+		public:
+			InputSystem();
+			~InputSystem();
+			void processInput(float deltaTime);
+		private:
+			static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+	};
+}

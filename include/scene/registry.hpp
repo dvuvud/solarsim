@@ -21,18 +21,18 @@ namespace solarsim {
 				}
 
 			template<typename Component>
-				Component& getComponent(Entity e) {
+				Component& getComponent(Entity e) const {
 					return getComponentStorage<Component>().at(e);
 				}
 
 			template<typename Component>
-				bool hasComponent(Entity e) {
+				bool hasComponent(Entity e) const {
 					auto& storage = getComponentStorage<Component>();
 					return storage.find(e) != storage.end();
 				}
 
 			template<typename... Components>
-				std::vector<Entity> view() {
+				std::vector<Entity> view() const {
 					std::vector<Entity> result;
 					if constexpr (sizeof...(Components) == 0) return result;
 
