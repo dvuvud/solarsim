@@ -9,7 +9,10 @@ namespace solarsim {
 		Registry registry;
 
 		float timeScale = 1.0f;
+
 		bool paused = false;
 		bool reverse = false;
+		void togglePause() { paused = !paused; }
+		void toggleReverse() { reverse = !reverse; }
 	};
 }

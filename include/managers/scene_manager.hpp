@@ -9,9 +9,9 @@ namespace solarsim {
 			SceneManager(const SceneManager&) = delete;
 			SceneManager& operator=(const SceneManager&) = delete;
 
-			static SceneManager& get();
+			[[nodiscard]] static SceneManager& get();
 
-			Scene* active();
+			[[nodiscard]] Scene* active();
 
 			void loadScene(std::unique_ptr<Scene> newScene);
 			void unloadScene();
