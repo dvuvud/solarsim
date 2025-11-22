@@ -1,54 +1,37 @@
 #include <engine/engine.hpp>
-#include <core/window.hpp>
-#include <core/input_manager.hpp>
-#include <graphics/renderer.hpp>
-#include <managers/simulation_manager.hpp>
-#include <mesh/cube.hpp>
-#include <stdexcept>
+#include <engine/window.hpp>
+#include <engine/renderer.hpp>
+#include <systems/input_system.hpp>
+#include <systems/physics_system.hpp>
+#include <scene/scene.hpp>
 
 namespace solarsim {
-
-	Engine::Engine()
-	{
-		if (!glfwInit()) {
-			throw std::runtime_error("Failed to initialize glfw");
-		}
-		m_window = new Window();
-		m_renderer = new Renderer();
-		m_inputManager = new InputManager();
-		current = this;
+	Engine::Engine() {
+		init();
 	}
 
-	Engine::~Engine() { 
-		if (glfwInit()) 
-			glfwTerminate();
-		if (m_window) 
-			delete m_window;
-		if (m_renderer)
-			delete m_renderer;
-		if (m_inputManager)
-			delete m_inputManager;
+	Engine::~Engine() {}
+
+	void Engine::init() {
+		m_window = std::make_unique<Window>(800, 600, "solarsim");
+		m_inputSystem = std::make_unique<InputSystem>();
+		m_physicsSystem = std::make_unique<PhysicsSystem>();
+		m_renderer = std::make_unique<Renderer>();
 	}
 
-	void Engine::run()
-	{
-		float deltaTime = 0.f, lastFrame = (float)glfwGetTime();
-		while (!m_window->shouldClose())
-		{
-			float currentFrame = (float)glfwGetTime();
+	void Engine::run() {
+		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
+		while (!m_window->shouldClose()) {
+			float currentFrame = glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			if (deltaTime > 0.1f)
-				deltaTime = 0.1f;
-
 			m_window->pollEvents();
-			m_inputManager->processInput(deltaTime);
+			m_inputSystem->processInput(deltaTime);
 
-			Simulation& currentSim = SimulationManager::getActiveSimulation();
-			currentSim.update(deltaTime);
+			m_physicsSystem->update(deltaTime);
 
-			m_renderer->render(currentSim);
+			m_renderer->render();
 
 			m_window->swapBuffers();
 		}
