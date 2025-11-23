@@ -19,6 +19,8 @@
 #include <graphics/shader.hpp>
 #include <graphics/mesh.hpp>
 
+#include <engine/engine.hpp>
+
 namespace solarsim {
 	Renderer::Renderer() {
 		// -- INIT CAMERA UBO --
@@ -70,7 +72,7 @@ namespace solarsim {
 	}
 
 	void Renderer::bindCameraMatrices(Registry& reg) {
-		auto cameraEntityOpt = getPrimaryCamera(reg);
+		auto cameraEntityOpt = Engine::getPrimaryCamera(reg);
 		if (cameraEntityOpt == -1) return;
 		Entity cameraEntity = *cameraEntityOpt;
 
@@ -177,13 +179,5 @@ namespace solarsim {
 			else
 				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
 		}
-	}
-
-	std::optional<Entity> Renderer::getPrimaryCamera(Registry& registry) {
-		for (auto e : registry.view<TransformComponent, CameraComponent>()) {
-			auto& cam = registry.getComponent<CameraComponent>(e);
-			if (cam.primary) return e;
-		}
-		return -1;
 	}
 }

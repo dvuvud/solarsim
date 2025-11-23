@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <optional>
+#include "scene/entity.hpp"
 
 namespace solarsim {
 	class Window;
@@ -8,6 +10,7 @@ namespace solarsim {
 	class InputSystem;
 	class PhysicsSystem;
 	struct Scene;
+	struct Registry;
 
 	class Engine {
 		public:
@@ -28,6 +31,8 @@ namespace solarsim {
 			Scene* currentScene() const { return m_activeScene.get(); }
 
 			void loadScene(std::unique_ptr<Scene> scene);
+
+			static std::optional<Entity> getPrimaryCamera(Registry& registry);
 		private:
 			Engine();
 			~Engine();

@@ -70,4 +70,12 @@ namespace solarsim {
 			m_window->swapBuffers();
 		}
 	}
+
+	std::optional<Entity> Engine::getPrimaryCamera(Registry& registry) {
+		for (auto e : registry.view<TransformComponent, CameraComponent>()) {
+			auto& cam = registry.getComponent<CameraComponent>(e);
+			if (cam.primary) return e;
+		}
+		return -1;
+	}
 }

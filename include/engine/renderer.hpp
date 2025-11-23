@@ -1,6 +1,5 @@
 #pragma once
 
-#include <optional>
 #include <scene/entity.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
@@ -52,7 +51,6 @@ namespace solarsim {
 			unsigned int lightsUBO;
 			unsigned int rbUBO;
 			bool showGrid = true;
-			std::optional<Entity> getPrimaryCamera(Registry& registry);
 	};
 
 }

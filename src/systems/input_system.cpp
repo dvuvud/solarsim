@@ -8,11 +8,13 @@
 
 #include <components/input_component.hpp>
 #include <components/transform_component.hpp>
+#include <components/camera_component.hpp>
 
 namespace solarsim {
 	InputSystem::InputSystem(GLFWwindow* window) : m_window(window) {
 		if (window) {
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetScrollCallback(window, scrollCallback);
 		}
 	}
 
@@ -135,6 +137,21 @@ namespace solarsim {
 					renderer->toggleGrid();
 			}
 		} else gLast = false;
+	}
+
+	void InputSystem::scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+		auto scene = SceneManager::get().active();
+		if (!scene) return;
+		auto& reg = scene->registry;
+		auto camOpt = Engine::getPrimaryCamera(reg);
+		if (camOpt == -1) return;
+		Entity camEntity = *camOpt;
+		auto& camComp = reg.getComponent<CameraComponent>(camEntity);
+		camComp.fov -= (float)yoffset;
+		if (camComp.fov < 1.0f)
+			camComp.fov = 1.0f;
+		if (camComp.fov > 45.0f)
+			camComp.fov = 45.0f;
 	}
 
 	void InputSystem::toggleMouseCapture() {

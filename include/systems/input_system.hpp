@@ -13,5 +13,7 @@ namespace solarsim {
 			bool mouseCaptured = true;
 			bool justCaptured = true;
 			GLFWwindow* m_window;
+
+			static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 	};
 }
