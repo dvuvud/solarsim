@@ -19,6 +19,22 @@
 #include <graphics/mesh.hpp>
 
 namespace solarsim {
+	// TODO: Add a UBO for light and move this to header
+	struct CameraUBO {
+		glm::vec3 pos; float pad0 = 0.0f;
+		glm::mat4 view;
+		glm::mat4 proj;
+		glm::mat4 viewProj;
+	};
+	Renderer::Renderer() {
+		glGenBuffers(1, &cameraUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(CameraUBO), nullptr, GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
+	}
+	Renderer::~Renderer() {
+	}
+	// TODO: REFACTOR METHOD ASAP
 	void Renderer::render() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -27,7 +43,7 @@ namespace solarsim {
 
 		Registry& registry = scene->registry;
 
-		// ------- CAMERA MATRICES --------
+		// ------- BIND CAMERA MATRICES --------
 		auto cameraEntityOpt = getPrimaryCamera(registry);
 		if (cameraEntityOpt == -1) return;
 		Entity cameraEntity = *cameraEntityOpt;
@@ -36,14 +52,19 @@ namespace solarsim {
 		auto& cam = registry.getComponent<CameraComponent>(cameraEntity);
 
 		glm::vec3 forward = camTransform.rotation * glm::vec3(0, 0, -1);
-		glm::mat4 view = glm::lookAt(
+		CameraUBO camUBO;
+		camUBO.pos = camTransform.position;
+		camUBO.view = glm::lookAt(
 				camTransform.position,
 				camTransform.position + forward,
 				camTransform.rotation * glm::vec3(0, 1, 0)
 				);
-
-		glm::mat4 projection = glm::perspective(glm::radians(cam.fov),
+		camUBO.proj = glm::perspective(glm::radians(cam.fov),
 				cam.aspect, cam.near, cam.far);
+		camUBO.viewProj = camUBO.proj * camUBO.view;
+
+		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraUBO), &camUBO);
 
 		// ------- RENDER GRID --------
 		for (auto e : registry.view<GridComponent>()) {
@@ -56,7 +77,6 @@ namespace solarsim {
 			if (!shader) return;
 
 			shader->use();
-			shader->setUniform("uVP", projection * view);
 
 			shader->setUniform("uMaterial.albedo", material->albedo);
 			shader->setUniform("uMaterial.metallic", material->metallic);
@@ -85,13 +105,10 @@ namespace solarsim {
 			if (!shader) continue;
 
 			shader->use();
-			shader->setUniform("uProj", projection);
-			shader->setUniform("uView", view);
 			shader->setUniform("uModel", model);
 
 			shader->setUniform("uLightPos", glm::vec3(5.0f));
 			shader->setUniform("uLightColor", glm::vec3(1.0f));
-			shader->setUniform("uCameraPos", camTransform.position);
 
 			shader->setUniform("uMaterial.albedo", material->albedo);
 			shader->setUniform("uMaterial.metallic", material->metallic);

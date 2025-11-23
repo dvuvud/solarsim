@@ -7,9 +7,16 @@ struct Material {
 };
 
 uniform Material uMaterial;
+
+layout(std140) uniform CameraBuffer {
+	vec3 uPos;
+	mat4 uV;
+	mat4 uP;
+	mat4 uVP;
+};
+
 uniform vec3 uLightPos;
 uniform vec3 uLightColor;
-uniform vec3 uCameraPos;
 
 in vec3 FragPos;
 in vec3 Normal;
@@ -20,7 +27,7 @@ void main()
 {
 	vec3 N = normalize(Normal);
 	vec3 L = normalize(uLightPos - FragPos);
-	vec3 V = normalize(uCameraPos - FragPos);
+	vec3 V = normalize(uPos - FragPos);
 	vec3 H = normalize(L + V);
 
 	float diff = max(dot(N, L), 0.0);

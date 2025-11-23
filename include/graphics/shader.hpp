@@ -16,6 +16,13 @@ namespace solarsim {
 			glUseProgram(programID);
 		}
 
+		void bindBlocks() {
+			int loc = glGetUniformBlockIndex(programID, "CameraBuffer"); 
+			if (loc != GL_INVALID_INDEX) {
+				glUniformBlockBinding(programID, loc, 0);
+			}
+		}
+
 		void setUniform(const std::string& name, const glm::mat4& value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
@@ -70,6 +77,9 @@ namespace solarsim {
 			glDeleteShader(fragment);
 
 			programID = program;
+
+			// Bind blocks once
+			bindBlocks();
 		}
 
 		void checkCompileErrors(unsigned int shader, const std::string& type) {

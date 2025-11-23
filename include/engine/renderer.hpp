@@ -8,8 +8,11 @@ namespace solarsim {
 
 	class Renderer {
 		public:
+			Renderer();
+			~Renderer();
 			void render();
 		private:
+			unsigned int cameraUBO;
 			std::optional<Entity> getPrimaryCamera(Registry& registry);
 	};
 
