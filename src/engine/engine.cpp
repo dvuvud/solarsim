@@ -55,10 +55,14 @@ namespace solarsim {
 
 	void Engine::run() {
 		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
+
 		while (!m_window->shouldClose()) {
 			float currentFrame = glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
+
+			if (deltaTime > 0.1f)
+				deltaTime = 0.0f;
 
 			m_window->pollEvents();
 			m_inputSystem->processInput(deltaTime);
