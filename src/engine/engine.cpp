@@ -47,7 +47,8 @@ namespace solarsim {
 		reg.addComponent<RigidBodyComponent>(e2, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-10.0f)});
 
 		Entity camEntity = reg.createEntity();
-		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(0.0f,0.0f,5.0f)});
+		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(40.0f,50.0f,180.0f),
+				.rotation=glm::quat(glm::vec3(glm::radians(-12.0f),glm::radians(12.0),0.0f))});
 		reg.addComponent<CameraComponent>(camEntity, CameraComponent());
 		reg.addComponent<InputComponent>(camEntity, InputComponent());
 	}
