@@ -17,8 +17,8 @@ layout(std140) uniform CameraBuffer {
 
 layout(std140) uniform LightsBuffer {
 	struct Light {
-		vec3 pos;
-		vec3 color;
+		vec4 pos;
+		vec4 color;
 	} lights[64];
 	int lightCount;
 };
@@ -30,24 +30,23 @@ out vec4 FragColor;
 
 void main()
 {
-	const float lightRadius = 40.0;
 	vec3 N = normalize(Normal);
 	vec3 V = normalize(uPos - FragPos);
 
 	vec3 finalColor = 0.1 * uMaterial.albedo;
 
 	for (int i = 0; i < lightCount; ++i) {
-		vec3 L = normalize(lights[i].pos - FragPos);
+		vec3 L = normalize(lights[i].pos.xyz - FragPos);
 		vec3 H = normalize(L + V);
 
 		float diff = max(dot(N, L), 0.0);
 		vec3 diffuse = diff * uMaterial.albedo;
 
 		float spec = pow(max(dot(N, H), 0.0), 32.0 * (1.0 - uMaterial.roughness));
-		vec3 specular = spec * mix(vec3(0.04), lights[i].color, uMaterial.metallic);
+		vec3 specular = spec * mix(vec3(0.04), lights[i].color.xyz, uMaterial.metallic);
 
-		float distanceToLight = length(lights[i].pos - FragPos);
-		float attenuation = 1.0 - smoothstep(0.0, lightRadius, distanceToLight);
+		float distanceToLight = length(lights[i].pos.xyz - FragPos);
+		float attenuation = 1.0 - smoothstep(0.0, lights[i].color.w, distanceToLight);
 		finalColor += (diffuse + specular) * attenuation;
 	}
 

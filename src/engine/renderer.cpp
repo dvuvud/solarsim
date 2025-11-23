@@ -81,8 +81,8 @@ namespace solarsim {
 			TransformComponent& LT = registry.getComponent<TransformComponent>(e);
 			LightComponent& LC = registry.getComponent<LightComponent>(e);
 
-			L.lights[L.count].color = LC.color;
-			L.lights[L.count].pos = LT.position;
+			L.lights[L.count].color = glm::vec4(LC.color, LC.radius);
+			L.lights[L.count].pos = glm::vec4(LT.position, 0.0);
 			++L.count;
 		}
 		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);

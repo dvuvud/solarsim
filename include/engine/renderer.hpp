@@ -21,8 +21,8 @@ namespace solarsim {
 			};
 
 			struct LightData {
-				glm::vec3 pos; float pad0;
-				glm::vec3 color; float pad1;
+				glm::vec4 pos;
+				glm::vec4 color;
 			};
 
 			struct LightsUBO {
