@@ -3,7 +3,7 @@
 layout(location = 0) in vec3 aPos;
 
 layout(std140) uniform CameraBuffer {
-	vec3 uPos;
+	vec3 uPos; float pad0;
 	mat4 uV;
 	mat4 uP;
 	mat4 uVP;

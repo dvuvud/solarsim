@@ -32,7 +32,7 @@ namespace solarsim {
 				}
 
 			template<typename... Components>
-				std::vector<Entity> view() {
+				[[nodiscard]]	std::vector<Entity> view() {
 					std::vector<Entity> result;
 					if constexpr (sizeof...(Components) == 0) return result;
 

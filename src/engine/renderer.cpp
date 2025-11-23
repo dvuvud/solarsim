@@ -1,11 +1,11 @@
 #include <glad/glad.h>
 #include <engine/renderer.hpp>
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <components/mesh_component.hpp>
 #include <components/grid_component.hpp>
 #include <components/transform_component.hpp>
+#include <components/light_component.hpp>
 #include <components/camera_component.hpp>
 
 #include <managers/asset_manager.hpp>
@@ -20,19 +20,20 @@
 
 namespace solarsim {
 	// TODO: Add a UBO for light and move this to header
-	struct CameraUBO {
-		glm::vec3 pos; float pad0 = 0.0f;
-		glm::mat4 view;
-		glm::mat4 proj;
-		glm::mat4 viewProj;
-	};
 	Renderer::Renderer() {
 		glGenBuffers(1, &cameraUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(CameraUBO), nullptr, GL_DYNAMIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
+
+		glGenBuffers(1, &lightsUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(LightsUBO), nullptr, GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightsUBO);
 	}
 	Renderer::~Renderer() {
+		glDeleteBuffers(1, &cameraUBO);
+		glDeleteBuffers(1, &lightsUBO);
 	}
 	// TODO: REFACTOR METHOD ASAP
 	void Renderer::render() {
@@ -65,6 +66,20 @@ namespace solarsim {
 
 		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraUBO), &camUBO);
+
+		// ------- GET AND BIND ALL LIGHT UBOS -------
+		LightsUBO L;
+		for (auto e : registry.view<TransformComponent, LightComponent>()) {
+			if (L.lightCount >= 64) break;
+			TransformComponent LT = registry.getComponent<TransformComponent>(e);
+			LightComponent LC = registry.getComponent<LightComponent>(e);
+
+			L.lights[L.lightCount].color = LC.color;
+			L.lights[L.lightCount].pos = LT.position;
+			++L.lightCount;
+		}
+		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(LightsUBO), &L);
 
 		// ------- RENDER GRID --------
 		for (auto e : registry.view<GridComponent>()) {
@@ -107,9 +122,6 @@ namespace solarsim {
 			shader->use();
 			shader->setUniform("uModel", model);
 
-			shader->setUniform("uLightPos", glm::vec3(5.0f));
-			shader->setUniform("uLightColor", glm::vec3(1.0f));
-
 			shader->setUniform("uMaterial.albedo", material->albedo);
 			shader->setUniform("uMaterial.metallic", material->metallic);
 			shader->setUniform("uMaterial.roughness", material->roughness);
@@ -126,7 +138,7 @@ namespace solarsim {
 	}
 
 	std::optional<Entity> Renderer::getPrimaryCamera(Registry& registry) {
-		for (Entity e : registry.view<TransformComponent, CameraComponent>()) {
+		for (auto e : registry.view<TransformComponent, CameraComponent>()) {
 			auto& cam = registry.getComponent<CameraComponent>(e);
 			if (cam.primary) return e;
 		}

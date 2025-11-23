@@ -9,14 +9,20 @@ struct Material {
 uniform Material uMaterial;
 
 layout(std140) uniform CameraBuffer {
-	vec3 uPos;
+	vec3 uPos; float pad0;
 	mat4 uV;
 	mat4 uP;
 	mat4 uVP;
 };
 
-uniform vec3 uLightPos;
-uniform vec3 uLightColor;
+layout(std140) uniform LightsBuffer {
+	struct Light {
+		vec3 pos; float pad0;
+		vec3 color; float pad1;
+	} lights[64];
+	int lightCount;
+	vec3 pad2;
+};
 
 in vec3 FragPos;
 in vec3 Normal;
@@ -26,17 +32,25 @@ out vec4 FragColor;
 void main()
 {
 	vec3 N = normalize(Normal);
-	vec3 L = normalize(uLightPos - FragPos);
 	vec3 V = normalize(uPos - FragPos);
-	vec3 H = normalize(L + V);
 
-	float diff = max(dot(N, L), 0.0);
-	vec3 diffuse = diff * uMaterial.albedo;
+	vec3 finalColor = 0.1 * uMaterial.albedo;
 
-	float spec = pow(max(dot(N, H), 0.0), 32.0 * (1.0 - uMaterial.roughness));
-	vec3 specular = spec * mix(vec3(0.04), uLightColor, uMaterial.metallic);
+	for (int i = 0; i < lightCount; ++i) {
+		vec3 L = normalize(lights[i].pos - FragPos);
+		vec3 H = normalize(L + V);
 
-	vec3 color = diffuse + specular;
+		float diff = max(dot(N, L), 0.0);
+		vec3 diffuse = diff * uMaterial.albedo;
 
-	FragColor = vec4(color, 1.0);
+		float spec = pow(max(dot(N, H), 0.0), 32.0 * (1.0 - uMaterial.roughness));
+		vec3 specular = spec * mix(vec3(0.04), lights[i].color, uMaterial.metallic);
+
+		vec3 DV = lights[i].pos - FragPos;
+		float DVSq = dot(DV, DV);
+		float attenuation = 1.0 / (1.0 + DVSq);
+		finalColor += (diffuse + specular) * attenuation;
+	}
+
+	FragColor = vec4(finalColor, 1.0);
 }

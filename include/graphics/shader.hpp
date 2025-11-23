@@ -21,6 +21,10 @@ namespace solarsim {
 			if (loc != GL_INVALID_INDEX) {
 				glUniformBlockBinding(programID, loc, 0);
 			}
+			loc = glGetUniformBlockIndex(programID, "LightsBuffer"); 
+			if (loc != GL_INVALID_INDEX) {
+				glUniformBlockBinding(programID, loc, 0);
+			}
 		}
 
 		void setUniform(const std::string& name, const glm::mat4& value) {
