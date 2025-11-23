@@ -21,16 +21,19 @@
 
 namespace solarsim {
 	Renderer::Renderer() {
+		// -- INIT CAMERA UBO --
 		glGenBuffers(1, &cameraUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(CameraUBO), nullptr, GL_DYNAMIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
 
+		// -- INIT LIGHT UBO --
 		glGenBuffers(1, &lightsUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(LightsUBO), nullptr, GL_DYNAMIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightsUBO);
 
+		// -- INIT RIGID BODY UBO --
 		glGenBuffers(1, &rbUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, rbUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(RBUBO), nullptr, GL_DYNAMIC_DRAW);
@@ -41,7 +44,6 @@ namespace solarsim {
 		glDeleteBuffers(1, &lightsUBO);
 		glDeleteBuffers(1, &rbUBO);
 	}
-	// TODO: REFACTOR METHOD ASAP
 	void Renderer::render() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -51,12 +53,29 @@ namespace solarsim {
 		Registry& registry = scene->registry;
 
 		// ------- BIND CAMERA MATRICES --------
-		auto cameraEntityOpt = getPrimaryCamera(registry);
+		bindCameraMatrices(registry);
+
+		// ------- GET AND BIND ALL LIGHT UBOS -------
+		bindLightUBOS(registry);
+
+		// ------- GET AND BIND ALL RIGID BODY UBOS -------
+		bindRigidBodyUBOS(registry);
+
+		// ------- RENDER GRID --------
+		if (showGrid)
+			renderGrid(registry);
+
+		// ------- RENDER MESHES --------
+		renderMeshes(registry);
+	}
+
+	void Renderer::bindCameraMatrices(Registry& reg) {
+		auto cameraEntityOpt = getPrimaryCamera(reg);
 		if (cameraEntityOpt == -1) return;
 		Entity cameraEntity = *cameraEntityOpt;
 
-		auto& camTransform = registry.getComponent<TransformComponent>(cameraEntity);
-		auto& cam = registry.getComponent<CameraComponent>(cameraEntity);
+		auto& camTransform = reg.getComponent<TransformComponent>(cameraEntity);
+		auto& cam = reg.getComponent<CameraComponent>(cameraEntity);
 
 		glm::vec3 forward = camTransform.rotation * glm::vec3(0, 0, -1);
 
@@ -73,13 +92,14 @@ namespace solarsim {
 
 		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraUBO), &camUBO);
+	}
 
-		// ------- GET AND BIND ALL LIGHT UBOS -------
+	void Renderer::bindLightUBOS(Registry& reg) {
 		LightsUBO L;
-		for (auto e : registry.view<TransformComponent, LightComponent>()) {
+		for (auto e : reg.view<TransformComponent, LightComponent>()) {
 			if (L.count >= 64) break;
-			TransformComponent& LT = registry.getComponent<TransformComponent>(e);
-			LightComponent& LC = registry.getComponent<LightComponent>(e);
+			TransformComponent& LT = reg.getComponent<TransformComponent>(e);
+			LightComponent& LC = reg.getComponent<LightComponent>(e);
 
 			L.lights[L.count].color = glm::vec4(LC.color, LC.radius);
 			L.lights[L.count].pos = glm::vec4(LT.position, 0.0);
@@ -87,13 +107,14 @@ namespace solarsim {
 		}
 		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(LightsUBO), &L);
+	}
 
-		// ------- GET AND BIND ALL RIGID BODY UBOS -------
+	void Renderer::bindRigidBodyUBOS(Registry& reg) {
 		RBUBO RB;
-		for (auto e : registry.view<TransformComponent, RigidBodyComponent>()) {
+		for (auto e : reg.view<TransformComponent, RigidBodyComponent>()) {
 			if (RB.count >= 64) break;
-			auto& TC = registry.getComponent<TransformComponent>(e);
-			auto& RBC = registry.getComponent<RigidBodyComponent>(e);
+			auto& TC = reg.getComponent<TransformComponent>(e);
+			auto& RBC = reg.getComponent<RigidBodyComponent>(e);
 
 			RB.rbs[RB.count].mPos.x = TC.position.x;
 			RB.rbs[RB.count].mPos.y = TC.position.y;
@@ -103,10 +124,11 @@ namespace solarsim {
 		}
 		glBindBuffer(GL_UNIFORM_BUFFER, rbUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(RBUBO), &RB);
+	}
 
-		// ------- RENDER GRID --------
-		for (auto e : registry.view<GridComponent>()) {
-			auto& meshComp = registry.getComponent<GridComponent>(e);
+	void Renderer::renderGrid(Registry& reg) {
+		for (auto e : reg.view<GridComponent>()) {
+			auto& meshComp = reg.getComponent<GridComponent>(e);
 
 			auto mesh = AssetManager::get().LoadMesh(meshComp.meshID);
 			auto material = AssetManager::get().LoadMaterial(meshComp.materialID);
@@ -126,12 +148,12 @@ namespace solarsim {
 			else
 				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
 		}
+	}
 
-
-		// ------- RENDER MESHES --------
-		for (auto e : registry.view<TransformComponent, MeshComponent>()) {
-			auto& transform = registry.getComponent<TransformComponent>(e);
-			auto& meshComp = registry.getComponent<MeshComponent>(e);
+	void Renderer::renderMeshes(Registry& reg) {
+		for (auto e : reg.view<TransformComponent, MeshComponent>()) {
+			auto& transform = reg.getComponent<TransformComponent>(e);
+			auto& meshComp = reg.getComponent<MeshComponent>(e);
 
 			glm::mat4 model = transform.getModelMatrix();
 
@@ -148,9 +170,6 @@ namespace solarsim {
 			shader->setUniform("uMaterial.albedo", material->albedo);
 			shader->setUniform("uMaterial.metallic", material->metallic);
 			shader->setUniform("uMaterial.roughness", material->roughness);
-
-			// Set other uniforms like applying light etc
-			// Could for example loop over registry.view(TransformComponent, LightComponent>()
 
 			glBindVertexArray(mesh->vao);
 			if (mesh->useElements)

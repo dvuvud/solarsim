@@ -12,6 +12,7 @@ namespace solarsim {
 			Renderer();
 			~Renderer();
 			void render();
+			void toggleGrid() { showGrid = !showGrid; }
 
 			struct CameraUBO {
 				glm::vec3 pos; float pad0;
@@ -42,9 +43,15 @@ namespace solarsim {
 			};
 
 		private:
+			void bindCameraMatrices(Registry& reg);
+			void bindLightUBOS(Registry& reg);
+			void bindRigidBodyUBOS(Registry& reg);
+			void renderGrid(Registry& reg);
+			void renderMeshes(Registry& reg);
 			unsigned int cameraUBO;
 			unsigned int lightsUBO;
 			unsigned int rbUBO;
+			bool showGrid = true;
 			std::optional<Entity> getPrimaryCamera(Registry& registry);
 	};
 

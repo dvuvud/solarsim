@@ -26,6 +26,7 @@ namespace solarsim {
 		static bool rLast = false;
 		static bool tabLast = false;
 		static bool pLast = false;
+		static bool gLast = false;
 
 		for (Entity e : registry.view<InputComponent, TransformComponent>()) {
 			auto& transform = registry.getComponent<TransformComponent>(e);
@@ -93,9 +94,11 @@ namespace solarsim {
 
 		// ------ GLOBAL KEYS -------
 
+		// SHUTDOWN
 		if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(m_window, true);
 
+		// ------ TOGGLE REVERSE ------
 		if (glfwGetKey(m_window, GLFW_KEY_R) == GLFW_PRESS) {
 			if (!rLast) {
 				rLast = true;
@@ -105,6 +108,7 @@ namespace solarsim {
 			}
 		} else rLast = false;
 
+		// ----- TOGGLE MOUSE CAPTURE -----
 		if (glfwGetKey(m_window, GLFW_KEY_TAB) == GLFW_PRESS) {
 			if (!tabLast) {
 				tabLast = true;
@@ -112,6 +116,7 @@ namespace solarsim {
 			}
 		} else tabLast = false;
 
+		// ----- PAUSE/UNPAUSE -----
 		if (glfwGetKey(m_window, GLFW_KEY_P) == GLFW_PRESS) {
 			if (!pLast) {
 				pLast = true;
@@ -120,6 +125,16 @@ namespace solarsim {
 					scene->togglePause();
 			}
 		} else pLast = false;
+
+		// ----- TOGGLE GRID -----
+		if (glfwGetKey(m_window, GLFW_KEY_G) == GLFW_PRESS) {
+			if (!gLast) {
+				gLast = true;
+				Renderer* renderer = Engine::get().renderer();
+				if (renderer)
+					renderer->toggleGrid();
+			}
+		} else gLast = false;
 	}
 
 	void InputSystem::toggleMouseCapture() {
