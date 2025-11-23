@@ -9,7 +9,32 @@ layout(std140) uniform CameraBuffer {
 	mat4 uVP;
 };
 
+layout(std140) uniform RigidbodyBuffer {
+	struct RB {
+		vec4 mPos;
+	} RBs[64];
+	int count;
+};
+
+out vec3 WorldPos;
+
 void main()
 {
-	gl_Position = uVP * vec4(aPos, 1.0);
+	const float INTENSITY = 0.5;
+	const float SMOOTHING = 0.1;
+	const float FALLOFF = 0.05;
+
+	vec3 warpedPos = aPos;
+
+	for(int i = 0; i < count; ++i) {
+		vec3 toEntity = RBs[i].mPos.xyz - aPos;
+		float dis = length(toEntity);
+		float smoothedDis = dis + SMOOTHING;
+
+		float gravityEffect = -RBs[i].mPos.w * exp(-smoothedDis * FALLOFF);
+		warpedPos.y += gravityEffect * INTENSITY;
+	}
+
+	WorldPos = warpedPos;
+	gl_Position = uVP * vec4(warpedPos, 1.0);
 }

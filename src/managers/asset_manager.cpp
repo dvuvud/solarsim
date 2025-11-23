@@ -126,6 +126,8 @@ namespace solarsim {
 			material->albedo = glm::vec3(1.0f, 0.0f, 0.0f);
 		} else if (materialID == "grid") {
 			material->shaderID = "grid";
+		} else if (materialID == "light") {
+			material->shaderID = "light";
 		}
 		loadedMaterials[materialID] = material;
 		return material;

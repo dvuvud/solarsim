@@ -14,16 +14,16 @@ namespace solarsim {
 
 
 		auto& registry = scene->registry;
-		auto entities = registry.view<Rigidbodycomponent, TransformComponent>();
+		auto entities = registry.view<RigidBodyComponent, TransformComponent>();
 
 		std::vector<glm::vec3> accumulatedForces(entities.size(), glm::vec3(0.0f));
 
 		for (size_t i = 0; i < entities.size(); ++i) {
-			auto& rbA = registry.getComponent<Rigidbodycomponent>(entities[i]);
+			auto& rbA = registry.getComponent<RigidBodyComponent>(entities[i]);
 			auto& tfA = registry.getComponent<TransformComponent>(entities[i]);
 
 			for (size_t j = i + 1; j < entities.size(); ++j) {
-				auto& rbB = registry.getComponent<Rigidbodycomponent>(entities[j]);
+				auto& rbB = registry.getComponent<RigidBodyComponent>(entities[j]);
 				auto& tfB = registry.getComponent<TransformComponent>(entities[j]);
 
 				glm::vec3 dir = tfB.position - tfA.position;
@@ -41,7 +41,7 @@ namespace solarsim {
 
 		// Apply velocities after accumulation
 		for (int i = 0; i < entities.size(); ++i) {
-			auto& rb = registry.getComponent<Rigidbodycomponent>(entities[i]);
+			auto& rb = registry.getComponent<RigidBodyComponent>(entities[i]);
 			auto& tf = registry.getComponent<TransformComponent>(entities[i]);
 
 			glm::vec3 acceleration = accumulatedForces[i] / rb.mass;

@@ -7,6 +7,7 @@
 #include <components/transform_component.hpp>
 #include <components/light_component.hpp>
 #include <components/camera_component.hpp>
+#include <components/rigid_body_component.hpp>
 
 #include <managers/asset_manager.hpp>
 #include <managers/scene_manager.hpp>
@@ -19,7 +20,6 @@
 #include <graphics/mesh.hpp>
 
 namespace solarsim {
-	// TODO: Add a UBO for light and move this to header
 	Renderer::Renderer() {
 		glGenBuffers(1, &cameraUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
@@ -30,10 +30,16 @@ namespace solarsim {
 		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(LightsUBO), nullptr, GL_DYNAMIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightsUBO);
+
+		glGenBuffers(1, &rbUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, rbUBO);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(RBUBO), nullptr, GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 2, rbUBO);
 	}
 	Renderer::~Renderer() {
 		glDeleteBuffers(1, &cameraUBO);
 		glDeleteBuffers(1, &lightsUBO);
+		glDeleteBuffers(1, &rbUBO);
 	}
 	// TODO: REFACTOR METHOD ASAP
 	void Renderer::render() {
@@ -53,6 +59,7 @@ namespace solarsim {
 		auto& cam = registry.getComponent<CameraComponent>(cameraEntity);
 
 		glm::vec3 forward = camTransform.rotation * glm::vec3(0, 0, -1);
+
 		CameraUBO camUBO;
 		camUBO.pos = camTransform.position;
 		camUBO.view = glm::lookAt(
@@ -70,16 +77,32 @@ namespace solarsim {
 		// ------- GET AND BIND ALL LIGHT UBOS -------
 		LightsUBO L;
 		for (auto e : registry.view<TransformComponent, LightComponent>()) {
-			if (L.lightCount >= 64) break;
-			TransformComponent LT = registry.getComponent<TransformComponent>(e);
-			LightComponent LC = registry.getComponent<LightComponent>(e);
+			if (L.count >= 64) break;
+			TransformComponent& LT = registry.getComponent<TransformComponent>(e);
+			LightComponent& LC = registry.getComponent<LightComponent>(e);
 
-			L.lights[L.lightCount].color = LC.color;
-			L.lights[L.lightCount].pos = LT.position;
-			++L.lightCount;
+			L.lights[L.count].color = LC.color;
+			L.lights[L.count].pos = LT.position;
+			++L.count;
 		}
 		glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(LightsUBO), &L);
+
+		// ------- GET AND BIND ALL RIGID BODY UBOS -------
+		RBUBO RB;
+		for (auto e : registry.view<TransformComponent, RigidBodyComponent>()) {
+			if (RB.count >= 64) break;
+			auto& TC = registry.getComponent<TransformComponent>(e);
+			auto& RBC = registry.getComponent<RigidBodyComponent>(e);
+
+			RB.rbs[RB.count].mPos.x = TC.position.x;
+			RB.rbs[RB.count].mPos.y = TC.position.y;
+			RB.rbs[RB.count].mPos.z = TC.position.z;
+			RB.rbs[RB.count].mPos.w = RBC.mass;
+			++RB.count;
+		}
+		glBindBuffer(GL_UNIFORM_BUFFER, rbUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(RBUBO), &RB);
 
 		// ------- RENDER GRID --------
 		for (auto e : registry.view<GridComponent>()) {

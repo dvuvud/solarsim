@@ -9,7 +9,7 @@ struct Material {
 uniform Material uMaterial;
 
 layout(std140) uniform CameraBuffer {
-	vec3 uPos; float pad0;
+	vec3 uPos;
 	mat4 uV;
 	mat4 uP;
 	mat4 uVP;
@@ -17,11 +17,10 @@ layout(std140) uniform CameraBuffer {
 
 layout(std140) uniform LightsBuffer {
 	struct Light {
-		vec3 pos; float pad0;
-		vec3 color; float pad1;
+		vec3 pos;
+		vec3 color;
 	} lights[64];
 	int lightCount;
-	vec3 pad2;
 };
 
 in vec3 FragPos;
@@ -46,9 +45,9 @@ void main()
 		float spec = pow(max(dot(N, H), 0.0), 32.0 * (1.0 - uMaterial.roughness));
 		vec3 specular = spec * mix(vec3(0.04), lights[i].color, uMaterial.metallic);
 
-		vec3 DV = lights[i].pos - FragPos;
-		float DVSq = dot(DV, DV);
-		float attenuation = 1.0 / (1.0 + DVSq);
+		const float lightRadius = 40.0;
+		float distanceToLight = length(lights[i].pos - FragPos);
+		float attenuation = 1.0 - smoothstep(0.0, lightRadius, distanceToLight);
 		finalColor += (diffuse + specular) * attenuation;
 	}
 

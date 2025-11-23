@@ -23,7 +23,11 @@ namespace solarsim {
 			}
 			loc = glGetUniformBlockIndex(programID, "LightsBuffer"); 
 			if (loc != GL_INVALID_INDEX) {
-				glUniformBlockBinding(programID, loc, 0);
+				glUniformBlockBinding(programID, loc, 1);
+			}
+			loc = glGetUniformBlockIndex(programID, "RigidbodyBuffer"); 
+			if (loc != GL_INVALID_INDEX) {
+				glUniformBlockBinding(programID, loc, 2);
 			}
 		}
 

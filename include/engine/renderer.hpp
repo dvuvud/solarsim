@@ -27,13 +27,24 @@ namespace solarsim {
 
 			struct LightsUBO {
 				LightData lights[64];
-				int lightCount = 0;
+				int count = 0;
+				float pad0[3];
+			};
+
+			struct RBData {
+				glm::vec4 mPos;
+			};
+
+			struct RBUBO {
+				RBData rbs[64];
+				int count = 0;
 				float pad0[3];
 			};
 
 		private:
 			unsigned int cameraUBO;
 			unsigned int lightsUBO;
+			unsigned int rbUBO;
 			std::optional<Entity> getPrimaryCamera(Registry& registry);
 	};
 
