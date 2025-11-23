@@ -30,6 +30,7 @@ out vec4 FragColor;
 
 void main()
 {
+	const float lightRadius = 40.0;
 	vec3 N = normalize(Normal);
 	vec3 V = normalize(uPos - FragPos);
 
@@ -45,7 +46,6 @@ void main()
 		float spec = pow(max(dot(N, H), 0.0), 32.0 * (1.0 - uMaterial.roughness));
 		vec3 specular = spec * mix(vec3(0.04), lights[i].color, uMaterial.metallic);
 
-		const float lightRadius = 40.0;
 		float distanceToLight = length(lights[i].pos - FragPos);
 		float attenuation = 1.0 - smoothstep(0.0, lightRadius, distanceToLight);
 		finalColor += (diffuse + specular) * attenuation;
