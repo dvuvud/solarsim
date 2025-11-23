@@ -54,6 +54,7 @@ namespace solarsim {
 	}
 
 	void Engine::run() {
+		const float maxDelta = 1.0f / 30.0f; // clamp to ~30 fps
 		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
 
 		while (!m_window->shouldClose()) {
@@ -63,6 +64,8 @@ namespace solarsim {
 
 			if (deltaTime > 0.1f)
 				deltaTime = 0.0f;
+			if (deltaTime > maxDelta)
+				deltaTime = maxDelta;
 
 			m_window->pollEvents();
 			m_inputSystem->processInput(deltaTime);
