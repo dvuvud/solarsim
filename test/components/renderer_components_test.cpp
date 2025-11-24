@@ -54,7 +54,7 @@ TEST_F(RendererComponentsTest, ComponentDefaults) {
 	CameraComponent cam;
 	EXPECT_EQ(cam.fov, 45.0f);
 	EXPECT_EQ(cam.near, 0.1f);
-	EXPECT_EQ(cam.far, 1000.0f);
+	EXPECT_EQ(cam.far, 2000.0f);
 	EXPECT_EQ(cam.aspect, 800.0f / 600.0f);
 	EXPECT_TRUE(cam.primary);
 
