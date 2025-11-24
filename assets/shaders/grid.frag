@@ -20,5 +20,6 @@ void main()
 		float brightness = 1.0 - smoothstep(0.0, lights[i].color.w, distanceToLight);
 		result += lights[i].color.xyz * brightness;
 	}
+	if (dot(result, result) == 0) discard;
 	FragColor = vec4(result, 1.0);
 }
