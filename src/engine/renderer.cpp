@@ -64,8 +64,12 @@ namespace solarsim {
 		bindRigidBodyUBOS(registry);
 
 		// ------- RENDER GRID --------
-		if (showGrid)
+		if (showGrid) {
+			glEnable(GL_BLEND); // Couple objects that need transparency for the future
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			renderGrid(registry);
+			glDisable(GL_BLEND);
+		}
 
 		// ------- RENDER MESHES --------
 		renderMeshes(registry);
