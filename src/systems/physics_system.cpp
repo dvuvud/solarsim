@@ -12,6 +12,7 @@ namespace solarsim {
 		if (!scene || scene->paused) return;
 		deltaTime = scene->reverse ? -deltaTime : deltaTime;
 
+		deltaTime *= timeScale;
 
 		auto& registry = scene->registry;
 		auto entities = registry.view<RigidBodyComponent, TransformComponent>();

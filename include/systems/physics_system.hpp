@@ -5,7 +5,8 @@ namespace solarsim {
 		public:
 			void update(float deltaTime);
 		private:
-			const float G = 5.0f;
+			float timeScale = 5.0f;
+			const float G = 7.5f;
 			const float SOFTENING_SQUARED = 2.0f;
 	};
 }

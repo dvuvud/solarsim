@@ -48,12 +48,34 @@ namespace solarsim {
 
 		// TODO: Add actual functionality for loading materials
 		auto material = std::make_shared<Material>();
-		if (materialID == "simple") {
+		if (materialID == "mercury") {
 			material->shaderID = "simple";
+			material->albedo=glm::vec3(0.5, 0.5, 0.5);
+		} else if (materialID == "venus") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(1.0, 0.9, 0.6);
+		} else if (materialID == "earth") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(0.2, 0.5, 1.0);
+		} else if (materialID == "mars") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(1.0, 0.4, 0.2);
+		} else if (materialID == "jupiter") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(0.9, 0.7, 0.5);
+		} else if (materialID == "saturn") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(1.0, 0.9, 0.6);
+		} else if (materialID == "uranus") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(0.5, 1.0, 1.0);
+		} else if (materialID == "neptune") {
+			material->shaderID = "simple";
+			material->albedo=glm::vec3(0.3, 0.4, 1.0);
+		} else if (materialID == "sun") {
+			material->shaderID = "light";
 		} else if (materialID == "grid") {
 			material->shaderID = "grid";
-		} else if (materialID == "light") {
-			material->shaderID = "light";
 		}
 		loadedMaterials[materialID] = material;
 		return material;

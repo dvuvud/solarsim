@@ -20,9 +20,9 @@ out vec3 WorldPos;
 
 void main()
 {
-	const float INTENSITY = 0.05;
+	const float INTENSITY = 0.025;
 	const float SMOOTHING = 0.1;
-	const float FALLOFF = 0.05;
+	const float FALLOFF = 0.01;
 
 	vec3 warpedPos = aPos;
 
