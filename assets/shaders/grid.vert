@@ -2,29 +2,37 @@
 
 layout(location = 0) in vec3 aPos;
 
+layout(std140) uniform CameraBuffer {
+	vec3 uPos; float pad0;
+	mat4 uV;
+	mat4 uP;
+	mat4 uVP;
+};
+
+layout(std140) uniform RigidbodyBuffer {
+	struct RB {
+		vec4 mPos;
+	} RBs[64];
+	int count;
+};
+
 out vec3 WorldPos;
 
-uniform vec4 uEntities[64]; // Limits the amount of entities that can have an effect
-uniform int uEntityCount;
-uniform mat4 uVP;
-
-void main() {
-	const float WARP_INTENSITY = 0.1;
-	const float DISTANCE_SMOOTHING = 0.1;
+void main()
+{
+	const float INTENSITY = 0.05;
+	const float SMOOTHING = 0.1;
 	const float FALLOFF = 0.05;
 
 	vec3 warpedPos = aPos;
 
-	for(int i = 0; i < uEntityCount; ++i) {
-		vec3 entityPos = uEntities[i].xyz;
-		float mass = uEntities[i].w;
+	for(int i = 0; i < count; ++i) {
+		vec3 toEntity = RBs[i].mPos.xyz - aPos;
+		float dis = length(toEntity);
+		float smoothedDis = dis + SMOOTHING;
 
-		vec3 toEntity = entityPos - aPos;
-		float distance = length(toEntity);
-		float smoothedDistance = distance + DISTANCE_SMOOTHING;
-
-		float gravityEffect = -mass * exp(-smoothedDistance * FALLOFF);
-		warpedPos.y += gravityEffect * WARP_INTENSITY;
+		float gravityEffect = -RBs[i].mPos.w * exp(-smoothedDis * FALLOFF);
+		warpedPos.y += gravityEffect * INTENSITY;
 	}
 
 	WorldPos = warpedPos;

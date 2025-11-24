@@ -62,6 +62,7 @@ build\Debug\solarsim.exe # Windows
 | `Left Shift`  | Move camera down                            |
 | `R`           | Toggle time reversal (rewind / forward)     |
 | `P`           | Toggle pause / unpause                      |
+| `G`           | Toggle grid                                 |
 | `Tab`         | Toggle mouse capture / release              |
 | `Scroll`      | Zoom in & out                               |
 | `Escape`      | Quit application                            |

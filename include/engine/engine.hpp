@@ -1,28 +1,51 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
-#include <core/input_manager.hpp>
-#include <core/window.hpp>
-#include <simulation/simulation.hpp>
-#include <graphics/material.hpp>
-#include <graphics/shader.hpp>
-#include <graphics/renderer.hpp>
-#include <mesh/mesh.hpp>
 #include <memory>
+#include <optional>
+#include "scene/entity.hpp"
 
 namespace solarsim {
+	class Window;
+	class Renderer;
+	class InputSystem;
+	class PhysicsSystem;
+	struct Scene;
+	struct Registry;
 
 	class Engine {
 		public:
-			Engine(unsigned int width = 800, unsigned int height = 600, const std::string& title = "solarsim");
-			~Engine();
+			Engine(const Engine&) = delete;
+			Engine& operator=(const Engine&) = delete;
+
+			static Engine& get() {
+				static Engine instance;
+				return instance;
+			}
+
 			void run();
+
+			Window* window() const { return m_window.get(); }
+			Renderer* renderer() const { return m_renderer.get(); }
+			InputSystem* inputManager() const { return m_inputSystem.get(); }
+			PhysicsSystem* physicsSystem() const { return m_physicsSystem.get(); }
+			Scene* currentScene() const { return m_activeScene.get(); }
+
+			void loadScene(std::unique_ptr<Scene> scene);
+
+			static std::optional<Entity> getPrimaryCamera(Registry& registry);
 		private:
+			Engine();
+			~Engine();
+
+			void init();
+
 			std::unique_ptr<Window> m_window;
-			std::unique_ptr<Simulation> m_simulation;
 			std::unique_ptr<Renderer> m_renderer;
-			std::unique_ptr<InputManager> m_inputManager;
+
+			std::unique_ptr<InputSystem> m_inputSystem;
+			std::unique_ptr<PhysicsSystem> m_physicsSystem;
+
+			std::unique_ptr<Scene> m_activeScene;
+
 	};
 }

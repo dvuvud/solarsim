@@ -24,18 +24,12 @@ find_package(OpenGL REQUIRED)
 ## Library for core functionality
 add_library(solarsim_core
 	src/engine/engine.cpp
-	src/core/window.cpp
-	src/core/input_manager.cpp
-	src/graphics/shader.cpp
-	src/graphics/texture.cpp
-	src/graphics/camera.cpp
-	src/graphics/renderer.cpp
-	src/graphics/grid.cpp
-	src/simulation/simulation.cpp
-	src/simulation/planet.cpp
-	src/simulation/sun.cpp
-	src/mesh/mesh.cpp
-	src/mesh/cube.cpp
+	src/engine/renderer.cpp
+	src/engine/window.cpp
+	src/managers/asset_manager.cpp
+	src/managers/scene_manager.cpp
+	src/systems/input_system.cpp
+	src/systems/physics_system.cpp
 )
 
 target_include_directories(solarsim_core PUBLIC
@@ -56,7 +50,7 @@ endif()
 
 
 ## Main executable
-add_executable(solarsim src/main.cpp)
+add_executable(solarsim src/app.cpp)
 target_link_libraries(solarsim solarsim_core)
 
 
@@ -67,12 +61,15 @@ target_link_libraries(solarsim solarsim_core)
 enable_testing()
 add_subdirectory(vendor/googletest)
 
-add_executable(solarsim_tests
-	test/simulation/test_simulation.cpp
-	test/simulation/test_entity.cpp
-	test/simulation/test_planet.cpp
-	test/simulation/test_sun.cpp
-	test/graphics/test_camera.cpp
+add_executable(solarsim_tests test/
+	test/scene/registry_test.cpp
+	test/scene/scene_test.cpp
+	test/components/transform_component_test.cpp
+	test/components/component_integration_test.cpp
+	test/components/renderer_components_test.cpp
+	test/systems/physics_system_test.cpp
+	test/systems/input_system_test.cpp
+	test/managers/scene_manager_test.cpp
 )
 
 target_link_libraries(solarsim_tests

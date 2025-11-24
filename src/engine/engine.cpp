@@ -1,72 +1,88 @@
 #include <engine/engine.hpp>
-#include <mesh/cube.hpp>
-#include <simulation/sun.hpp>
-#include <simulation/planet.hpp>
-#include <stdexcept>
+#include <engine/window.hpp>
+#include <engine/renderer.hpp>
+
+#include <systems/input_system.hpp>
+#include <systems/physics_system.hpp>
+
+#include <managers/scene_manager.hpp>
+#include <scene/scene.hpp>
+
+#include <components/transform_component.hpp>
+#include <components/mesh_component.hpp>
+#include <components/grid_component.hpp>
+#include <components/camera_component.hpp>
+#include <components/input_component.hpp>
+#include <components/rigid_body_component.hpp>
+#include <components/light_component.hpp>
 
 namespace solarsim {
+	Engine::Engine() {
+		init();
+	}
 
-	Engine::Engine(unsigned int width, unsigned int height, const std::string& title)
-	{
-		if (!glfwInit()) {
-			throw std::runtime_error("Failed to initialize glfw");
-		}
-		m_window = std::make_unique<Window>(width, height, title.c_str());
-		m_simulation = std::make_unique<Simulation>();
+	Engine::~Engine() {}
+
+	void Engine::init() {
+		m_window = std::make_unique<Window>(800, 600, "solarsim");
+		m_inputSystem = std::make_unique<InputSystem>(m_window->getNativeWindow());
+		m_physicsSystem = std::make_unique<PhysicsSystem>();
 		m_renderer = std::make_unique<Renderer>();
-		m_inputManager = std::make_unique<InputManager>(m_window.get(), m_simulation.get());
 
-		Transform earthTransform;
-		earthTransform.position = glm::vec3(0.f, 1.0f, -100.f);
-		earthTransform.scale = glm::vec3(5.0f);
-		std::unique_ptr<Material> earthMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag",
-				glm::vec3(0.0215, 0.1745, 0.0215), glm::vec3(0.07568, 0.61424, 0.07568), glm::vec3(0.633, 0.727811, 0.633), 0.6);
-		std::unique_ptr<Mesh> earthMesh = std::make_unique<Cube>();
-		m_simulation->spawnEntity(std::make_unique<Planet>(earthTransform, earthMesh, earthMat, 100.0f, 1.0f, glm::vec3(-20.0f, 0.0f, 0.0f)));
+		SceneManager::get().loadScene(std::make_unique<Scene>());
+		Registry& reg = SceneManager::get().active()->registry;
+		
+		Entity grid = reg.createEntity();
+		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
-		Transform planetTransform;
-		planetTransform.position = glm::vec3(100.0f, 1.0f, 0.0f);
-		planetTransform.scale = glm::vec3(5.0f);
-		std::unique_ptr<Material> planetMat = std::make_unique<Material>("assets/shaders/planet.vert", "assets/shaders/planet.frag",
-				glm::vec3(0.135, 0.2225, 0.1575), glm::vec3(0.54, 0.89, 0.63), glm::vec3(0.316228, 0.316228, 0.316228), 0.1);
-		std::unique_ptr<Mesh> planetMesh = std::make_unique<Cube>();
-		m_simulation->spawnEntity(std::make_unique<Planet>(planetTransform, planetMesh, planetMat, 100.0f, 1.0f, glm::vec3(0.0f, 0.0f, -20.0f)));
+		Entity e1 = reg.createEntity();
+		reg.addComponent<TransformComponent>(e1, TransformComponent{.scale=glm::vec3(15.0f)});
+		reg.addComponent<MeshComponent>(e1, MeshComponent{.meshID="cube", .materialID="light"});
+		reg.addComponent<RigidBodyComponent>(e1, RigidBodyComponent{.mass=10000.0f});
+		reg.addComponent<LightComponent>(e1, LightComponent());
 
-		Transform sunTransform;
-		sunTransform.position = glm::vec3(0.0f, 1.0f, 0.0f);
-		sunTransform.scale = glm::vec3(20.0f);
-		std::unique_ptr<Material> sunMat = std::make_unique<Material>("assets/shaders/sun.vert", "assets/shaders/sun.frag");
-		std::unique_ptr<Mesh> sunMesh = std::make_unique<Cube>();
-		m_simulation->spawnEntity(std::make_unique<Sun>(sunTransform, sunMesh, sunMat, 10000.0f, 1.0f, 150.0f, glm::vec3(0.5f, 1.0f, 1.0f)));
+		Entity e2 = reg.createEntity();
+		reg.addComponent<TransformComponent>(e2, TransformComponent{.position=glm::vec3(-50.0f,0.0f,3.0f), .scale=glm::vec3(3.0f)});
+		reg.addComponent<MeshComponent>(e2, MeshComponent{.meshID="cube", .materialID="simple"});
+		reg.addComponent<RigidBodyComponent>(e2, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-35.0f)});
 
-		Transform sun2Transform;
-		sun2Transform.position = glm::vec3(-100.0f, 1.0f, 0.0f);
-		sun2Transform.scale = glm::vec3(5.0f);
-		std::unique_ptr<Material> sun2Mat = std::make_unique<Material>("assets/shaders/sun.vert", "assets/shaders/sun.frag");
-		std::unique_ptr<Mesh> sun2Mesh = std::make_unique<Cube>();
-		m_simulation->spawnEntity(std::make_unique<Sun>(sun2Transform, sun2Mesh, sun2Mat, 100.0f, 1.0f, 40.0f, glm::vec3(1.0f, 0.5f, 1.0f), glm::vec3(0.0f, 0.0f, 20.0f)));
-
-
+		Entity camEntity = reg.createEntity();
+		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(40.0f,50.0f,180.0f),
+				.rotation=glm::quat(glm::vec3(glm::radians(-12.0f),glm::radians(12.0),0.0f))});
+		reg.addComponent<CameraComponent>(camEntity, CameraComponent());
+		reg.addComponent<InputComponent>(camEntity, InputComponent());
 	}
 
-	Engine::~Engine() { 
-		if (glfwInit()) glfwTerminate();
-	}
+	void Engine::run() {
+		const float maxDelta = 1.0f / 30.0f; // clamp to ~30 fps
+		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
 
-	void Engine::run()
-	{
-		float deltaTime = 0.f, lastFrame = 0.f;
-		while (!m_window->shouldClose())
-		{
-			float currentFrame = (float)glfwGetTime();
+		while (!m_window->shouldClose()) {
+			float currentFrame = glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			m_inputManager->processInput(deltaTime);
-			m_simulation->update(deltaTime);
-			m_renderer->render(m_simulation);
-			m_window->swapBuffers();
+			if (deltaTime > 0.1f)
+				deltaTime = 0.0f;
+			if (deltaTime > maxDelta)
+				deltaTime = maxDelta;
+
 			m_window->pollEvents();
+			m_inputSystem->processInput(deltaTime);
+
+			m_physicsSystem->update(deltaTime);
+
+			m_renderer->render();
+
+			m_window->swapBuffers();
 		}
+	}
+
+	std::optional<Entity> Engine::getPrimaryCamera(Registry& registry) {
+		for (auto e : registry.view<TransformComponent, CameraComponent>()) {
+			auto& cam = registry.getComponent<CameraComponent>(e);
+			if (cam.primary) return e;
+		}
+		return -1;
 	}
 }
