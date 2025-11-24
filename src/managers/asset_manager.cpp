@@ -20,93 +20,22 @@ namespace solarsim {
 		// TODO: Implement assimp and replace the following with model loading
 		auto mesh = std::make_shared<Mesh>();
 		if (meshID == "cube") {
-			mesh->vertices = {
-				// positions          // normals
-				// Front face
-				-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-				0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-				0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-				0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-				-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-				-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-
-				// Back face
-				-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-				-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-				0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-				0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-				0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-				-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-
-				// Left face
-				-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-				-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-				-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-				-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-				-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-				-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-				// Right face
-				0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-				0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-				0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-				0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-				0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-				0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-				// Top face
-				-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-				-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-				0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-				0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-				0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-				-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-
-				// Bottom face
-				-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-				0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-				0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-				0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-				-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-				-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f
-			};
+			mesh->vertices = cube;
 			mesh->vertexCount = 36;
-		} else if (meshID == "grid") {
-			int m_size = 100;
-			float m_spacing = 3.5f;
+		} else if (meshID == "sphere") {
+			mesh->useElements = true;
 
-			// Create individual points at each vertex in the grid
-			for (int z = -m_size; z < m_size; ++z) {
-				for (int x = -m_size; x < m_size; ++x) {
-					GLfloat xPos = x * m_spacing;
-					GLfloat zPos = z * m_spacing;
-					mesh->vertices.insert(mesh->vertices.end(), {xPos, 0.f, zPos});
-				}
-			}
+			generateSphere(mesh->vertices, mesh->indices);
 
-			GLuint pointsPerSide = m_size * 2;
-
-			// Link those points together 2x2 to create horizontal lines
-			for (GLuint z = 0; z < pointsPerSide; ++z) {
-				for (GLuint x = 0; x < pointsPerSide - 1; ++x) {
-					GLuint start = z * pointsPerSide + x;
-					GLuint end = start + 1;
-					mesh->indices.insert(mesh->indices.end(), {start, end});
-				}
-			}
-
-			// Link those points together 2x2 to create vertical lines
-			for (GLuint x = 0; x < pointsPerSide; ++x) {
-				for (GLuint z = 0; z < pointsPerSide - 1; ++z) {
-					GLuint start = z * pointsPerSide + x;
-					GLuint end = start + pointsPerSide;
-					mesh->indices.insert(mesh->indices.end(), {start, end});
-				}
-			}
 			mesh->vertexCount = mesh->indices.size();
+		} else if (meshID == "grid") {
 			mesh->useElements = true;
 			mesh->drawMode = GL_LINES;
 			mesh->useNormals = false;
+
+			generateGrid(mesh->vertices, mesh->indices);
+
+			mesh->vertexCount = mesh->indices.size();
 		}
 
 		mesh->setupBuffers();
@@ -149,5 +78,96 @@ namespace solarsim {
 		shader->compile(vertexSrc, fragmentSrc);
 		loadedShaders[shaderID] = shader;
 		return shader;
+	}
+
+	void AssetManager::generateSphere(std::vector<float>& vertices, std::vector<unsigned int>& indices, float radius, int resolution)
+	{
+		int latCount = resolution + 1;
+		int lonCount = resolution + 1;
+
+		vertices.clear();
+		indices.clear();
+
+		vertices.reserve((size_t)latCount * lonCount * 6); // 6 floats per vertex
+		indices.reserve((size_t)resolution * resolution * 6); // 2 triangles per quad -> 6 indices
+
+		// generate vertices (position + normal)
+		for (int lat = 0; lat < latCount; ++lat) {
+			float theta = (float)lat / (float)resolution * glm::pi<float>();
+			float sinTheta = std::sin(theta);
+			float cosTheta = std::cos(theta);
+
+			for (int lon = 0; lon < lonCount; ++lon) {
+				float phi = (float)lon / (float)resolution * 2.0f * glm::pi<float>();
+				float sinPhi = std::sin(phi);
+				float cosPhi = std::cos(phi);
+
+				// normal
+				float nx = cosPhi * sinTheta;
+				float ny = cosTheta;
+				float nz = sinPhi * sinTheta;
+
+				// position = normal * radius
+				float px = radius * nx;
+				float py = radius * ny;
+				float pz = radius * nz;
+
+				vertices.push_back(px);
+				vertices.push_back(py);
+				vertices.push_back(pz);
+				vertices.push_back(nx);
+				vertices.push_back(ny);
+				vertices.push_back(nz);
+			}
+		}
+
+		// generate indices (two triangles per quad)
+		for (int lat = 0; lat < resolution; ++lat) {
+			for (int lon = 0; lon < resolution; ++lon) {
+				unsigned int current = (unsigned int)(lat * lonCount + lon);
+				unsigned int next = (unsigned int)((lat + 1) * lonCount + lon);
+
+				// triangle 1
+				indices.push_back(current);
+				indices.push_back(next);
+				indices.push_back(current + 1);
+
+				// triangle 2
+				indices.push_back(current + 1);
+				indices.push_back(next);
+				indices.push_back(next + 1);
+			}
+		}
+	}
+
+	void AssetManager::generateGrid(std::vector<float>& vertices, std::vector<unsigned int>& indices, float spacing, int extent) {
+		// Create individual points at each vertex in the grid
+		for (int z = -extent; z < extent; ++z) {
+			for (int x = -extent; x < extent; ++x) {
+				GLfloat xPos = x * spacing;
+				GLfloat zPos = z * spacing;
+				vertices.insert(vertices.end(), {xPos, 0.f, zPos});
+			}
+		}
+
+		GLuint pointsPerSide = extent * 2;
+
+		// Link those points together 2x2 to create horizontal lines
+		for (GLuint z = 0; z < pointsPerSide; ++z) {
+			for (GLuint x = 0; x < pointsPerSide - 1; ++x) {
+				GLuint start = z * pointsPerSide + x;
+				GLuint end = start + 1;
+				indices.insert(indices.end(), {start, end});
+			}
+		}
+
+		// Link those points together 2x2 to create vertical lines
+		for (GLuint x = 0; x < pointsPerSide; ++x) {
+			for (GLuint z = 0; z < pointsPerSide - 1; ++z) {
+				GLuint start = z * pointsPerSide + x;
+				GLuint end = start + pointsPerSide;
+				indices.insert(indices.end(), {start, end});
+			}
+		}
 	}
 }

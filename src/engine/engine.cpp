@@ -37,13 +37,13 @@ namespace solarsim {
 
 		Entity e1 = reg.createEntity();
 		reg.addComponent<TransformComponent>(e1, TransformComponent{.scale=glm::vec3(15.0f)});
-		reg.addComponent<MeshComponent>(e1, MeshComponent{.meshID="cube", .materialID="light"});
+		reg.addComponent<MeshComponent>(e1, MeshComponent{.meshID="sphere", .materialID="light"});
 		reg.addComponent<RigidBodyComponent>(e1, RigidBodyComponent{.mass=10000.0f});
 		reg.addComponent<LightComponent>(e1, LightComponent());
 
 		Entity e2 = reg.createEntity();
 		reg.addComponent<TransformComponent>(e2, TransformComponent{.position=glm::vec3(-50.0f,0.0f,3.0f), .scale=glm::vec3(3.0f)});
-		reg.addComponent<MeshComponent>(e2, MeshComponent{.meshID="cube", .materialID="simple"});
+		reg.addComponent<MeshComponent>(e2, MeshComponent{.meshID="sphere", .materialID="simple"});
 		reg.addComponent<RigidBodyComponent>(e2, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-35.0f)});
 
 		Entity camEntity = reg.createEntity();
