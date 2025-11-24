@@ -4,6 +4,8 @@
 #include <unordered_set>
 #include <vector>
 #include <tuple>
+#include <typeindex>
+#include <memory>
 #include "entity.hpp"
 
 namespace solarsim {
@@ -49,12 +51,29 @@ namespace solarsim {
 			std::unordered_set<Entity> entities;
 			unsigned int nextEntity = 0;
 
-			// Each component type gets its own static storage
+			struct IComponentStorage {
+				virtual ~IComponentStorage() = default;
+			};
+
+			template<typename Component>
+				struct ComponentStorage : IComponentStorage {
+					std::unordered_map<Entity, Component> components;
+				};
+
+			std::unordered_map<std::type_index, std::unique_ptr<IComponentStorage>> componentStorages;
+
 			template<typename Component>
 				std::unordered_map<Entity, Component>& getComponentStorage() {
-					static std::unordered_map<Entity, Component> storage;
-					return storage;
+					auto typeIndex = std::type_index(typeid(Component));
+					auto it = componentStorages.find(typeIndex);
+					if (it == componentStorages.end()) {
+
+						auto storage = std::make_unique<ComponentStorage<Component>>();
+						auto& components = storage->components;
+						componentStorages[typeIndex] = std::move(storage);
+						return components;
+					}
+					return static_cast<ComponentStorage<Component>*>(it->second.get())->components;
 				}
 	};
-
 }
