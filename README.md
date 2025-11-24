@@ -2,6 +2,10 @@
 
 I built this to learn OpenGL, and somewhere between the shader errors and matrix math, I ended up with something that actually looks like space.
 
+## Demo of the solar system
+
+![ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f9938905-46cb-466a-a438-b673e3769ecf)
+
 ## Build & Run
 
 ### Required System Libraries
