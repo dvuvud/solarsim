@@ -9,17 +9,17 @@ I built this to learn OpenGL, and somewhere between the shader errors and matrix
 ## Build & Run
 
 ### Required System Libraries
-- **OpenGL** (3.3+)
-- **CMake** (3.10+)
-- **C++20 compiler**
-- **Make** (for the Makefile commands)
+- [OpenGL](https://www.opengl.org/) (3.3+)
+- [CMake](https://cmake.org/download/) (3.10+)
+- C++20 compiler ([reference](https://en.cppreference.com/w/cpp/compiler_support/20.html))
+- [GNU Make](https://www.gnu.org/software/make/) (optional if using CMake directly)
 
 ### Included Dependencies (No installation needed)
 The following are included as submodules or source code:
-- **GLFW** - Window and input management
-- **GLM** - 3D mathematics library  
-- **GLAD** - OpenGL function loader
-- **stb_image** - Image loading library
+- [GLFW](https://github.com/glfw/glfw) - Window and input management
+- [GLM](https://github.com/g-truc/glm) - 3D mathematics library  
+- [GLAD](https://glad.dav1d.de/) - OpenGL function loader
+- [stb_image](https://github.com/nothings/stb) - Image loading library
 
 ### Commands
 
