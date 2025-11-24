@@ -69,21 +69,6 @@ TEST_F(SceneTest, EntityManagement) {
 // Test 3: Time scale affects physics
 TEST_F(SceneTest, TimeScale) {
 	scene->timeScale = 2.0f; // Double speed
-
-	auto& registry = scene->registry;
-
-	Entity entity = registry.createEntity();
-
-	TransformComponent t;
-	t.position = glm::vec3(0.0f, 0.0f, 0.0f);
-
-	RigidBodyComponent rb;
-	rb.mass = 1000.0f;
-	rb.vel = glm::vec3(10.0f, 0.0f, 0.0f);
-
-	registry.addComponent(entity, t);
-	registry.addComponent(entity, rb);
-
 	EXPECT_EQ(scene->timeScale, 2.0f);
 }
 

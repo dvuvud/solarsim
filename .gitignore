@@ -2,3 +2,4 @@ build/
 *.clangd
 *.DS_Store
 *vscode
+*.fuse*

@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <engine/renderer.hpp>
 #include <scene/scene.hpp>
-#include <managers/scene_manager.hpp>
 #include <components/transform_component.hpp>
 #include <components/mesh_component.hpp>
 #include <components/camera_component.hpp>
@@ -15,11 +14,10 @@ class RendererComponentsTest : public ::testing::Test {
 	protected:
 		void SetUp() override {
 			scene = std::make_unique<Scene>();
-			SceneManager::get().loadScene(std::move(scene));
 		}
 
 		void TearDown() override {
-			SceneManager::get().unloadScene();
+			scene.reset();
 		}
 
 		std::unique_ptr<Scene> scene;
@@ -78,7 +76,7 @@ TEST_F(RendererComponentsTest, ComponentDefaults) {
 
 // Test 3: Entity view combinations for rendering
 TEST_F(RendererComponentsTest, RendererViewCombinations) {
-	auto& registry = SceneManager::get().active()->registry;
+	auto& registry = scene->registry;
 
 	// Create different types of renderable entities
 	Entity meshOnly = registry.createEntity();
@@ -115,7 +113,7 @@ TEST_F(RendererComponentsTest, RendererViewCombinations) {
 
 // Test 4: Transform matrix caching
 TEST_F(RendererComponentsTest, TransformMatrixCaching) {
-	auto& registry = SceneManager::get().active()->registry;
+	auto& registry = scene->registry;
 
 	Entity entity = registry.createEntity();
 	TransformComponent transform;
@@ -149,7 +147,7 @@ TEST_F(RendererComponentsTest, TransformMatrixCaching) {
 
 // Test 5: Light component properties
 TEST_F(RendererComponentsTest, LightComponentProperties) {
-	auto& registry = SceneManager::get().active()->registry;
+	auto& registry = scene->registry;
 
 	Entity light = registry.createEntity();
 	LightComponent lightComp;
