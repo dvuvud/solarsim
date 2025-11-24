@@ -36,7 +36,7 @@ namespace solarsim {
 		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
 		Entity e1 = reg.createEntity();
-		reg.addComponent<TransformComponent>(e1, TransformComponent{.scale=glm::vec3(5.0f)});
+		reg.addComponent<TransformComponent>(e1, TransformComponent{.scale=glm::vec3(15.0f)});
 		reg.addComponent<MeshComponent>(e1, MeshComponent{.meshID="cube", .materialID="light"});
 		reg.addComponent<RigidBodyComponent>(e1, RigidBodyComponent{.mass=10000.0f});
 		reg.addComponent<LightComponent>(e1, LightComponent());
@@ -44,7 +44,7 @@ namespace solarsim {
 		Entity e2 = reg.createEntity();
 		reg.addComponent<TransformComponent>(e2, TransformComponent{.position=glm::vec3(-50.0f,0.0f,3.0f), .scale=glm::vec3(3.0f)});
 		reg.addComponent<MeshComponent>(e2, MeshComponent{.meshID="cube", .materialID="simple"});
-		reg.addComponent<RigidBodyComponent>(e2, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-10.0f)});
+		reg.addComponent<RigidBodyComponent>(e2, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-35.0f)});
 
 		Entity camEntity = reg.createEntity();
 		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(40.0f,50.0f,180.0f),

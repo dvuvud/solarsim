@@ -58,21 +58,29 @@ target_link_libraries(solarsim solarsim_core)
 #			Tests				  #
 ###########################################################
 
-#enable_testing()
-#add_subdirectory(vendor/googletest)
+enable_testing()
+add_subdirectory(vendor/googletest)
 
-#add_executable(solarsim_tests test/
-#)
+add_executable(solarsim_tests test/
+	test/scene/registry_test.cpp
+	test/scene/scene_test.cpp
+	test/components/transform_component_test.cpp
+	test/components/component_integration_test.cpp
+	test/components/renderer_components_test.cpp
+	test/systems/physics_system_test.cpp
+	test/systems/input_system_test.cpp
+	test/managers/scene_manager_test.cpp
+)
 
-#target_link_libraries(solarsim_tests
-#	solarsim_core
-#	gtest
-#	gtest_main
-#)
+target_link_libraries(solarsim_tests
+	solarsim_core
+	gtest
+	gtest_main
+)
 
-#target_include_directories(solarsim_tests PRIVATE
-#	include
-#)
+target_include_directories(solarsim_tests PRIVATE
+	include
+)
 
-#include(GoogleTest)
-#gtest_discover_tests(solarsim_tests)
+include(GoogleTest)
+gtest_discover_tests(solarsim_tests)
