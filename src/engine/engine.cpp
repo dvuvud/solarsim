@@ -39,7 +39,7 @@ namespace solarsim {
 		// ================================
 		//     BINARY STAR SYSTEM DEMO
 		// ================================
-
+		/*
 		Entity sun0 = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun0, TransformComponent{.position=glm::vec3(100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
 		reg.addComponent<MeshComponent>(sun0, MeshComponent{.meshID="sphere", .materialID="sun"});
@@ -51,12 +51,11 @@ namespace solarsim {
 		reg.addComponent<MeshComponent>(sun1, MeshComponent{.meshID="sphere", .materialID="sun"});
 		reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
 		reg.addComponent<LightComponent>(sun1, LightComponent{.radius=700.0f});
-
+		*/
 
 		// ================================
 		// 	  SOLAR SYSTEM DEMO
 		// ================================
-		/*
 		Entity sun = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun, TransformComponent{.scale=glm::vec3(15.0f)});
 		reg.addComponent<MeshComponent>(sun, MeshComponent{.meshID="sphere", .materialID="sun"});
@@ -102,7 +101,6 @@ namespace solarsim {
 		reg.addComponent<TransformComponent>(neptune, TransformComponent{.position=glm::vec3(-500.0f,0.0f,0.0f), .scale=glm::vec3(7.5f)});
 		reg.addComponent<MeshComponent>(neptune, MeshComponent{.meshID="sphere", .materialID="neptune"});
 		reg.addComponent<RigidBodyComponent>(neptune, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-44.7f)});
-		*/
 
 		Entity camEntity = reg.createEntity();
 		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(0.0f,300.0f,1000.0f),

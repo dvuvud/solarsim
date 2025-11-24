@@ -67,7 +67,6 @@ namespace solarsim {
 					auto typeIndex = std::type_index(typeid(Component));
 					auto it = componentStorages.find(typeIndex);
 					if (it == componentStorages.end()) {
-
 						auto storage = std::make_unique<ComponentStorage<Component>>();
 						auto& components = storage->components;
 						componentStorages[typeIndex] = std::move(storage);
