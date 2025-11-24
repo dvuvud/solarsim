@@ -35,51 +35,74 @@ namespace solarsim {
 		Entity grid = reg.createEntity();
 		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
+
+		// ================================
+		//     BINARY STAR SYSTEM DEMO
+		// ================================
+
+		Entity sun0 = reg.createEntity();
+		reg.addComponent<TransformComponent>(sun0, TransformComponent{.position=glm::vec3(100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
+		reg.addComponent<MeshComponent>(sun0, MeshComponent{.meshID="sphere", .materialID="sun"});
+		reg.addComponent<RigidBodyComponent>(sun0, RigidBodyComponent{.mass=100'000.0f, .vel=glm::vec3(0.0f,0.0f,35.355f)});
+		reg.addComponent<LightComponent>(sun0, LightComponent{.radius=700.0f});
+
+		Entity sun1 = reg.createEntity();
+		reg.addComponent<TransformComponent>(sun1, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
+		reg.addComponent<MeshComponent>(sun1, MeshComponent{.meshID="sphere", .materialID="sun"});
+		reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
+		reg.addComponent<LightComponent>(sun1, LightComponent{.radius=700.0f});
+
+
+		// ================================
+		// 	  SOLAR SYSTEM DEMO
+		// ================================
+		/*
 		Entity sun = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun, TransformComponent{.scale=glm::vec3(15.0f)});
 		reg.addComponent<MeshComponent>(sun, MeshComponent{.meshID="sphere", .materialID="sun"});
-		reg.addComponent<RigidBodyComponent>(sun, RigidBodyComponent{.mass=100000.0f});
+		reg.addComponent<RigidBodyComponent>(sun, RigidBodyComponent{.mass=100'000.0f});
 		reg.addComponent<LightComponent>(sun, LightComponent{.radius=700.0f});
 
 		Entity mercury = reg.createEntity();
 		reg.addComponent<TransformComponent>(mercury, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
 		reg.addComponent<MeshComponent>(mercury, MeshComponent{.meshID="sphere", .materialID="mercury"});
-		reg.addComponent<RigidBodyComponent>(mercury, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-86.6f)});
+		reg.addComponent<RigidBodyComponent>(mercury, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-100.0f)});
 
 		Entity venus = reg.createEntity();
 		reg.addComponent<TransformComponent>(venus, TransformComponent{.position=glm::vec3(-135.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
 		reg.addComponent<MeshComponent>(venus, MeshComponent{.meshID="sphere", .materialID="venus"});
-		reg.addComponent<RigidBodyComponent>(venus, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-74.5f)});
+		reg.addComponent<RigidBodyComponent>(venus, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-86.0f)});
 
 		Entity earth = reg.createEntity();
 		reg.addComponent<TransformComponent>(earth, TransformComponent{.position=glm::vec3(-175.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
 		reg.addComponent<MeshComponent>(earth, MeshComponent{.meshID="sphere", .materialID="earth"});
-		reg.addComponent<RigidBodyComponent>(earth, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-65.5f)});
+		reg.addComponent<RigidBodyComponent>(earth, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-75.5f)});
 
 		Entity mars = reg.createEntity();
 		reg.addComponent<TransformComponent>(mars, TransformComponent{.position=glm::vec3(-215.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
 		reg.addComponent<MeshComponent>(mars, MeshComponent{.meshID="sphere", .materialID="mars"});
-		reg.addComponent<RigidBodyComponent>(mars, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-59.1f)});
+		reg.addComponent<RigidBodyComponent>(mars, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-68.2f)});
 
 		Entity jupiter = reg.createEntity();
 		reg.addComponent<TransformComponent>(jupiter, TransformComponent{.position=glm::vec3(-285.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
 		reg.addComponent<MeshComponent>(jupiter, MeshComponent{.meshID="sphere", .materialID="jupiter"});
-		reg.addComponent<RigidBodyComponent>(jupiter, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-51.3f)});
+		reg.addComponent<RigidBodyComponent>(jupiter, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-59.3f)});
 
 		Entity saturn = reg.createEntity();
 		reg.addComponent<TransformComponent>(saturn, TransformComponent{.position=glm::vec3(-360.0f,0.0f,0.0f), .scale=glm::vec3(9.5f)});
 		reg.addComponent<MeshComponent>(saturn, MeshComponent{.meshID="sphere", .materialID="saturn"});
-		reg.addComponent<RigidBodyComponent>(saturn, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-45.6f)});
+		reg.addComponent<RigidBodyComponent>(saturn, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-52.7f)});
 		
 		Entity uranus = reg.createEntity();
 		reg.addComponent<TransformComponent>(uranus, TransformComponent{.position=glm::vec3(-435.0f,0.0f,0.0f), .scale=glm::vec3(7.5f)});
 		reg.addComponent<MeshComponent>(uranus, MeshComponent{.meshID="sphere", .materialID="uranus"});
-		reg.addComponent<RigidBodyComponent>(uranus, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-41.5f)});
+		reg.addComponent<RigidBodyComponent>(uranus, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-48.0f)});
 
 		Entity neptune = reg.createEntity();
 		reg.addComponent<TransformComponent>(neptune, TransformComponent{.position=glm::vec3(-500.0f,0.0f,0.0f), .scale=glm::vec3(7.5f)});
 		reg.addComponent<MeshComponent>(neptune, MeshComponent{.meshID="sphere", .materialID="neptune"});
-		reg.addComponent<RigidBodyComponent>(neptune, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-38.7f)});
+		reg.addComponent<RigidBodyComponent>(neptune, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-44.7f)});
+		*/
 
 		Entity camEntity = reg.createEntity();
 		reg.addComponent<TransformComponent>(camEntity, TransformComponent{.position=glm::vec3(0.0f,300.0f,1000.0f),
