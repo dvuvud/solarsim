@@ -8,14 +8,33 @@
 #include <glm/gtx/quaternion.hpp>
 
 namespace solarsim {
+	/**
+	 * @brief Defines spatial properties and provides model matrix calculation
+	 */
 	struct TransformComponent {
+		/** World space position vector */
 		glm::vec3 position{0.0f};
+
+		/** Orientation as a quaternion */
 		glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};
+
+		/** Scaling factors */
 		glm::vec3 scale{1.0f};
 
+		/** Cached tranformation matrix (set via getModelMatrix below) */
 		mutable glm::mat4 modelMatrix;
+
+		/** Flag indication if matrix needs recalculation */
 		mutable bool dirty = true;
 
+		/**
+		 * @brief Computes the model transformation matrix
+		 * 
+		 * @return glm::mat4 The composed model matrix (translation * rotation * scale)
+		 * 
+		 * @note Only recalculates when dirty flag is set
+		 * @warning Modifying position, rotation, or scale does NOT currently set dirty=true automatically
+		 */
 		glm::mat4 getModelMatrix() const {
 			if (dirty) {
 				modelMatrix = 
