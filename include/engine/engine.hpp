@@ -46,6 +46,5 @@ namespace solarsim {
 			std::unique_ptr<PhysicsSystem> m_physicsSystem;
 
 			std::unique_ptr<Scene> m_activeScene;
-
 	};
 }

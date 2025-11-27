@@ -1,5 +1,9 @@
 #include <glad/glad.h>
 #include <engine/window.hpp>
+#include <managers/scene_manager.hpp>
+#include <engine/engine.hpp>
+#include <components/camera_component.hpp>
+#include <scene/scene.hpp>
 #include <stdexcept>
 
 #include <iostream>
@@ -34,5 +38,14 @@ namespace solarsim {
 	}
 	void Window::framebuffer_size_callback(GLFWwindow* w, int p_width, int p_height) {
 		glViewport(0, 0, p_width, p_height);
+
+		auto scene = SceneManager::get().active();
+		if (!scene) return;
+		auto& reg = scene->registry;
+		auto camOpt = Engine::getPrimaryCamera(reg);
+		if (camOpt == -1) return;
+		Entity camEntity = *camOpt;
+		auto& camComp = reg.getComponent<CameraComponent>(camEntity);
+		camComp.aspect = (float)p_width / p_height;
 	}
 }
