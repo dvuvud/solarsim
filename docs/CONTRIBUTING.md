@@ -8,7 +8,7 @@ You can contribute in several ways:
 
 1. **Report bugs or issues** – Use the [Issues](https://github.com/dvuvud/solarsim/issues) tab to submit bug reports or feature requests.
 2. **Submit code** – Fork the repository, make your changes on a new branch, and submit a pull request.
-3. **Discuss new features/ideas** – Use [Discussions](https://github.com/dvuvud/solarsim/discussions/categories/ideas) to help come up with cool ideas for new features and ideas!
+3. **Discuss new features/ideas** – Use [Discussions](https://github.com/dvuvud/solarsim/discussions/categories/ideas) to help come up with cool ideas for new features!
 
 ## Pull Request Guidelines
 
