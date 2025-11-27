@@ -20,6 +20,9 @@ The following are included as submodules or source code:
 - [GLM](https://github.com/g-truc/glm) - 3D mathematics library  
 - [GLAD](https://glad.dav1d.de/) - OpenGL function loader
 - [stb_image](https://github.com/nothings/stb) - Image loading library
+- [googletest](https://github.com/google/googletest) - C++ testing framework
+- [assimp](https://github.com/assimp/assimp) - Asset loading library
+- [Dear ImGui](https://github.com/ocornut/imgui/tree/docking) - C++ GUI library
 
 ### Commands
 
