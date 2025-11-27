@@ -4,20 +4,42 @@
 #include <vector>
 
 namespace solarsim {
+	
+	/**
+	 * @brief Represents 3D geometry with OpenGL buffers
+	 * 
+	 * @note Handles both vertex array and buffer object management
+	 * @warning Call setupBuffers() before rendering to initialize OpenGL state
+	 */
 	struct Mesh {
-		uint32_t vao;
+		/** Vertex array object handle */
+		uint32_t vao = 0;
+		/** Vertex buffer object handle */
 		uint32_t vbo = 0;
+		/** Element buffer object handle */
 		uint32_t ebo = 0;
-		uint32_t vertexCount;
+		/** Number of vertices in the mesh */
+		uint32_t vertexCount = 0;
 
+		/** OpenGL primitive type for the type of geometry to draw */
 		GLenum drawMode = GL_TRIANGLES;
+		/** Whether to use index buffer */
 		bool useElements = false;
 
+		/** Whether vertices include normals */
 		bool useNormals = true;
 
+		/** Raw vertex data */
 		std::vector<float> vertices;
+		/** Vertex indicdes for indexed rendering */
 		std::vector<uint32_t> indices;
 
+		/**
+		 * @brief Initialize OpenGL buffers and vertex attributes
+		 * 
+		 * @note Creates VAO, VBO, and optionally EBO
+		 * @warning Must be called with active OpenGL context
+		 */
 		void setupBuffers() {
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);

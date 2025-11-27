@@ -8,14 +8,31 @@
 #include <string>
 
 namespace solarsim {
+
+	/**
+	 * @brief Manages OpenGL shader program compilation and uniform setting
+	 * 
+	 * @note Automatically binds common uniform blocks (Camera, Lights, Rigidbody)
+	 * @warning Shader sources must be valid GLSL code
+	 */
 	struct Shader
 	{
+		/** The OpenGL shader program handle */
 		uint32_t programID = 0;
 
+		/**
+		 * @brief Activate this shader for rendering
+		 */
 		void use() {
 			glUseProgram(programID);
 		}
 
+		/**
+		 * @brief Bind uniform buffer blocks to predefined binding points
+		 * 
+		 * @note Binds CameraBuffer(0), LightsBuffer(1), RigidbodyBuffer(2)
+		 * @warning Call this after compilation, it's called automatically by compile()
+		 */
 		void bindBlocks() {
 			int loc = glGetUniformBlockIndex(programID, "CameraBuffer"); 
 			if (loc != GL_INVALID_INDEX) {
@@ -31,30 +48,57 @@ namespace solarsim {
 			}
 		}
 
+		// Uniform setting methods
+
+		/**
+		 * @brief Set a mat4 uniform value
+		 * @param name Uniform variable name in shader
+		 * @param value 4x4 matrix value
+		 */
 		void setUniform(const std::string& name, const glm::mat4& value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
 				glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 			}
 		}
+		/**
+		 * @brief Set a vec3 uniform value
+		 * @param name Uniform variable name in shader
+		 * @param value 3-component vector value
+		 */
 		void setUniform(const std::string& name, const glm::vec3& value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
 				glUniform3fv(loc, 1, glm::value_ptr(value));
 			}
 		}
+		/**
+		 * @brief Set a float uniform value
+		 * @param name Uniform variable name in shader
+		 * @param value Single float value
+		 */
 		void setUniform(const std::string& name, float value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
 				glUniform1f(loc, value);
 			}
 		}
+		/**
+		 * @brief Set an integer uniform value
+		 * @param name Uniform variable name in shader
+		 * @param value Integer value
+		 */
 		void setUniform(const std::string& name, int value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
 				glUniform1i(loc, value);
 			}
 		}
+		/**
+		 * @brief Set a boolean uniform value
+		 * @param name Uniform variable name in shader
+		 * @param value Boolean value (converted to 0 or 1)
+		 */
 		void setUniform(const std::string& name, bool value) {
 			int loc = glGetUniformLocation(programID, name.c_str());
 			if (loc != -1) {
@@ -62,6 +106,13 @@ namespace solarsim {
 			}
 		}
 
+		/**
+		 * @brief Compile and link shader program from source code
+		 * @param vertexSrc Vertex shader source code
+		 * @param fragmentSrc Fragment shader source code
+		 * 
+		 * @note Automatically calls bindBlocks() after successful compilation
+		 */
 		void compile(const std::string& vertexSrc, const std::string& fragmentSrc) {
 			uint32_t vertex = glCreateShader(GL_VERTEX_SHADER);
 			const char* vSrc = vertexSrc.c_str();
@@ -90,6 +141,13 @@ namespace solarsim {
 			bindBlocks();
 		}
 
+		/**
+		 * @brief Check for shader compilation or linking errors
+		 * @param shader Shader or program object to check
+		 * @param type Type of shader ("VERTEX", "FRAGMENT", or "PROGRAM")
+		 * 
+		 * @note Prints errors to std::cerr
+		 */
 		void checkCompileErrors(uint32_t shader, const std::string& type) {
 			int success;
 			char infoLog[1024];
