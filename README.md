@@ -10,7 +10,7 @@ I built this to learn OpenGL, and somewhere between the shader errors and matrix
 
 This project uses [Doxygen](https://www.doxygen.nl) to generate API documentation.
 
-## Generating docs
+### Generating docs
 ```bash
 doxygen Doxyfile
 ```
