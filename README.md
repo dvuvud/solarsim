@@ -14,6 +14,7 @@ This project uses [Doxygen](https://www.doxygen.nl) to generate API documentatio
 ```bash
 doxygen Doxyfile
 ```
+This will generate the documentation in the `docs/html` folder. You can open the `index.html` file in a web browser to view the documentation.
 
 ## Build & Run
 
