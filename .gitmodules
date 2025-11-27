@@ -4,6 +4,10 @@
 [submodule "lib/glm"]
 	path = lib/glm
 	url = https://github.com/g-truc/glm.git
-[submodule "vendor/googletest"]
-	path = vendor/googletest
-	url = https://github.com/google/googletest.git
+[submodule "lib/imgui"]
+	path = lib/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
+[submodule "lib/googletest"]
+	path = lib/googletest
+	url = https://github.com/google/googletest

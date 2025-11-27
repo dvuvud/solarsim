@@ -59,7 +59,7 @@ target_link_libraries(solarsim solarsim_core)
 ###########################################################
 
 enable_testing()
-add_subdirectory(vendor/googletest)
+add_subdirectory(lib/googletest)
 
 add_executable(solarsim_tests test/
 	test/scene/registry_test.cpp
