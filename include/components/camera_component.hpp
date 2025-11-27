@@ -10,16 +10,16 @@ namespace solarsim {
 	 * @warning Inconsistent aspect ratios may cause visual distortion
 	 */
 	struct CameraComponent {
-		/** Field of view in degrees. Default: 45.0f */
+		/** Field of view in degrees */
 		float fov = 45.0f;
 
-		/** Near clipping plane distance. Default: 0.1f */
+		/** Near clipping plane distance */
 		float near = 0.1f;
 
-		/** Far clipping plane distance. Default: 2000.0f */
+		/** Far clipping plane distance */
 		float far = 2000.f;
 
-		/** Aspect ratio (width/height). Default: 800.0f/600.0f */
+		/** Aspect ratio (width/height) */
 		float aspect = 800.0f / 600.0f;
 
 		/** Whether this is the primary camera. Only one should be true. */
