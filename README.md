@@ -6,6 +6,15 @@ I built this to learn OpenGL, and somewhere between the shader errors and matrix
 
 ![ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f9938905-46cb-466a-a438-b673e3769ecf)
 
+## Documentation
+
+This project uses [Doxygen](https://www.doxygen.nl) to generate API documentation.
+
+## Generating docs
+```bash
+doxygen Doxyfile
+```
+
 ## Build & Run
 
 ### Required System Libraries
