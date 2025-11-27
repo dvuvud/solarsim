@@ -5,7 +5,7 @@
 namespace solarsim {
 	class Window {
 		public:
-			Window(const unsigned int p_width = 800, const unsigned int p_height = 600, const char* p_title = "solarsim");
+			Window(const uint32_t p_width = 800, const uint32_t p_height = 600, const char* p_title = "solarsim");
 			~Window();
 			bool shouldClose() { return glfwWindowShouldClose(m_window); }
 			void swapBuffers() { glfwSwapBuffers(m_window); }

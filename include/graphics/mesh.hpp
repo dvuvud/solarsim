@@ -5,10 +5,10 @@
 
 namespace solarsim {
 	struct Mesh {
-		unsigned int vao;
-		unsigned int vbo = 0;
-		unsigned int ebo = 0;
-		unsigned int vertexCount;
+		uint32_t vao;
+		uint32_t vbo = 0;
+		uint32_t ebo = 0;
+		uint32_t vertexCount;
 
 		GLenum drawMode = GL_TRIANGLES;
 		bool useElements = false;
@@ -16,7 +16,7 @@ namespace solarsim {
 		bool useNormals = true;
 
 		std::vector<float> vertices;
-		std::vector<unsigned int> indices;
+		std::vector<uint32_t> indices;
 
 		void setupBuffers() {
 			glGenVertexArrays(1, &vao);
@@ -29,7 +29,7 @@ namespace solarsim {
 			if (useElements && !indices.empty()) {
 				glGenBuffers(1, &ebo);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
 			}
 
 			size_t fields = useNormals ? 2 : 1;

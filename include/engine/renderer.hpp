@@ -47,9 +47,9 @@ namespace solarsim {
 			void bindRigidBodyUBOS(Registry& reg);
 			void renderGrid(Registry& reg);
 			void renderMeshes(Registry& reg);
-			unsigned int cameraUBO;
-			unsigned int lightsUBO;
-			unsigned int rbUBO;
+			uint32_t cameraUBO;
+			uint32_t lightsUBO;
+			uint32_t rbUBO;
 			bool showGrid = true;
 	};
 

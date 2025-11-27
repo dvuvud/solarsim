@@ -49,7 +49,7 @@ namespace solarsim {
 				}
 		private:
 			std::unordered_set<Entity> entities;
-			unsigned int nextEntity = 0;
+			uint32_t nextEntity = 0;
 
 			struct IComponentStorage {
 				virtual ~IComponentStorage() = default;

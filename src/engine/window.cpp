@@ -9,7 +9,7 @@
 #include <iostream>
 
 namespace solarsim {
-	Window::Window(const unsigned int p_width, const unsigned int p_height, const char* p_title) {
+	Window::Window(const uint32_t p_width, const uint32_t p_height, const char* p_title) {
 		if (!glfwInit())
 			throw std::runtime_error("Failed to initialize GLFW");
 

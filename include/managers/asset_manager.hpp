@@ -75,8 +75,8 @@ namespace solarsim {
 			std::unordered_map<std::string, std::shared_ptr<Mesh>> loadedMeshes;
 			std::unordered_map<std::string, std::shared_ptr<Shader>> loadedShaders;
 
-			void generateSphere(std::vector<float>& vertices, std::vector<unsigned int>& indices, float radius=1.0f, int resolution=100);
-			void generateGrid(std::vector<float>& vertices, std::vector<unsigned int>& indices, float spacing=20.0f, int extent=100);
+			void generateSphere(std::vector<float>& vertices, std::vector<uint32_t>& indices, float radius=1.0f, int resolution=100);
+			void generateGrid(std::vector<float>& vertices, std::vector<uint32_t>& indices, float spacing=20.0f, int extent=100);
 
 			AssetManager() {}
 			~AssetManager() {}

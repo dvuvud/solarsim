@@ -102,7 +102,7 @@ namespace solarsim {
 		return shader;
 	}
 
-	void AssetManager::generateSphere(std::vector<float>& vertices, std::vector<unsigned int>& indices, float radius, int resolution)
+	void AssetManager::generateSphere(std::vector<float>& vertices, std::vector<uint32_t>& indices, float radius, int resolution)
 	{
 		int latCount = resolution + 1;
 		int lonCount = resolution + 1;
@@ -146,8 +146,8 @@ namespace solarsim {
 		// generate indices (two triangles per quad)
 		for (int lat = 0; lat < resolution; ++lat) {
 			for (int lon = 0; lon < resolution; ++lon) {
-				unsigned int current = (unsigned int)(lat * lonCount + lon);
-				unsigned int next = (unsigned int)((lat + 1) * lonCount + lon);
+				uint32_t current = (uint32_t)(lat * lonCount + lon);
+				uint32_t next = (uint32_t)((lat + 1) * lonCount + lon);
 
 				// triangle 1
 				indices.push_back(current);
@@ -162,7 +162,7 @@ namespace solarsim {
 		}
 	}
 
-	void AssetManager::generateGrid(std::vector<float>& vertices, std::vector<unsigned int>& indices, float spacing, int extent) {
+	void AssetManager::generateGrid(std::vector<float>& vertices, std::vector<uint32_t>& indices, float spacing, int extent) {
 		// Create individual points at each vertex in the grid
 		for (int z = -extent; z < extent; ++z) {
 			for (int x = -extent; x < extent; ++x) {

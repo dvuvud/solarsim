@@ -10,7 +10,7 @@
 namespace solarsim {
 	struct Shader
 	{
-		unsigned int programID = 0;
+		uint32_t programID = 0;
 
 		void use() {
 			glUseProgram(programID);
@@ -63,19 +63,19 @@ namespace solarsim {
 		}
 
 		void compile(const std::string& vertexSrc, const std::string& fragmentSrc) {
-			unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
+			uint32_t vertex = glCreateShader(GL_VERTEX_SHADER);
 			const char* vSrc = vertexSrc.c_str();
 			glShaderSource(vertex, 1, &vSrc, nullptr);
 			glCompileShader(vertex);
 			checkCompileErrors(vertex, "VERTEX");
 
-			unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
+			uint32_t fragment = glCreateShader(GL_FRAGMENT_SHADER);
 			const char* fSrc = fragmentSrc.c_str();
 			glShaderSource(fragment, 1, &fSrc, nullptr);
 			glCompileShader(fragment);
 			checkCompileErrors(fragment, "FRAGMENT");
 
-			unsigned int program = glCreateProgram();
+			uint32_t program = glCreateProgram();
 			glAttachShader(program, vertex);
 			glAttachShader(program, fragment);
 			glLinkProgram(program);
@@ -90,7 +90,7 @@ namespace solarsim {
 			bindBlocks();
 		}
 
-		void checkCompileErrors(unsigned int shader, const std::string& type) {
+		void checkCompileErrors(uint32_t shader, const std::string& type) {
 			int success;
 			char infoLog[1024];
 			if (type != "PROGRAM") {
