@@ -54,24 +54,16 @@ namespace solarsim {
 
 		Registry& registry = scene->registry;
 
-		// ------- BIND CAMERA MATRICES --------
 		bindCameraMatrices(registry);
-
-		// ------- GET AND BIND ALL LIGHT UBOS -------
 		bindLightUBOS(registry);
-
-		// ------- GET AND BIND ALL RIGID BODY UBOS -------
 		bindRigidBodyUBOS(registry);
 
-		// ------- RENDER GRID --------
 		if (showGrid) {
 			glEnable(GL_BLEND); // Couple objects that need transparency for the future
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			renderGrid(registry);
 			glDisable(GL_BLEND);
 		}
-
-		// ------- RENDER MESHES --------
 		renderMeshes(registry);
 	}
 
