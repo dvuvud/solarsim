@@ -36,9 +36,14 @@ namespace solarsim {
 			void run();
 
 			// System accessors
+
+			/** Getter for the window management system */
 			Window* window() const { return m_window.get(); }
+			/** Getter for the renderingsystem */
 			Renderer* renderer() const { return m_renderer.get(); }
+			/** Getter for the input management system */
 			InputSystem* inputManager() const { return m_inputSystem.get(); }
+			/** Getter for the physics system */
 			PhysicsSystem* physicsSystem() const { return m_physicsSystem.get(); }
 
 			/**
