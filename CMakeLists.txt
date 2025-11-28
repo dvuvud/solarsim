@@ -20,7 +20,6 @@ add_subdirectory(lib/glm)
 
 find_package(OpenGL REQUIRED)
 
-
 ## Library for core functionality
 add_library(solarsim_core
 	src/engine/engine.cpp
@@ -30,11 +29,20 @@ add_library(solarsim_core
 	src/managers/scene_manager.cpp
 	src/systems/input_system.cpp
 	src/systems/physics_system.cpp
+	lib/imgui/imgui.cpp
+	lib/imgui/imgui_draw.cpp
+	lib/imgui/imgui_tables.cpp
+	lib/imgui/imgui_widgets.cpp
+	lib/imgui/imgui_demo.cpp
+	lib/imgui/backends/imgui_impl_opengl3.cpp
+	lib/imgui/backends/imgui_impl_glfw.cpp
 )
 
 target_include_directories(solarsim_core PUBLIC
 	include
 	lib/stb
+	lib/imgui
+	lib/imgui/backends
 )
 
 target_link_libraries(solarsim_core

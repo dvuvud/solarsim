@@ -21,6 +21,9 @@
 
 #include <engine/engine.hpp>
 
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+
 namespace solarsim {
 	Renderer::Renderer() {
 		// -- INIT CAMERA UBO --
@@ -40,8 +43,10 @@ namespace solarsim {
 		glBindBuffer(GL_UNIFORM_BUFFER, rbUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(RBUBO), nullptr, GL_DYNAMIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 2, rbUBO);
+
 	}
 	Renderer::~Renderer() {
+		// Delete UBOs
 		glDeleteBuffers(1, &cameraUBO);
 		glDeleteBuffers(1, &lightsUBO);
 		glDeleteBuffers(1, &rbUBO);
@@ -66,6 +71,8 @@ namespace solarsim {
 		}
 		renderLights(registry);
 		renderMeshes(registry);
+		renderGrid(registry);
+		renderGui(registry);
 	}
 
 	void Renderer::bindCameraMatrices(Registry& reg) {
@@ -199,6 +206,31 @@ namespace solarsim {
 				glDrawElements(mesh->drawMode, mesh->vertexCount, GL_UNSIGNED_INT, 0);
 			else
 				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
+		}
+	}
+
+	void Renderer::renderGui(Registry& reg) {
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		{
+			ImGui::Begin("SolarSim");
+			ImGui::Slider
+			ImGui::Text("Average %.3f ms&frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+			ImGui::End();
+		}
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
 		}
 	}
 }

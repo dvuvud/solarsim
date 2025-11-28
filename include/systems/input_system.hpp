@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 
 namespace solarsim {
-
 	/**
 	 * @brief Handles user input processing and mouse/keyboard state management
 	 */

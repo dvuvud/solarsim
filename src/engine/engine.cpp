@@ -16,6 +16,10 @@
 #include <components/rigid_body_component.hpp>
 #include <components/light_component.hpp>
 
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+
 namespace solarsim {
 	Engine::Engine() 
 		: m_window(800, 600, "solarsim"),
@@ -26,9 +30,27 @@ namespace solarsim {
 		init();
 	}
 
-	Engine::~Engine() {}
+	Engine::~Engine() {
+		// Cleanup ImGui
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
 
 	void Engine::init() {
+
+		/** -- INIT IMGUI CONTEXT -- */
+		const char* glsl_version = "#version 330 core";
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGui_ImplGlfw_InitForOpenGL(glfwGetCurrentContext(), true);
+		ImGui_ImplOpenGL3_Init(glsl_version);
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
 		SceneManager::get().loadScene(std::make_unique<Scene>());
 		Registry& reg = SceneManager::get().active()->registry;
 
@@ -39,23 +61,23 @@ namespace solarsim {
 		//     BINARY STAR SYSTEM DEMO
 		// ================================
 		/*
-		Entity sun0 = reg.createEntity();
-		reg.addComponent<TransformComponent>(sun0, TransformComponent{.position=glm::vec3(100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
-		reg.addComponent<RigidBodyComponent>(sun0, RigidBodyComponent{.mass=100'000.0f, .vel=glm::vec3(0.0f,0.0f,35.355f)});
-		reg.addComponent<LightComponent>(sun0, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
+		   Entity sun0 = reg.createEntity();
+		   reg.addComponent<TransformComponent>(sun0, TransformComponent{.position=glm::vec3(100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
+		   reg.addComponent<RigidBodyComponent>(sun0, RigidBodyComponent{.mass=100'000.0f, .vel=glm::vec3(0.0f,0.0f,35.355f)});
+		   reg.addComponent<LightComponent>(sun0, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
 
-		Entity sun1 = reg.createEntity();
-		reg.addComponent<TransformComponent>(sun1, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
-		reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
-		reg.addComponent<LightComponent>(sun1, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
-		*/
+		   Entity sun1 = reg.createEntity();
+		   reg.addComponent<TransformComponent>(sun1, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
+		   reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
+		   reg.addComponent<LightComponent>(sun1, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
+		   */
 		// ================================
 		// 	  SOLAR SYSTEM DEMO
 		// ================================
 		Entity sun = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun, TransformComponent{.scale=glm::vec3(15.0f)});
 		reg.addComponent<RigidBodyComponent>(sun, RigidBodyComponent{.mass=100'000.0f});
-		reg.addComponent<LightComponent>(sun, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f,.color=glm::vec3(1.0,1.0,0.0)});
+		reg.addComponent<LightComponent>(sun, LightComponent{.meshID="sphere",.shaderID="light",.radius=1000.0f,.color=glm::vec3(0.7,0.5,0.6)});
 
 		Entity mercury = reg.createEntity();
 		reg.addComponent<TransformComponent>(mercury, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
@@ -105,6 +127,7 @@ namespace solarsim {
 	}
 
 	void Engine::run() {
+
 		const float maxDelta = 1.0f / 30.0f; // clamp to ~30 fps
 		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
 
@@ -113,13 +136,13 @@ namespace solarsim {
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
+			m_window.pollEvents();
+			m_inputSystem.processInput(deltaTime);
+
 			if (deltaTime > 0.1f)
 				deltaTime = 0.0f;
 			if (deltaTime > maxDelta)
 				deltaTime = maxDelta;
-
-			m_window.pollEvents();
-			m_inputSystem.processInput(deltaTime);
 
 			m_physicsSystem.update(deltaTime);
 
@@ -127,6 +150,7 @@ namespace solarsim {
 
 			m_window.swapBuffers();
 		}
+
 	}
 
 	std::optional<Entity> Engine::getPrimaryCamera(Registry& registry) {

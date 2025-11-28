@@ -5,6 +5,9 @@
 #include <components/camera_component.hpp>
 #include <scene/scene.hpp>
 #include <stdexcept>
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include <iostream>
 
@@ -19,8 +22,9 @@ namespace solarsim {
 #ifdef __APPLE__
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-		m_window = glfwCreateWindow(p_width, p_height, p_title, NULL, NULL);
-		if (m_window == NULL)
+		float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
+		m_window = glfwCreateWindow((int)p_width*main_scale, (int)p_height*main_scale, p_title, nullptr, nullptr);
+		if (m_window == nullptr)
 		{
 			throw std::runtime_error("Failed to create GLFW window");
 		}
@@ -39,6 +43,7 @@ namespace solarsim {
 	void Window::framebuffer_size_callback(GLFWwindow* w, int p_width, int p_height) {
 		glViewport(0, 0, p_width, p_height);
 
+		/** Update camera aspect ratio if found */
 		auto scene = SceneManager::get().active();
 		if (!scene) return;
 		auto& reg = scene->registry;

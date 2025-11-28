@@ -3,6 +3,7 @@
 #include <scene/entity.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
+#include <imgui.h>
 
 namespace solarsim {
 	class Registry;
@@ -25,6 +26,7 @@ namespace solarsim {
 			 * @warning Call this only from the main thread with active GL context
 			 */
 			void render();
+
 			/**
 			 * @brief Toggle grid visibility
 			 */
@@ -100,6 +102,11 @@ namespace solarsim {
 			 * @param reg Registry containing mesh entities
 			 */
 			void renderMeshes(Registry& reg);
+
+			/**
+			 * @brief Toggle grid visibility
+			 */
+			void renderGui(Registry& reg);
 
 			/** OpenGL handle for camera UBO */
 			uint32_t cameraUBO;
