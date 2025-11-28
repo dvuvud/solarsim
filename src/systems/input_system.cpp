@@ -132,9 +132,8 @@ namespace solarsim {
 		if (glfwGetKey(m_window, GLFW_KEY_G) == GLFW_PRESS) {
 			if (!gLast) {
 				gLast = true;
-				Renderer* renderer = Engine::get().renderer();
-				if (renderer)
-					renderer->toggleGrid();
+				Renderer& renderer = Engine::get().renderer();
+				renderer.toggleGrid();
 			}
 		} else gLast = false;
 	}

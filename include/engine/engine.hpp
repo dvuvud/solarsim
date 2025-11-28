@@ -2,13 +2,13 @@
 
 #include <memory>
 #include <optional>
+#include <engine/window.hpp>
+#include <engine/renderer.hpp>
+#include <systems/input_system.hpp>
+#include <systems/physics_system.hpp>
 #include "scene/entity.hpp"
 
 namespace solarsim {
-	class Window;
-	class Renderer;
-	class InputSystem;
-	class PhysicsSystem;
 	struct Registry;
 
 	/**
@@ -37,14 +37,23 @@ namespace solarsim {
 
 			// System accessors
 
-			/** Getter for the window management system */
-			Window* window() const { return m_window.get(); }
-			/** Getter for the renderingsystem */
-			Renderer* renderer() const { return m_renderer.get(); }
-			/** Getter for the input management system */
-			InputSystem* inputManager() const { return m_inputSystem.get(); }
-			/** Getter for the physics system */
-			PhysicsSystem* physicsSystem() const { return m_physicsSystem.get(); }
+			/** Const getter for the window management system */
+			const Window& window() const { return m_window; }
+			/** Non-const getter for the window management system */
+			Window& window() { return m_window; }
+			/** Const getter for the renderingsystem */
+			const Renderer& renderer() const { return m_renderer; }
+			/** Non-const getter for the renderingsystem */
+			Renderer& renderer() { return m_renderer; }
+
+			/** Const getter for the input management system */
+			const InputSystem& inputManager() const { return m_inputSystem; }
+			/** Non-const getter for the input management system */
+			InputSystem& inputManager() { return m_inputSystem; }
+			/** Const getter for the physics system */
+			const PhysicsSystem& physicsSystem() const { return m_physicsSystem; }
+			/** Non-const getter for the physics system */
+			PhysicsSystem& physicsSystem() { return m_physicsSystem; }
 
 			/**
 			 * @brief Find the primary camera entity in the registry
@@ -64,13 +73,13 @@ namespace solarsim {
 			void init();
 
 			/** Window management system */
-			std::unique_ptr<Window> m_window;
+			Window m_window;
 			/** Rendering system */
-			std::unique_ptr<Renderer> m_renderer;
+			Renderer m_renderer;
 
 			/** Input processing system */
-			std::unique_ptr<InputSystem> m_inputSystem;
+			InputSystem m_inputSystem;
 			/** Physics handling system */
-			std::unique_ptr<PhysicsSystem> m_physicsSystem;
+			PhysicsSystem m_physicsSystem;
 	};
 }

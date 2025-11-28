@@ -17,21 +17,21 @@
 #include <components/light_component.hpp>
 
 namespace solarsim {
-	Engine::Engine() {
+	Engine::Engine() 
+		: m_window(800, 600, "solarsim"),
+		m_inputSystem(m_window.getNativeWindow()),
+		m_physicsSystem(),
+		m_renderer()
+	{
 		init();
 	}
 
 	Engine::~Engine() {}
 
 	void Engine::init() {
-		m_window = std::make_unique<Window>(800, 600, "solarsim");
-		m_inputSystem = std::make_unique<InputSystem>(m_window->getNativeWindow());
-		m_physicsSystem = std::make_unique<PhysicsSystem>();
-		m_renderer = std::make_unique<Renderer>();
-
 		SceneManager::get().loadScene(std::make_unique<Scene>());
 		Registry& reg = SceneManager::get().active()->registry;
-		
+
 		Entity grid = reg.createEntity();
 		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
@@ -52,7 +52,6 @@ namespace solarsim {
 		reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
 		reg.addComponent<LightComponent>(sun1, LightComponent{.radius=700.0f});
 		*/
-
 		// ================================
 		// 	  SOLAR SYSTEM DEMO
 		// ================================
@@ -91,7 +90,7 @@ namespace solarsim {
 		reg.addComponent<TransformComponent>(saturn, TransformComponent{.position=glm::vec3(-360.0f,0.0f,0.0f), .scale=glm::vec3(9.5f)});
 		reg.addComponent<MeshComponent>(saturn, MeshComponent{.meshID="sphere", .materialID="saturn"});
 		reg.addComponent<RigidBodyComponent>(saturn, RigidBodyComponent{.mass=100.0f, .vel=glm::vec3(0.0f,0.0f,-52.7f)});
-		
+
 		Entity uranus = reg.createEntity();
 		reg.addComponent<TransformComponent>(uranus, TransformComponent{.position=glm::vec3(-435.0f,0.0f,0.0f), .scale=glm::vec3(7.5f)});
 		reg.addComponent<MeshComponent>(uranus, MeshComponent{.meshID="sphere", .materialID="uranus"});
@@ -113,7 +112,7 @@ namespace solarsim {
 		const float maxDelta = 1.0f / 30.0f; // clamp to ~30 fps
 		float deltaTime = 0.0f, lastFrame = (float)glfwGetTime();
 
-		while (!m_window->shouldClose()) {
+		while (!m_window.shouldClose()) {
 			float currentFrame = glfwGetTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
@@ -123,14 +122,14 @@ namespace solarsim {
 			if (deltaTime > maxDelta)
 				deltaTime = maxDelta;
 
-			m_window->pollEvents();
-			m_inputSystem->processInput(deltaTime);
+			m_window.pollEvents();
+			m_inputSystem.processInput(deltaTime);
 
-			m_physicsSystem->update(deltaTime);
+			m_physicsSystem.update(deltaTime);
 
-			m_renderer->render();
+			m_renderer.render();
 
-			m_window->swapBuffers();
+			m_window.swapBuffers();
 		}
 	}
 
