@@ -40,7 +40,9 @@ namespace solarsim {
 
 			/** Single light source data */
 			struct LightData {
+				/** Stores the position of the light in xyz, w = padding */
 				glm::vec4 pos;
+				/** Stores the RGB values of the light in xyz and radius in w */
 				glm::vec4 color;
 			};
 
@@ -86,6 +88,12 @@ namespace solarsim {
 			 * @param reg Registry containing grid entities
 			 */
 			void renderGrid(Registry& reg);
+
+			/**
+			 * @brief Render all light entities
+			 * @param reg Registry containing mesh entities
+			 */
+			void renderLights(Registry& reg);
 
 			/**
 			 * @brief Render all mesh entities

@@ -64,6 +64,7 @@ namespace solarsim {
 			renderGrid(registry);
 			glDisable(GL_BLEND);
 		}
+		renderLights(registry);
 		renderMeshes(registry);
 	}
 
@@ -139,6 +140,30 @@ namespace solarsim {
 			shader->setUniform("uMaterial.albedo", material->albedo);
 			shader->setUniform("uMaterial.metallic", material->metallic);
 			shader->setUniform("uMaterial.roughness", material->roughness);
+
+			glBindVertexArray(mesh->vao);
+			if (mesh->useElements)
+				glDrawElements(mesh->drawMode, mesh->vertexCount, GL_UNSIGNED_INT, 0);
+			else
+				glDrawArrays(mesh->drawMode, 0, mesh->vertexCount);
+		}
+	}
+
+	void Renderer::renderLights(Registry& reg) {
+		for (auto e : reg.view<TransformComponent, LightComponent>()) {
+			auto& transform = reg.getComponent<TransformComponent>(e);
+			auto& lightComp = reg.getComponent<LightComponent>(e);
+
+			glm::mat4 model = transform.getModelMatrix();
+
+			// TODO: Add logs for when things go wrong
+			auto mesh = AssetManager::get().LoadMesh(lightComp.meshID);
+			auto shader = AssetManager::get().LoadShader(lightComp.shaderID);
+			if (!shader || !mesh) continue;
+
+			shader->use();
+			shader->setUniform("uModel", model);
+			shader->setUniform("uColor", lightComp.color);
 
 			glBindVertexArray(mesh->vao);
 			if (mesh->useElements)

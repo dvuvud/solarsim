@@ -2,14 +2,8 @@
 
 out vec4 FragColor;
 
-struct Material {
-	vec3 albedo;
-	float metallic;
-	float roughness;
-};
-
-uniform Material uMaterial;
+uniform vec3 uColor;
 
 void main() {
-	FragColor = vec4(uMaterial.albedo, 1.0);
+	FragColor = vec4(uColor, 1.0);
 }

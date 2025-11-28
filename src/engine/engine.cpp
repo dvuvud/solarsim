@@ -35,31 +35,27 @@ namespace solarsim {
 		Entity grid = reg.createEntity();
 		reg.addComponent<GridComponent>(grid, GridComponent{.meshID="grid", .materialID="grid"});
 
-
 		// ================================
 		//     BINARY STAR SYSTEM DEMO
 		// ================================
 		/*
 		Entity sun0 = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun0, TransformComponent{.position=glm::vec3(100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
-		reg.addComponent<MeshComponent>(sun0, MeshComponent{.meshID="sphere", .materialID="sun"});
 		reg.addComponent<RigidBodyComponent>(sun0, RigidBodyComponent{.mass=100'000.0f, .vel=glm::vec3(0.0f,0.0f,35.355f)});
-		reg.addComponent<LightComponent>(sun0, LightComponent{.radius=700.0f});
+		reg.addComponent<LightComponent>(sun0, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
 
 		Entity sun1 = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun1, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(15.0f)});
-		reg.addComponent<MeshComponent>(sun1, MeshComponent{.meshID="sphere", .materialID="sun"});
 		reg.addComponent<RigidBodyComponent>(sun1, RigidBodyComponent{.mass=50'000.0f, .vel=glm::vec3(0.0f,0.0f,-70.71f)});
-		reg.addComponent<LightComponent>(sun1, LightComponent{.radius=700.0f});
+		reg.addComponent<LightComponent>(sun1, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f});
 		*/
 		// ================================
 		// 	  SOLAR SYSTEM DEMO
 		// ================================
 		Entity sun = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun, TransformComponent{.scale=glm::vec3(15.0f)});
-		reg.addComponent<MeshComponent>(sun, MeshComponent{.meshID="sphere", .materialID="sun"});
 		reg.addComponent<RigidBodyComponent>(sun, RigidBodyComponent{.mass=100'000.0f});
-		reg.addComponent<LightComponent>(sun, LightComponent{.radius=700.0f});
+		reg.addComponent<LightComponent>(sun, LightComponent{.meshID="sphere",.shaderID="light",.radius=700.0f,.color=glm::vec3(1.0,1.0,0.0)});
 
 		Entity mercury = reg.createEntity();
 		reg.addComponent<TransformComponent>(mercury, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});
