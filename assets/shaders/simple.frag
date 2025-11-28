@@ -39,7 +39,7 @@ void main()
 		vec3 L = normalize(lights[i].pos.xyz - FragPos);
 
 		float NdotL = max(dot(N, L), 0.0);
-		vec3 diffuse = NdotL * uMaterial.albedo;
+		vec3 diffuse = NdotL * lights[i].color.xyz * uMaterial.albedo;
 
 		vec3 specular = vec3(0.0);
 		if (NdotL > 0) {
