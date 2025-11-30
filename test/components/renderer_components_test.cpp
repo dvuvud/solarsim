@@ -61,7 +61,7 @@ TEST_F(RendererComponentsTest, ComponentDefaults) {
 	// Test LightComponent defaults
 	LightComponent light;
 	EXPECT_EQ(light.color, glm::vec3(1.0f));
-	EXPECT_EQ(light.radius, 135.0f);
+	EXPECT_EQ(light.radius, 1000.0f);
 
 	// Test MeshComponent (no specific defaults, but test creation)
 	MeshComponent mesh;
