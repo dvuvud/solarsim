@@ -19,6 +19,7 @@ add_subdirectory(lib/glfw)
 add_subdirectory(lib/glm)
 
 find_package(OpenGL REQUIRED)
+find_package(X11 REQUIRED)
 
 ## Library for core functionality
 add_library(solarsim_core
@@ -50,6 +51,7 @@ target_link_libraries(solarsim_core
 	glm
 	glad_c
 	OpenGL::GL
+	X11::X11
 )
 
 if(APPLE)
