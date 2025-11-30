@@ -77,7 +77,7 @@ namespace solarsim {
 		Entity sun = reg.createEntity();
 		reg.addComponent<TransformComponent>(sun, TransformComponent{.scale=glm::vec3(15.0f)});
 		reg.addComponent<RigidBodyComponent>(sun, RigidBodyComponent{.mass=100'000.0f});
-		reg.addComponent<LightComponent>(sun, LightComponent{.meshID="sphere",.shaderID="light",.radius=1000.0f,.color=glm::vec3(0.7,0.5,0.6)});
+		reg.addComponent<LightComponent>(sun, LightComponent{.meshID="sphere",.shaderID="light",.color=glm::vec3(0.7,0.5,0.6),.radius=1000.0f});
 
 		Entity mercury = reg.createEntity();
 		reg.addComponent<TransformComponent>(mercury, TransformComponent{.position=glm::vec3(-100.0f,0.0f,0.0f), .scale=glm::vec3(5.0f)});

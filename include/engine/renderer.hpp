@@ -116,6 +116,8 @@ namespace solarsim {
 			uint32_t rbUBO;
 			/** Whether to render the debug grid */
 			bool showGrid = true;
+			/** OpenGL clear buffer bit color */
+			glm::vec4 clearColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	};
 
 }

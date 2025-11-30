@@ -83,6 +83,13 @@ namespace solarsim {
 
 					return result;
 				}
+
+			/**
+			 * Get all entities currently in scene
+			 * @return std::unordered_seet<Entity> A set of all entities
+			 */
+			const auto& getEntities() const { return entities; }
+
 		private:
 			/** Set of all active entities */
 			std::unordered_set<Entity> entities;

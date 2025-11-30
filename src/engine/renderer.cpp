@@ -52,7 +52,7 @@ namespace solarsim {
 		glDeleteBuffers(1, &rbUBO);
 	}
 	void Renderer::render() {
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(clearColor.x * clearColor.w, clearColor.y * clearColor.w, clearColor.z * clearColor.w, clearColor.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Scene* scene = SceneManager::get().active();
 		if (!scene) return;
@@ -218,7 +218,11 @@ namespace solarsim {
 
 		{
 			ImGui::Begin("SolarSim");
-			ImGui::Slider
+			ImGui::ColorEdit3("clear color", (float*)&clearColor);
+	
+			const auto& entities = reg.getEntities();
+
+
 			ImGui::Text("Average %.3f ms&frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 			ImGui::End();
 		}
