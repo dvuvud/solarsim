@@ -16,7 +16,7 @@ var searchData=
   ['showgrid_13',['showGrid',['../classsolarsim_1_1_renderer.html#ad58d3e3b64b37cfba01c9b65eb1b561c',1,'solarsim::Renderer']]],
   ['softening_5fsquared_14',['SOFTENING_SQUARED',['../classsolarsim_1_1_physics_system.html#a627db1e7916d1f210e2b42d572bfefe1',1,'solarsim::PhysicsSystem']]],
   ['solar_20system_15',['Demo of the solar system',['../index.html#autotoc_md1',1,'']]],
-  ['solarsim_16',['SolarSim',['../md_docs_2_c_o_n_t_r_i_b_u_t_i_n_g.html',1,'Contributing to SolarSim'],['../index.html',1,'SolarSim']]],
+  ['solarsim_16',['SolarSim',['../md__8github_2_c_o_n_t_r_i_b_u_t_i_n_g.html',1,'Contributing to SolarSim'],['../index.html',1,'SolarSim']]],
   ['solarsim_17',['solarsim',['../namespacesolarsim.html',1,'']]],
   ['swapbuffers_18',['swapBuffers',['../classsolarsim_1_1_window.html#a3ec9a82d27a4810d0937ad0588a28373',1,'solarsim::Window']]],
   ['system_19',['Demo of the solar system',['../index.html#autotoc_md1',1,'']]],

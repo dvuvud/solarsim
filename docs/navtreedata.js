@@ -38,10 +38,10 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Controls / Keybinds", "index.html#autotoc_md10", null ],
-    [ "Contributing to SolarSim", "md_docs_2_c_o_n_t_r_i_b_u_t_i_n_g.html", [
-      [ "How to Contribute", "md_docs_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md12", null ],
-      [ "Pull Request Guidelines", "md_docs_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md13", null ],
-      [ "Communication", "md_docs_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md14", null ]
+    [ "Contributing to SolarSim", "md__8github_2_c_o_n_t_r_i_b_u_t_i_n_g.html", [
+      [ "How to Contribute", "md__8github_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md12", null ],
+      [ "Pull Request Guidelines", "md__8github_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md13", null ],
+      [ "Communication", "md__8github_2_c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md14", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
