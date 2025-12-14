@@ -3,5 +3,4 @@ build/
 *.DS_Store
 *vscode
 *.fuse*
-docs/html
 imgui.ini
