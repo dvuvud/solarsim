@@ -14,7 +14,9 @@ This project uses [Doxygen](https://www.doxygen.nl) to generate API documentatio
 ```bash
 doxygen Doxyfile
 ```
-This will generate the documentation in the `docs/html` folder. You can open the `index.html` file in a web browser to view the documentation.
+This will generate the documentation in the docs/ folder. You can open the index.html file in a web browser to view the documentation locally.
+
+Alternatively, the documentation is hosted via GitHub Pages and can be viewed [here](https://dvuvud.github.io/solarsim/)
 
 ## Build & Run
 
