@@ -71,7 +71,6 @@ namespace solarsim {
 		}
 		renderLights(registry);
 		renderMeshes(registry);
-		renderGrid(registry);
 		renderGui(registry);
 	}
 
