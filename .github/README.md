@@ -1,5 +1,7 @@
 # SolarSim
 
+[![solarsim CI](https://github.com/dvuvud/solarsim/actions/workflows/ci.yml/badge.svg)](https://github.com/dvuvud/solarsim/actions/workflows/ci.yml)
+
 I built this to learn OpenGL, and somewhere between the shader errors and matrix math, I ended up with something that actually looks like space.
 
 ## Demo of the solar system
