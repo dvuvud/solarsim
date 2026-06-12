@@ -3,6 +3,6 @@
 using namespace solarsim;
 
 int main() {
-	Engine::get().run();
-	return 0;
+  Engine::get().run();
+  return 0;
 }

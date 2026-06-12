@@ -3,26 +3,26 @@
 #include <glm/glm.hpp>
 
 namespace solarsim {
-	/**
-	 * @brief Defines camera properties for rendering and view projection
-	 * 
-	 * @note Only one camera should have primary=true at any time
-	 * @warning Inconsistent aspect ratios may cause visual distortion
-	 */
-	struct CameraComponent {
-		/** Field of view in degrees */
-		float fov = 45.0f;
+/**
+ * @brief Defines camera properties for rendering and view projection
+ * 
+ * @note Only one camera should have primary=true at any time
+ * @warning Inconsistent aspect ratios may cause visual distortion
+ */
+struct CameraComponent {
+  /** Field of view in degrees */
+  float fov = 45.0f;
 
-		/** Near clipping plane distance */
-		float near = 0.1f;
+  /** Near clipping plane distance */
+  float near = 0.1f;
 
-		/** Far clipping plane distance */
-		float far = 2000.f;
+  /** Far clipping plane distance */
+  float far = 2000.f;
 
-		/** Aspect ratio (width/height) */
-		float aspect = 800.0f / 600.0f;
+  /** Aspect ratio (width/height) */
+  float aspect = 800.0f / 600.0f;
 
-		/** Whether this is the primary camera. Only one should be true. */
-		bool primary = true;
-	};
+  /** Whether this is the primary camera. Only one should be true. */
+  bool primary = true;
+};
 }
